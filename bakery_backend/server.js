@@ -9,12 +9,7 @@ const recipesModel = require("./models/recipesModel.js");
 const recipeBooksModel = require("./models/recipeBooksModel.js");
 
 userAccountsModel.initialize(url, "bakery_db", false)
-.then(() => {
-    recipesModel.initialize(url, "bakery_db", false)
-})
-.then(() => {
-    recipeBooksModel.initialize(url, "bakery_db", false)
-})
-.then(
-    app.listen(port) // Run the server
+.then(recipesModel.initialize(url, "bakery_db", false))
+.then(recipeBooksModel.initialize(url, "bakery_db", false))
+.then(app.listen(port) // Run the server
 );
