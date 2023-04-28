@@ -5,8 +5,6 @@ const logger = require('../logger.js');
 const recipeBooksModel = require("../models/recipeBooksModel.js");
 
 
-
-
 module.exports = {
     router,
     routeRoot

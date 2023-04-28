@@ -5,7 +5,6 @@ const logger = require('../logger.js');
 const userAccounts = require("../models/userAccountsModel.js");
 
 
-
 module.exports = {
     router,
     routeRoot
