@@ -1,25 +1,22 @@
-const {MongoClient} = require("mongodb");
 const DatabaseError = require('./databaseError.js');
+const InvalidInputError = require('./invalidInputError.js');
 const logger = require('../logger.js');
 let collectionName = "recipes";
-let client;
 let collection;
+let databaseConnection;
 
 /**
- * Connect up to the online MongoDb database based on .env details
- * Use the database with the name stored in the dbName
- * Will create the collection if it doesn't exist
+ * Sets the collection in the database
+ * 
+ * @param {object} db Database connection
+ * @param {boolean} resetFlag Flag to drop collection and create a new one
  */
-async function initialize(url, dbName, resetFlag) {
+async function setCollection(db, resetFlag) {
     try {
+      databaseConnection = db;
 
       logger.debug("debug");
       logger.trace("trace");
-
-      client = new MongoClient(url); // store connected client for use while the app is running
-      await client.connect(); 
-      logger.info("Connected to Mongo");
-      let db = client.db(dbName);
 
       // collation specifying case-insensitive collection
       const collation = { locale: "en", strength: 1 };
@@ -45,4 +42,17 @@ async function initialize(url, dbName, resetFlag) {
     } 
 }
 
-module.exports = {initialize}
+/**
+ * Gets the recipe collection
+ * @returns The recipe collection from the database
+ */
+async function getCollection(){
+  try{
+    return collection;
+  }
+  catch(err){
+    console.log(err.message);
+  }
+}
+
+module.exports = {setCollection, getCollection}
