@@ -10,7 +10,7 @@ app.use(httpLogger);
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-const controllers = ['userAccountsController', 'recipesController', 'recipeBooksController'];
+const controllers = ['userAccountsController', 'recipesController', 'recipeBooksController', 'errorController'];
 
 app.use(cors());
 app.use(express.json());
@@ -31,7 +31,7 @@ controllers.forEach((controllerName) => {
     // We could fail gracefully, but this would hide bugs later on.
     throw error; 
     }    
-  })
+});
   
   const listEndpoints = require('express-list-endpoints');
   console.log(listEndpoints(app));
