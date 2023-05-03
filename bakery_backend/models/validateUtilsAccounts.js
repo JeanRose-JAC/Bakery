@@ -7,17 +7,19 @@ const { InvalidInputError } = require("./InvalidInputError");
  * Check if password meets minimum requirements.
  * 
  * Minimum requirements: 
- * Usernames: 6 char long, no special characters
- * Display Name: 4 char long, no special characters 
+ * Usernames: 6 char long, no special characters.
+ * Display Name: 4 char long, no special characters. 
  * 
- * Passwords: 8 char long, 1 special char
- * @param {*} username of pokemon name to validate.
- * @param {*} type of pokemon type to validate.
+ * Passwords: 8 char long, 1 special char.
+ * @param {string} email of the account to validate.
+ * @param {string} displayName of the account to validate.
+ * @param {string} username of pokemon name to validate.
+ * @param {string} password of pokemon type to validate.
  * @returns True if data is valid
  * @throws InvalidInputError if pokemon Name or Type is invalid.
  * @throws Exception if unexpected error occurred.
  */
- function isValid2(username, type) {
+ function isAccountValid(email, displayName, username, password) {
     // check if name contains only letters
     if(!validator.isAlpha(username)){
         throw new InvalidInputError("\nINVALID NAME: Name must contain only letters and numbers. It cannot be empty or contain other characters (! , _ @).\nName passed in: " + username);
@@ -48,5 +50,5 @@ function isPasswordValid(password){
 
 
 module.exports ={
-    isValid2
+    isAccountValid
 }

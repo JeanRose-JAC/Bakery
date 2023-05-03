@@ -5,6 +5,8 @@ let collectionName = "user_accounts";
 let collection;
 let databaseConnection;
 
+// validation imports
+const validateUtilsAcc = require("./validateUtilsAccounts");
 /**
  * Sets the collection in the database
  * 
@@ -69,7 +71,7 @@ async function getCollection(){
 async function addAccount(email, displayName, username, password){
   try {
       // check for valid username and password
-      if(validateUtils.isValid2(username,password)){
+      if(validateUtilsAcc.isAccountValid(email, displayName, username, password)){
    
           // if account with username does not exist, create one 
           // creates and returns new account object if successful
