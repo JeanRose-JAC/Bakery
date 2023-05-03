@@ -43,8 +43,8 @@ beforeEach(async () => {
 });
 
 //afterEach is being called out of sequence. Something wrong with model.close()?
-//For example, once client.connect() is executed in initialize(), it jumps immediately to afterEach().
-//The rest of initialize() aren't being executed.
+//For example, once client.connect() is executed in connectToDatabase(), it jumps immediately to afterEach().
+//The rest of connectToDatabase() aren't being executed.
 //Therefore, it's not establishing a connection to the database and some of the tests fail.
 afterEach(async () => {
     //await recipesModel.close();
