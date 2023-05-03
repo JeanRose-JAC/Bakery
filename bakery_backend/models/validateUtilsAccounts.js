@@ -15,6 +15,7 @@ const { InvalidInputError } = require("./InvalidInputError");
  * @param {*} type of pokemon type to validate.
  * @returns True if data is valid
  * @throws InvalidInputError if pokemon Name or Type is invalid.
+ * @throws Exception if unexpected error occurred.
  */
  function isValid2(username, type) {
     // check if name contains only letters
@@ -30,7 +31,19 @@ const { InvalidInputError } = require("./InvalidInputError");
  * @returns {boolean} true if email
  */
 function isEmailvalid(email){
+    // User validator isEmail(str,[, options])
 
+    // format email using normalizeEmail
+}
+
+// TODO: Documentation for isUsernameValid
+function isUsernameValid(username){
+    // TODO: Implementation of isUsernameValid
+}
+
+// TODO: Documentation for isPasswordValid
+function isPasswordValid(password){
+    // use isStrongPassword in validator
 }
 
 
