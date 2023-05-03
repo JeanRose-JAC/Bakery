@@ -62,12 +62,12 @@ async function getCollection(){
  * Method creates an account object and adds it to the MongoDB specified collection.
  * @param {*} username of account to create.
  * @param {*} password of account to create.
- * @returns pokemon object if successful.
- * @throws InvalidInputError if the password or username is invalid.
+ * @returns account object if successful.
+ * @throws InvalidInputError if username is taken. Or if password is not good enough.
+ * @throws Database error if could not add to database.
  */
-async function addAccount(username, password){
+async function addAccount(email, displayName, username, password){
   try {
-      // TODO: Validate if account exists 
       // check for valid username and password
       if(validateUtils.isValid2(username,password)){
    
