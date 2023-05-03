@@ -21,12 +21,7 @@ const { InvalidInputError } = require("./InvalidInputError");
     if(!validator.isAlpha(username)){
         throw new InvalidInputError("\nINVALID NAME: Name must contain only letters and numbers. It cannot be empty or contain other characters (! , _ @).\nName passed in: " + username);
     }
-    // name valid, check type
-    if(type == "Normal" || type == "Grass" || type =="Fire" || type == "Water" || type == "Electric" || type == "Psychic") 
-        return true;
-    
-    let acceptedTypes = "\nAccepted types: Normal, Grass, Fire, Water, Electric, Psychic"
-    throw new InvalidInputError("\nINVALID TYPE. Type must be within accepted types.\nType passed in: " + type + acceptedTypes) ;
+    // TODO: Validate password
 }
 /**
  * Method validates to check if email format is valid.
