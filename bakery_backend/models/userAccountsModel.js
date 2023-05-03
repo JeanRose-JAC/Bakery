@@ -91,7 +91,6 @@ async function addAccount(email, displayName, username, password){
       }
       throw err;
   }
-  // Validate Name and Type
 
 }
 module.exports = {setCollection, getCollection}
