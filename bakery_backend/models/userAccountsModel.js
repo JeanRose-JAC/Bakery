@@ -55,4 +55,43 @@ async function getCollection(){
   }
 }
 
+// =================================================================
+// CRUD 
+// =================================================================
+/**
+ * Method creates an account object and adds it to the MongoDB specified collection.
+ * @param {*} username of account to create.
+ * @param {*} password of account to create.
+ * @returns pokemon object if successful.
+ * @throws InvalidInputError if the password or username is invalid.
+ */
+async function addAccount(username, password){
+  try {
+      // TODO: Validate if account exists 
+      // check for valid username and password
+      if(validateUtils.isValid2(username,password)){
+   
+          // if account with username does not exist, create one 
+          // creates and returns new account object if successful
+          if(await !accountCollection.insertOne( { username: username, password: password } ))
+              throw new DatabaseError(`Error while inserting account into db: ${username}, ${password}`);
+
+          // Return account object
+              return { username: username, password: password };
+      }
+      
+  } catch (err) { 
+      if(err instanceof InvalidInputError){
+          console.log("Input Error while adding account: " + err.message);
+      }
+      if(err instanceof DatabaseError){
+          console.log("Database Error while adding account: " + err.message);
+      }else{
+          console.log("Unexpected error while adding account: " + err.message);
+      }
+      throw err;
+  }
+  // Validate Name and Type
+
+}
 module.exports = {setCollection, getCollection}
