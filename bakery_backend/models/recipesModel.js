@@ -4,7 +4,7 @@ const validateUtils = require('./recipesValidateUtils.js');
 const validator = require('validator');
 const logger = require('../logger.js');
 let collectionName = "recipes";
-let collection;
+let recipesCollection;
 let databaseConnection;
 
 /**
@@ -30,12 +30,12 @@ async function setCollection(db, resetFlag) {
           // No match was found, so create new collection
           await db.createCollection(collectionName, { collation: collation });
       }    
-      collection = db.collection(collectionName); // convenient access to collection
+      recipesCollection = db.collection(collectionName); // convenient access to collection
 
       if(resetFlag){
-        await collection.drop();
+        await recipesCollection.drop();
         await db.createCollection(collectionName, { collation: collation });
-        collection = db.collection(collectionName); // convenient access to collection
+        recipesCollection = db.collection(collectionName); // convenient access to collection
       }
 
     } catch (err) {
@@ -50,7 +50,7 @@ async function setCollection(db, resetFlag) {
  */
 async function getCollection(){
   try{
-    return collection;
+    return recipesCollection;
   }
   catch(err){
     console.log(err.message);
@@ -115,7 +115,7 @@ async function getRecipesOfOneUser(username){
 
   try{
     if(validator.isEmpty(username)){
-      throw new InvalidInputError("Username must not be empty");
+      throw new InvalidInputError("Username field must not be empty.");
     }
 
     let allRecipes = await recipesCollection.find({userId: username});
@@ -123,7 +123,12 @@ async function getRecipesOfOneUser(username){
   }
   catch (err) {
     logger.error("From getRecipesOfOneUser(): " + err.message);
-    throw new DatabaseError(err.message);
+
+    if(err instanceof InvalidInputError){
+      throw err;
+    }
+    else
+      throw new DatabaseError(err.message);
   }  
 }
 
