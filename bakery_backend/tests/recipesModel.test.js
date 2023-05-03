@@ -4,7 +4,6 @@ const DatabaseError = require('../models/databaseError.js');
 const recipesModel = require('../models/recipesModel.js');
 const databaseConnection = require('../models/databaseConnection.js');
 const {MongoMemoryServer} = require('mongodb-memory-server');
-const { all } = require('../app.js');
 
 let db = "bakery_db_test";
 let mongod;
@@ -42,7 +41,7 @@ beforeEach(async () => {
 //The rest of initialize() aren't being executed.
 //Therefore, it's not establishing a connection to the database and some of the tests fail.
 afterEach(async () => {
-    //await model.close();
+    //await recipesModel.close();
 });
 
 async function getCollectionAsArray(){

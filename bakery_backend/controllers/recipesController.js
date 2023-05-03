@@ -4,6 +4,9 @@ const routeRoot = '/';
 const logger = require('../logger.js');
 const recipesModel = require("../models/recipesModel.js");
 
+const InvalidInputError = require('../models/invalidInputError.js');
+const DatabaseError = require('../models/databaseError.js');
+
 
 router.post('/recipe', createRecipe);
 /**
@@ -59,7 +62,7 @@ async function createRecipe(req, res){
 
 }
 
-router.get('/recipe/', showRecipes);
+router.get('/recipe', showRecipes);
 /**
  * Handles the retrieving of all the recipes 
  * 
