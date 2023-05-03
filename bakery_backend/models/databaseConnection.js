@@ -18,7 +18,7 @@ async function connectToDatabase(url, dbName){
 
         return db;
     }
-    catch(e){
+    catch(err){
         logger.error(err.message);
         throw new DatabaseError(err.message);
     }
