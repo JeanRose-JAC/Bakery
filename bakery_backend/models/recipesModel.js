@@ -1,6 +1,7 @@
 const DatabaseError = require('./databaseError.js');
 const InvalidInputError = require('./invalidInputError.js');
 const validateUtils = require('./recipesValidateUtils.js');
+const validator = require('validator');
 const logger = require('../logger.js');
 let collectionName = "recipes";
 let collection;
@@ -85,12 +86,11 @@ async function addNewRecipe(userId, title, ingredients, servings, instructions){
 /**
  * Gets all the recipes
  * 
- * @param {string} userId username
  * @returns An array of recipe objects
  * @throws DatabaseError if an error occurs in the database
  * @throws InvalidInputError if any of the input fields are invalid
  */
-async function getRecipes(userId){
+async function getRecipes(){
 
   try{
 
@@ -99,6 +99,30 @@ async function getRecipes(userId){
   }
   catch (err) {
     logger.error("From getRecipes(): " + err.message);
+    throw new DatabaseError(err.message);
+  }  
+}
+
+/**
+ * Gets all the recipes of one user
+ * 
+ * @param {string} username username 
+ * @returns An array of recipe objects
+ * @throws DatabaseError if an error occurs in the database
+ * @throws InvalidInputError if any of the input fields are invalid
+ */
+async function getRecipesOfOneUser(username){
+
+  try{
+    if(validator.isEmpty(username)){
+      throw new InvalidInputError("Username must not be empty");
+    }
+
+    let allRecipes = await recipesCollection.find({userId: username});
+    return allRecipes.toArray();
+  }
+  catch (err) {
+    logger.error("From getRecipesOfOneUser(): " + err.message);
     throw new DatabaseError(err.message);
   }  
 }
@@ -195,4 +219,4 @@ async function deleteRecipe(userId, title){
   }
 }
 
-module.exports = {setCollection, getCollection, addNewRecipe, getOneRecipe, updateRecipe, deleteRecipe}
+module.exports = {setCollection, getCollection, addNewRecipe, getOneRecipe, getRecipes, getRecipesOfOneUser, updateRecipe, deleteRecipe}
