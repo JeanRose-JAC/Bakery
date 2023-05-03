@@ -2,15 +2,15 @@ const validator = require('validator');
 const { InvalidInputError } = require("./InvalidInputError");
 
 /**
- * Validate if account data is valid by checking DisplayName, Username and Password.
+ * Validate if account data is valid by checking Email, DisplayName, Username and Password.
  * Checks if display and usernames contain only numbers and letters.
  * Check if password meets minimum requirements.
  * 
  * Minimum requirements: 
- * Usernames: 6 char long, no special characters.
- * Display Name: 4 char long, no special characters. 
+ * Usernames: 6 characters long, no special characters.
+ * Display Name: 4 characters long, no special characters. 
  * 
- * Passwords: 8 char long, 1 special char.
+ * Passwords: 8 characters long, 1 special char.
  * @param {string} email of the account to validate.
  * @param {string} displayName of the account to validate.
  * @param {string} username of pokemon name to validate.
@@ -37,13 +37,14 @@ function isEmailvalid(email){
 
     // format email using normalizeEmail
 }
+function isDisplayNameValid(displayName){
 
-// TODO: Documentation for isUsernameValid
-function isUsernameValid(username){
-    // TODO: Implementation of isUsernameValid
 }
 
-// TODO: Documentation for isPasswordValid
+function isUsernameValid(username){
+
+}
+
 function isPasswordValid(password){
     // use isStrongPassword in validator
 }
