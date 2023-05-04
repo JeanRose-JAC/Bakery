@@ -67,8 +67,25 @@ function isDisplayNameValid(displayName){
     
 }
 
+/**
+ * Validates if string of username meets minimum requirements.
+ * 
+ * Minimum requirements are: 6 characters long, no special characters.
+ * @param {*} username to validate.
+ * @returns true if username meets minimum requirements.
+ */
 function isUsernameValid(username){
 
+    // Check length meets minimum requirements.
+    if(username.length < 6)
+        throw new InvalidInputError("\nUsername must be at least 6 characters long");
+
+    // Check for special characters
+    if(!validator.isAlphanumeric(displayName))
+        throw new InvalidInputError("\nSpecial Characters are not allowed");
+
+    // If all checks pass, return true
+    return true;
 }
 
 function isPasswordValid(password){
