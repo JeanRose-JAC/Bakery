@@ -3,8 +3,8 @@ const { DatabaseError } = require('../models/DatabaseError');
 const { MongoMemoryServer} = require('mongodb-memory-server');
 // TODO: Require Faker JS
 
-const model = require('../models/accountModelMongoDb');
-const utils = require('../models/validateUtils');
+const model = require('../models/userAccountsModel');
+const utils = require('../models/validateUtilsAccounts');
 require("dotenv").config();
 jest.setTimeout(100000);
 let client;
