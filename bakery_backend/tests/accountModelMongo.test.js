@@ -1,14 +1,14 @@
 const { InvalidInputError } = require('../models/InvalidInputError');
 const { DatabaseError } = require('../models/DatabaseError');
-const { MongoMemoryServer} = require('mongodb-memory-server');
 // TODO: Require Faker JS
 
 const model = require('../models/userAccountsModel');
 const utils = require('../models/validateUtilsAccounts');
+const databaseConnection = require('../models/databaseConnection');
+const { MongoMemoryServer} = require('mongodb-memory-server');
+
 require("dotenv").config();
 jest.setTimeout(100000);
-let client;
-let pokemonsCollection;
 let db = "user_account_test"; // collection name
 
 // TODO: Use fakeJS To generate user data when adding or manually make stuff up
@@ -57,6 +57,7 @@ beforeEach(async () => {
         const url = mongod.getUri();
 
         // Initialize mock database
+        //async function setCollection(db, resetFlag)
         await model.initialize(url, db, true) // True deletes old if exists and creates new database
 
     } catch (error) {
