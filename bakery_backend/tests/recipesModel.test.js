@@ -271,14 +271,21 @@ test('Failed_UpdateRecipe: Invalid servings', async ()=>{
 test('Success_DeleteRecipe: Delete one recipe', async ()=> {
     let newRecipe = await addOneRecipeToCollection();
 
-    await recipesModel.deleteRecipe(newRecipe.userId, newRecipe.title);
+    let result = await recipesModel.deleteRecipe(newRecipe.userId, newRecipe.title);
+
     let recipeCol = await getCollectionAsArray();
     expect(recipeCol.length).toBe(0);
+    expect(result.recipe.title).toBe(newRecipe.title);
 });
 
-test('Success_DeleteRecipe: Delete non existent recipe', async ()=> {
-    let result = await recipesModel.deleteRecipe("testUser", "testTitle");
-    expect(result.deletedCount).toBe(0);
+test('Failed_DeleteRecipe: Delete non existent recipe', async ()=> {
+
+    try{
+        let result = await recipesModel.deleteRecipe("testUser", "testTitle");
+    }
+    catch(e){
+        expect(e instanceof InvalidInputError).toBe(true);
+    }
 });
 
 test('Failed_DeleteRecipe: Invalid userId', async ()=>{

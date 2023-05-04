@@ -1,6 +1,6 @@
 const DatabaseError = require('./databaseError.js');
 const InvalidInputError = require('./invalidInputError.js');
-const validateUtils = require('./recipesValidateUtils.js');
+const recipesValidateUtils = require('./recipesValidateUtils.js');
 const validator = require('validator');
 const logger = require('../logger.js');
 let collectionName = "recipes";
@@ -70,7 +70,7 @@ async function getCollection(){
  * @throws InvalidInputError if any of the input fields are invalid
  */
 async function addNewRecipe(userId, title, ingredients, servings, instructions){
-  validateUtils.areFieldsValid(userId, title, ingredients, servings, instructions);
+  recipesValidateUtils.areFieldsValid(userId, title, ingredients, servings, instructions);
 
   try{
       await recipesCollection.insertOne({userId: userId, title: title, ingredients: ingredients, servings: servings, instructions: instructions})
@@ -84,16 +84,13 @@ async function addNewRecipe(userId, title, ingredients, servings, instructions){
 }
 
 /**
- * Gets all the recipes
+ * Gets all the recipes in the database
  * 
  * @returns An array of recipe objects
  * @throws DatabaseError if an error occurs in the database
- * @throws InvalidInputError if any of the input fields are invalid
  */
 async function getRecipes(){
-
   try{
-
     let allRecipes = await recipesCollection.find();
     return allRecipes.toArray();
   }
@@ -109,7 +106,7 @@ async function getRecipes(){
  * @param {string} username username 
  * @returns An array of recipe objects
  * @throws DatabaseError if an error occurs in the database
- * @throws InvalidInputError if any of the input fields are invalid
+ * @throws InvalidInputError if the username is empty
  */
 async function getRecipesOfOneUser(username){
 
@@ -142,7 +139,7 @@ async function getRecipesOfOneUser(username){
  * @throws InvalidInputError if any of the input fields are invalid
  */
 async function getOneRecipe(userId, title){
-  validateUtils.areKeyValid(userId, title);
+  recipesValidateUtils.areKeyValid(userId, title);
 
   try{
 
@@ -168,11 +165,11 @@ async function getOneRecipe(userId, title){
  * @throws InvalidInputError if any of the input fields are invalid
  */
 async function updateRecipe(userId, title, newTitle, newIngredients, newServings, newInstructions){
-  validateUtils.areKeyValid(userId, title);
+  recipesValidateUtils.areKeyValid(userId, title);
 
   try{
-    let key = {userId: userId, title: title};
     let obj = await getOneRecipe(userId, title);
+    let key = {_id: obj._id};
 
     if(newTitle == "")
         newTitle = obj.title;
@@ -183,7 +180,7 @@ async function updateRecipe(userId, title, newTitle, newIngredients, newServings
     if(newServings == "")
         newServings = obj.servings;
     else{
-      validateUtils.isServingsValid(newServings);
+      recipesValidateUtils.isServingsValid(newServings);
     }
     
     if(newInstructions == "")
@@ -208,20 +205,32 @@ async function updateRecipe(userId, title, newTitle, newIngredients, newServings
  * 
  * @param {string} userId username
  * @param {string} title title of the recipe
- * @returns Object with a boolean acknowledged and integer deletedCount
+ * @returns Object with a boolean acknowledged and integer deletedCount as well as recipe object
  * @throws DatabaseError if an error occurs in the database
  * @throws InvalidInputError if any of the input fields are invalid
  */
 async function deleteRecipe(userId, title){
-  validateUtils.areKeyValid(userId, title);
+  recipesValidateUtils.areKeyValid(userId, title);
 
   try{
-    return recipesCollection.deleteOne({userId: userId, title: title})
+    let recipe = await getOneRecipe(userId, title);
+
+    if(recipe == null){
+      throw new InvalidInputError("Recipe does not exist.");
+    }
+
+    let result = await recipesCollection.deleteOne({_id: recipe._id});
+
+    return {recipe: recipe, deleteResult: result};
   }
   catch(err){
     logger.error("From deleteRecipe(): " + err.message);
-    throw new DatabaseError(err.message);
-  }
+
+    if(err instanceof InvalidInputError){
+      throw err;
+    }
+    else
+      throw new DatabaseError(err.message);  }
 }
 
 module.exports = {setCollection, getCollection, addNewRecipe, getOneRecipe, getRecipes, getRecipesOfOneUser, updateRecipe, deleteRecipe}

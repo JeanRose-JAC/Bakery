@@ -3,21 +3,21 @@ const logger = require('../logger.js');
 const InvalidInputError = require("./invalidInputError");
 
 /**
- * Validates the input fields
+ * Validates all the input fields of the recipe object
  * 
  * @param {string} userId username
  * @param {string} title title of recipe
  * @param {string} ingredients ingredients  of recipe
  * @param {string} servings number of servings of recipe
  * @param {string} instructions instructions of recipe
- * @returns True if all fields are valid.
+ * @returns True if all fields are valid. An error otherwise.
  * @throws InvalidInputError if any of the fields are invalid
  */
 function areFieldsValid(userId, title, ingredients, servings, instructions){
     let errMsg;
 
     if(validator.isEmpty(userId)){
-        errMsg += "UserID is required."
+        errMsg += "Username is required."
     }
 
     if(validator.isEmpty(title)){
@@ -49,12 +49,11 @@ function areFieldsValid(userId, title, ingredients, servings, instructions){
 }
 
 /**
- * Validates the servings fields
+ * Validates that the servings value is a valid number
  * 
  * @param {string} serving Number of servings
- * @returns True if servings is valid.
+ * @returns True if servings is a number.
  * @throws InvalidInputError if any of the fields are invalid
-
  */
 function isServingsValid(serving){
     let errMsg;
@@ -83,7 +82,7 @@ function areKeyValid(userId, title){
     let errMsg;
 
     if(validator.isEmpty(userId)){
-        errMsg += "UserID is required."
+        errMsg += "Username is required."
     }
 
     if(validator.isEmpty(title)){

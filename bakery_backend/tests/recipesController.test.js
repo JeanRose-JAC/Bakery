@@ -358,6 +358,7 @@ test('Success_DeleteRecipe: Delete one recipe', async()=>{
     const testResponse = await testRequest.delete('/recipe/' + newRecipe.userId + '/' + newRecipe.title);
 
     expect(testResponse.status).toBe(200);
+    expect(testResponse.body.title).toBe(newRecipe.title);
 });
 
 test('Failed_DeleteRecipe: Invalid title', async()=>{

@@ -297,7 +297,7 @@ router.delete('/recipe/:userId/:title', deleteRecipe);
  * Handles the deleting of a recipe
  * 
  * @param {object} req request object with the parameters containing the userId and title
- * @param {object} res response object with the body containing an object with a boolean acknowledged and integer deletedCount 
+ * @param {object} res response object with the body containing an object with a boolean acknowledged and integer deletedCount as well as the recipe object
  */
 async function deleteRecipe(req, res){
     let output;
@@ -308,11 +308,11 @@ async function deleteRecipe(req, res){
 
         let result = await recipesModel.deleteRecipe(userId, title);
 
-        if(result.deletedCount > 0){
+        if(result.deleteResult.deletedCount > 0){
             output = "Successfully deleted recipe: " + title;
             res.status("200");
             logger.info(output);
-            res.send(result);
+            res.send(result.recipe);
         }
         else{
             output = "Failed to delete recipe: " + title;
