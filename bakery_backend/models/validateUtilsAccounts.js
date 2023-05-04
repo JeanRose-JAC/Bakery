@@ -15,9 +15,10 @@ const { InvalidInputError } = require("./InvalidInputError");
  * @param {string} displayName of the account to validate.
  * @param {string} username of pokemon name to validate.
  * @param {string} password of pokemon type to validate.
+ * @throws {InvalidInputError} if pokemon Name or Type is invalid.
+ * @throws {Exception} if unexpected error occurred.
  * @returns True if data is valid
- * @throws InvalidInputError if pokemon Name or Type is invalid.
- * @throws Exception if unexpected error occurred.
+ * 
  */
  function isAccountValid(email, displayName, username, password) {
 
@@ -33,7 +34,7 @@ const { InvalidInputError } = require("./InvalidInputError");
 /**
  * Validate if string passed in is an email.
  * @param {string} email to validate 
- * @throws InvalidInputError if email format is invalid
+ * @throws {InvalidInputError} if email format is invalid
  * @returns {boolean} true if email string passed in, in in fact an email.
  */
 function isEmailValid(email){
@@ -49,7 +50,7 @@ function isEmailValid(email){
  * Checks if Display is at least 4 characters long
  * Checks if Display Name does not contain any special characters
  * @param {string} displayName to validate
- * @throws InvalidInputError if display name does not meet requirements.
+ * @throws {InvalidInputError} if display name does not meet requirements.
  * @returns {boolean} true if display name meets all requirements
  */
 function isDisplayNameValid(displayName){
@@ -71,7 +72,8 @@ function isDisplayNameValid(displayName){
  * Validates if string of username meets minimum requirements.
  * 
  * Minimum requirements are: 6 characters long, no special characters.
- * @param {*} username to validate.
+ * @param {true} username to validate.
+ * @throws {InvalidInputError} if username does not meet minimum requirements.
  * @returns true if username meets minimum requirements.
  */
 function isUsernameValid(username){
@@ -88,8 +90,28 @@ function isUsernameValid(username){
     return true;
 }
 
+
+/**
+ * Check if password meets minimum requirements.
+ * 
+ * Minimum requirements
+ * Is at least 8 characters long.
+ * Contains one number.
+ * Contains one special character.
+ * @param {string} password to validate. 
+ * @throws {InvalidInputError} if password is not valid.
+ * @returns true if password meets minimum requirements
+ */
 function isPasswordValid(password){
-    // use isStrongPassword in validator
+
+    // Filter for isStrongPassword, 
+    strongPasswordOptions = {minLength: 8, minNumbers: 1, minSymbols: 1}
+
+    // If password does not meet strongPasswordOptions criteria, returns false.
+    if(!validator.isStrongPassword(password, strongPasswordOptions))
+        throw InvalidInputError("\nPassword is not strong enough: Must be at least 8 characters long, contains 1 number and one special character.");
+    
+    return true;
 }
 
 
