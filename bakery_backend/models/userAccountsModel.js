@@ -60,10 +60,10 @@ async function getCollection() {
  */
 async function close() {
   try {
-      await client.close();
-      console.log("MongoDb connection closed");
+    await client.close();
+    console.log("MongoDb connection closed");
   } catch (error) {
-      console.log(error.message);
+    console.log(error.message);
   }
 }
 // =================================================================
@@ -79,22 +79,19 @@ async function close() {
  */
 async function addAccount(email, displayName, username, password) {
   try {
+
     // Check if an account already exists
+    // ----------------------------------------------------------------
     if (await accountCollection.findOne({ username: username })) {
       throw new InvalidInputError(
         "\nAccount with username is taken. Username: " + username
       );
     }
     // check for valid username and password
-    else if (
-      validateUtilsAcc.isAccountValid(email, displayName, username, password)
-    ) {
+    // ----------------------------------------------------------------
+    else if (validateUtilsAcc.isAccountValid(email, displayName, username, password)) {
       // creates and returns new account object if successful
-      if (
-        await !accountCollection.insertOne({
-          username: username,
-          password: password,
-        })
+      if (await !accountCollection.insertOne({email: email, displayName: displayName, username: username, password: password,})
       )
         throw new DatabaseError(
           `Error while inserting account into db: ${username}, ${password}`
@@ -115,4 +112,4 @@ async function addAccount(email, displayName, username, password) {
     throw err;
   }
 }
-module.exports = { setCollection, getCollection, addAccount, close};
+module.exports = { setCollection, getCollection, addAccount, close };
