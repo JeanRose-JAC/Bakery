@@ -82,7 +82,7 @@ async function addAccount(email, displayName, username, password) {
 
     // Check if an account already exists
     // ----------------------------------------------------------------
-    if (await accountCollection.findOne({ username: username })) {
+    if (await collection.findOne({ username: username })) {
       throw new InvalidInputError(
         "\nAccount with username is taken. Username: " + username
       );
@@ -91,7 +91,7 @@ async function addAccount(email, displayName, username, password) {
     // ----------------------------------------------------------------
     else if (validateUtilsAcc.isAccountValid(email, displayName, username, password)) {
       // creates and returns new account object if successful
-      if (await !accountCollection.insertOne({email: email, displayName: displayName, username: username, password: password,})
+      if (await !collection.insertOne({email: email, displayName: displayName, username: username, password: password,})
       )
         throw new DatabaseError(
           `Error while inserting account into db: ${username}, ${password}`

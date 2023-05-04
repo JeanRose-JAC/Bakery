@@ -55,10 +55,8 @@ beforeEach(async () => {
     try {
         // Get URL for mock database
         const url = mongod.getUri();
-
-        // Initialize mock database
-        //async function setCollection(db, resetFlag)
-        await model.initialize(url, db, true) // True deletes old if exists and creates new database
+        await databaseConnection.connectToDatabase(url, db)
+        .then((conn) => model.setCollection(conn, true));
 
     } catch (error) {
         console.log(error.message);
@@ -67,7 +65,7 @@ beforeEach(async () => {
 
 // Close database connection after each test run
 afterEach(async () => {
-    await model.close();
+    //await model.close();
 });
 
 // =================================================================
