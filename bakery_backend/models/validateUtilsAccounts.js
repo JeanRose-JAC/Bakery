@@ -20,6 +20,10 @@ const { InvalidInputError } = require("./InvalidInputError");
  * @throws Exception if unexpected error occurred.
  */
  function isAccountValid(email, displayName, username, password) {
+
+    // Validate Email is an Email 
+    isEmailValid(email);
+
     // check if name contains only letters
     if(!validator.isAlpha(username)){
         throw new InvalidInputError("\nINVALID NAME: Name must contain only letters and numbers. It cannot be empty or contain other characters (! , _ @).\nName passed in: " + username);
@@ -30,15 +34,33 @@ const { InvalidInputError } = require("./InvalidInputError");
  * Method validates to check if email format is valid.
  * @param {string} email to validate 
  * @throws InvalidInputError if email format is invalid
- * @returns {boolean} true if email
+ * @returns {boolean} true if email string passed in, in in fact an email.
  */
-function isEmailvalid(email){
+function isEmailValid(email){
+
     // User validator isEmail(str,[, options])
+    if (!validator.isEmail(email))
+        throw new InvalidInputError("\nEmail format is invalid. Accepted format: xyz@domain.com");
 
-    // format email using normalizeEmail
+    return true;
 }
-function isDisplayNameValid(displayName){
 
+/**
+ * Checks if Display is at least 4 characters long
+ * Checks if Display Name does not contain any special characters
+ * @param {string} displayName to validate
+ * @throws InvalidInputError if display name does not meet requirements.
+ * @returns {boolean} true if display name meets all requirements
+ */
+function isDisplayNameValid(displayName){
+    
+    if(displayName.length < 4)
+    
+    // Check for special characters
+    if(!validator.isAlphanumeric(displayName))
+        throw new InvalidInputError("\nSpecial Characters are not allowed");
+
+    
 }
 
 function isUsernameValid(username){
