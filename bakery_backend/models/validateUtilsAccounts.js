@@ -31,14 +31,14 @@ const { InvalidInputError } = require("./InvalidInputError");
     // TODO: Validate password
 }
 /**
- * Method validates to check if email format is valid.
+ * Validate if string passed in is an email.
  * @param {string} email to validate 
  * @throws InvalidInputError if email format is invalid
  * @returns {boolean} true if email string passed in, in in fact an email.
  */
 function isEmailValid(email){
 
-    // User validator isEmail(str,[, options])
+    // User validator isEmail(str,[, options]) ** only checks for format
     if (!validator.isEmail(email))
         throw new InvalidInputError("\nEmail format is invalid. Accepted format: xyz@domain.com");
 
