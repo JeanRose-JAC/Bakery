@@ -102,12 +102,12 @@ async function addAccount(email, displayName, username, password) {
     }
   } catch (err) {
     if (err instanceof InvalidInputError) {
-      console.log("Input Error while adding account: " + err.message);
+      logger.error("Input Error while adding account: " + err.message);
     }
     if (err instanceof DatabaseError) {
-      console.log("Database Error while adding account: " + err.message);
+      logger.error("Database Error while adding account: " + err.message);
     } else {
-      console.log("Unexpected error while adding account: " + err.message);
+      logger.error("Unexpected error while adding account: " + err.message);
     }
     throw err;
   }
