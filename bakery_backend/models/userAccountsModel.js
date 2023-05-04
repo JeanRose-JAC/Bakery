@@ -70,10 +70,13 @@ async function getCollection(){
  */
 async function addAccount(email, displayName, username, password){
   try {
+
+      // Check if an account already exists
+      if(await accountCollection.findOne({username: username})){
+          throw new InvalidInputError("\nAccount with username is taken. Username: " + username);
+      }else
       // check for valid username and password
       if(validateUtilsAcc.isAccountValid(email, displayName, username, password)){
-   
-          // if account with username does not exist, create one 
           // creates and returns new account object if successful
           if(await !accountCollection.insertOne( { username: username, password: password } ))
               throw new DatabaseError(`Error while inserting account into db: ${username}, ${password}`);
