@@ -16,20 +16,20 @@ const { InvalidInputError } = require("./InvalidInputError");
  * @param {string} username of pokemon name to validate.
  * @param {string} password of pokemon type to validate.
  * @throws {InvalidInputError} if pokemon Name or Type is invalid.
- * @throws {Exception} if unexpected error occurred.
  * @returns True if data is valid
  * 
  */
  function isAccountValid(email, displayName, username, password) {
 
-    // Validate Email is an Email 
+    // Validate All Input -- each will throw appropriate exception if it fails
     isEmailValid(email);
+    isDisplayNameValid(displayName);
+    isUsernameValid(username);
+    isPasswordValid(password);
 
-    // check if name contains only letters
-    if(!validator.isAlpha(username)){
-        throw new InvalidInputError("\nINVALID NAME: Name must contain only letters and numbers. It cannot be empty or contain other characters (! , _ @).\nName passed in: " + username);
-    }
-    // TODO: Validate password
+    // if checks pass, return true
+    return true;
+
 }
 /**
  * Validate if string passed in is an email.
