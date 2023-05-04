@@ -118,5 +118,7 @@ function isPasswordValid(password){
 module.exports ={
     isAccountValid,
     isEmailValid,
-    isDisplayNameValid
+    isDisplayNameValid,
+    isUsernameValid,
+    isPasswordValid,
 }
