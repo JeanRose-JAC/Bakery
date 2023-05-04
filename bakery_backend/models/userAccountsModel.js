@@ -54,7 +54,18 @@ async function getCollection() {
     console.log(err.message);
   }
 }
-
+/**
+ * Close connection to database with name stored in dbName
+ * Logs if closing connection was successful, otherwise logs error message
+ */
+async function close() {
+  try {
+      await client.close();
+      console.log("MongoDb connection closed");
+  } catch (error) {
+      console.log(error.message);
+  }
+}
 // =================================================================
 // CRUD
 // =================================================================
@@ -104,4 +115,4 @@ async function addAccount(email, displayName, username, password) {
     throw err;
   }
 }
-module.exports = { setCollection, getCollection, addAccount };
+module.exports = { setCollection, getCollection, addAccount, close};
