@@ -54,12 +54,16 @@ function isEmailValid(email){
  */
 function isDisplayNameValid(displayName){
     
+    // Check length meets minimum requirements (4)
     if(displayName.length < 4)
+        throw new InvalidInputError("\nUsername must be at least 4 characters long.");
     
     // Check for special characters
     if(!validator.isAlphanumeric(displayName))
         throw new InvalidInputError("\nSpecial Characters are not allowed");
 
+    // If all checks pass, return true
+    return true;
     
 }
 
@@ -73,5 +77,7 @@ function isPasswordValid(password){
 
 
 module.exports ={
-    isAccountValid
+    isAccountValid,
+    isEmailValid,
+    isDisplayNameValid
 }
