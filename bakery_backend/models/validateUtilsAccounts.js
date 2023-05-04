@@ -50,7 +50,7 @@ function isEmailValid(email){
  * Checks if Display is at least 4 characters long
  * Checks if Display Name does not contain any special characters
  * @param {string} displayName to validate
- * @throws {InvalidInputError} if display name does not meet requirements.
+ * @throws InvalidInputError if display name does not meet requirements.
  * @returns {boolean} true if display name meets all requirements
  */
 function isDisplayNameValid(displayName){
