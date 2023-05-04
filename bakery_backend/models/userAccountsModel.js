@@ -51,7 +51,7 @@ async function getCollection() {
   try {
     return collection;
   } catch (err) {
-    console.log(err.message);
+    logger.error(err.message);
   }
 }
 /**
@@ -61,9 +61,9 @@ async function getCollection() {
 async function close() {
   try {
     await client.close();
-    console.log("MongoDb connection closed");
+    logger.info("MongoDb connection closed");
   } catch (error) {
-    console.log(error.message);
+    logger.error(error.message);
   }
 }
 // =================================================================
