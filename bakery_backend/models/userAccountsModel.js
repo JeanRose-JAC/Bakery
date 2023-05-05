@@ -98,7 +98,7 @@ async function addAccount(email, displayName, username, password) {
         );
 
       // Return account object
-      return { username: username, password: password };
+      return { email: email, displayName: displayName, username: username, password: password };
     }
   } catch (err) {
     if (err instanceof InvalidInputError) {

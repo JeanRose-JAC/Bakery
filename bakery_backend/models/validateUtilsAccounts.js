@@ -109,7 +109,7 @@ function isPasswordValid(password){
 
     // If password does not meet strongPasswordOptions criteria, returns false.
     if(!validator.isStrongPassword(password, strongPasswordOptions))
-        throw InvalidInputError("\nPassword is not strong enough: Must be at least 8 characters long, contains 1 number and one special character.");
+        throw new InvalidInputError("\nPassword is not strong enough: Must be at least 8 characters long, contains 1 number and one special character.");
     
     return true;
 }

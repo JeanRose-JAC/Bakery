@@ -134,33 +134,40 @@ test("Cannot add duplicate accounts to DB", async () => {
  
 });
 
-test("Cannot add account with an empty username", async () => {
+test("Cannot add account with an empty Username", async () => {
     const { email, displayName, username, password } = generateAccountData();
     const emptyuserName = "";
     
     // expect InvalidInputError exception to be thrown
     await expect(()=> model.addAccount(email, displayName, emptyuserName,password)).rejects.toThrow(InvalidInputError);
 });
-test("Cannot add account with an empty displayName", async () => {
+test("Cannot add account with an empty Display Name", async () => {
     const { email, displayName, username, password } = generateAccountData();
     const emptydisplayName = "";
     
     // expect InvalidInputError exception to be thrown
     await expect(()=> model.addAccount(email, emptydisplayName, username ,password)).rejects.toThrow(InvalidInputError);
 });
-test("Cannot add account with an invalid username", async () => {
+test("Cannot add account with an invalid Username", async () => {
     const { email, displayName, username, password } = generateAccountData();
     const invalidUsername = "NoSpecialCharacters!_";
     
     // expect InvalidInputError exception to be thrown
     await expect(()=> model.addAccount(email, displayName, invalidUsername ,password)).rejects.toThrow(InvalidInputError);
 });
-test.only("Cannot add account with an invalid Display Name", async () => {
+test("Cannot add account with an invalid Display Name", async () => {
     const { email, displayName, username, password } = generateAccountData();
     const invalidDisplayName = "NoSpecialCharacters!_";
     
     // expect InvalidInputError exception to be thrown
     await expect(()=> model.addAccount(email, invalidDisplayName, username ,password)).rejects.toThrow(InvalidInputError);
+});
+test.only("Cannot add account with an invalid password", async () => {
+    const { email, displayName, username, password } = generateAccountData();
+    const invalidPassword = "lamepassword";
+    
+    // expect InvalidInputError exception to be thrown
+    await expect(()=> model.addAccount(email, displayName, username ,invalidPassword)).rejects.toThrow(InvalidInputError);
 });
 
 // test("Cannot add account with a number non alphabet/number name", async () => {
