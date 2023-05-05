@@ -1,6 +1,7 @@
 const { InvalidInputError } = require('../models/invalidInputError');
 const { DatabaseError } = require('../models/DatabaseError');
 const {faker} = require('@faker-js/faker');
+const logger = require("../logger.js");
 
 const model = require('../models/userAccountsModel');
 const utils = require('../models/validateUtilsAccounts');
