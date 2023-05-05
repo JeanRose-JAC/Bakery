@@ -1,4 +1,4 @@
-const {DatabaseError} = require("./databaseError.js");
+const { DatabaseError } = require("./databaseError.js");
 const {InvalidInputError} = require("./invalidInputError.js");
 const logger = require("../logger.js");
 let collectionName = "user_accounts";

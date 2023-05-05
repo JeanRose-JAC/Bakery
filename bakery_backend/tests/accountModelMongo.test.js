@@ -50,7 +50,6 @@ afterAll(async () => {
 });
 
 // initialize a connection to a database before each test
-
 beforeEach(async () => {
     try {
         // Get URL for mock database
@@ -87,16 +86,21 @@ afterEach(async () => {
  * for more accurate results.
 */
 test("Can add account to DB", async () => {
+    // Generate account data
     const { email, displayName, username, password } = generateAccountData();
     let filter = { email: email, displayName: displayName, username: username, password: password };
+    
+    
+    // get collection
     let collection = await model.getCollection();
-
-    await collection.insertOne(filter); // add account to database  
+    
+    // add account to database  
+    await collection.insertOne(filter); 
 
     // Query database
     const cursor = await model.getCollection();
     let results = await cursor.find({username: username, password:password}).toArray();// Convert query to array
-    //console.log("Inside of test, results values is: " + results[0].username)
+
     // Check Array 
     expect(Array.isArray(results)).toBe(true);
     expect(results.length).toBe(1);
@@ -107,13 +111,13 @@ test("Can add account to DB", async () => {
  
 });
 
-// test("Cannot add account with an empty username", async () => {
-//     const { username, password } = generateAccountData();
-//     const emptyName = "";
+test("Cannot add account with an empty username", async () => {
+    const { email, displayName, username, password } = generateAccountData();
+    const emptyuserName = "";
     
-//     // expect InvalidInputError exception to be thrown
-//     await expect(()=> model.addAccount(emptyName,password)).rejects.toThrow(InvalidInputError);
-// });
+    // expect InvalidInputError exception to be thrown
+    await expect(()=> model.addAccount(email, displayName, emptyuserName,password)).rejects.toThrow(InvalidInputError);
+});
 
 
 // test("Cannot add account with a number non alphabet/number name", async () => {
