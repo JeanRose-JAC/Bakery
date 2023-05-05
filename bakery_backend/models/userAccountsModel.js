@@ -83,7 +83,7 @@ async function addAccount(email, displayName, username, password) {
     // Check if an account already exists
     // ----------------------------------------------------------------
     if (await collection.findOne({ username: username })) {
-      throw new InvalidInputError(
+      throw new DatabaseError(
         "\nAccount with username is taken. Username: " + username
       );
     }

@@ -110,13 +110,41 @@ test("Can add account to DB", async () => {
     expect(results[0].password.toLowerCase() == password.toLowerCase()).toBe(true);
  
 });
+test("Cannot add duplicate accounts to DB", async () => {
+    // Generate account data
+    const { email, displayName, username, password } = generateAccountData();
+    let filter = { email: email, displayName: displayName, username: username, password: password };
+    
+    
+    // get collection
+    let collection = await model.getCollection();
+    
+    // Add first account to database  
+    await model.addAccount(email, displayName, username, password);
+
+    // Query database
+    const cursor = await model.getCollection();
+    let results = await cursor.find({username: username, password:password}).toArray();// Convert query to array
+
+    // Check Array 
+    expect(Array.isArray(results)).toBe(true);
+    expect(results.length).toBe(1);
+
+    // Check Account Object from Database 
+    expect(results[0].username.toLowerCase() == username.toLowerCase()).toBe(true);
+    expect(results[0].password.toLowerCase() == password.toLowerCase()).toBe(true);
+
+    // Add second account, expect failure
+    await expect(()=> model.addAccount(email, displayName, username ,password)).rejects.toThrow(DatabaseError);
+ 
+});
 
 test("Cannot add account with an empty username", async () => {
     const { email, displayName, username, password } = generateAccountData();
     const emptyuserName = "";
     
     // expect InvalidInputError exception to be thrown
-    await expect(()=> model.addAccount(email, displayName, emptyuserName,password)).rejects.toThrow(InvalidInputError);
+    await expect(()=> model.addAccount(email, displayName, emptyuserName,password)).rejects.toThrow(DatabaseError);
 });
 test("Cannot add account with an empty displayName", async () => {
     const { email, displayName, username, password } = generateAccountData();
