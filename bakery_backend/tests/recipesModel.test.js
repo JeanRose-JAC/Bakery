@@ -239,16 +239,32 @@ test('Success_UpdateRecipe: Update one recipe', async () => {
     let newServings = "2";
     let newInstructions = "newInstructionList";
 
-    await recipesModel.updateRecipe(newRecipe.userId, newRecipe.title, newTitle, newIngredients, newServings, newInstructions);
+    let result = await recipesModel.updateRecipe(newRecipe.userId, newRecipe.title, newTitle, newIngredients, newServings, newInstructions);
 
     let recipeCol = await getCollectionAsArray();
     expect(recipeCol.length).toBe(1);
 
+    expect(result.updateResult.modifiedCount).toBe(1);
     expect(recipeCol[0].userId).toBe(newRecipe.userId);
     expect(recipeCol[0].title).toBe(newTitle);
     expect(recipeCol[0].ingredients).toBe(newIngredients);
     expect(recipeCol[0].servings).toBe(newServings);
     expect(recipeCol[0].instructions).toBe(newInstructions);
+});
+
+test('Success_UpdateRecipe: Update title only', async ()=>{
+    let recipe = await addOneRecipeToCollection();
+    let newTitle = "newTitle";
+
+    let result = await recipesModel.updateRecipe(recipe.userId, recipe.title, newTitle);
+
+    let recipeCol = await getCollectionAsArray();
+
+    expect(recipeCol.length).toBe(1);
+    expect(result.updateResult.modifiedCount).toBe(1);
+    expect(recipeCol[0].title).toBe(newTitle);
+    expect(recipeCol[0].ingredients).toBe(recipe.ingredients);
+
 });
 
 test('Failed_UpdateRecipe: Recipe does not exist', async ()=>{
@@ -323,3 +339,14 @@ test('Failed_DeleteRecipe: Invalid title', async ()=>{
         expect(e instanceof InvalidInputError).toBe(true);
     }
 });  
+
+test('Failed : Connection Lost', async ()=> {
+    try{
+        let newRecipe = await addOneRecipeToCollection();
+        await databaseConnection.close();
+        let rec = await recipesModel.deleteRecipe(newRecipe.userId, newRecipe.title);
+    }
+    catch(e){
+        expect(e instanceof DatabaseError).toBe(true);
+    }
+});

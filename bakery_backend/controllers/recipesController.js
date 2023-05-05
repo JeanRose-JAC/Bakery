@@ -20,11 +20,26 @@ async function createRecipe(req, res){
     let output;
 
     try{
-        let userId = req.body.userId;
-        let title = req.body.title;
-        let ingredients = req.body.ingredients;
-        let servings = req.body.servings;
-        let instructions = req.body.instructions;
+        let userId = "";
+        let title = "";
+        let ingredients = "";
+        let servings = "";
+        let instructions = "";
+
+        if(req.body.userId != null)            
+            userId = req.body.userId;
+
+        if(req.body.title != null)
+            title = req.body.title;
+
+        if(req.body.ingredients != null)
+            ingredients = req.body.ingredients;
+
+        if(req.body.servings != null)
+            servings = req.body.servings;
+
+        if(req.body.instructions != null)
+            instructions = req.body.instructions
 
         let result = await recipesModel.addNewRecipe(userId, title, ingredients, servings, instructions);
 
@@ -246,15 +261,12 @@ async function updateRecipe(req, res){
 
         let result = await recipesModel.updateRecipe(userId, title, newTitle, newIngredients, newServings, newInstructions);
 
-        if(result.modifiedCount > 0){
+        if(result.updateResult.modifiedCount > 0){
             output = "Successfully updated recipe: " + title;
             res.status("200");
             logger.info(output);
 
-            if(newTitle != "")
-                res.send(await recipesModel.getOneRecipe(userId, newTitle));
-            else
-                res.send(await recipesModel.getOneRecipe(userId, title));
+            res.send(result.recipe);
         }
         else{
             output = "Failed to update recipe: " + title;
@@ -295,8 +307,14 @@ async function deleteRecipe(req, res){
     let output;
 
     try{
-        let userId = req.params.userId;
-        let title = req.params.title;
+        let userId = "";
+        let title = "";
+
+        if(req.params.userId != null)
+            userId = req.params.userId;
+
+        if(req.params.title != null)
+            title = req.params.title;
 
         let result = await recipesModel.deleteRecipe(userId, title);
 

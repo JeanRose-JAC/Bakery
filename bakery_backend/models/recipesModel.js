@@ -73,14 +73,15 @@ async function addNewRecipe(userId, title, ingredients, servings, instructions){
   recipesValidateUtils.areFieldsValid(userId, title, ingredients, servings, instructions);
 
   try{
-      await recipesCollection.insertOne({userId: userId, title: title, ingredients: ingredients, servings: servings, instructions: instructions})
+      await recipesCollection.insertOne({userId: userId, title: title, ingredients: ingredients, servings: servings, instructions: instructions});
+      let newRecipe = await getOneRecipe(userId, title);
+      return newRecipe;
   }
   catch (err) {
       logger.error("From addNewRecipe(): " + err.message);
       throw new DatabaseError(err.message);
   }
 
-  return ({userId: userId, title: title, ingredients: ingredients, servings: servings, instructions: instructions});
 }
 
 /**
@@ -164,7 +165,7 @@ async function getOneRecipe(userId, title){
  * @throws DatabaseError if an error occurs in the database
  * @throws InvalidInputError if any of the input fields are invalid
  */
-async function updateRecipe(userId, title, newTitle, newIngredients, newServings, newInstructions){
+async function updateRecipe(userId, title, newTitle = "", newIngredients = "", newServings = "", newInstructions = ""){
   recipesValidateUtils.areKeyValid(userId, title);
 
   try{
@@ -192,7 +193,10 @@ async function updateRecipe(userId, title, newTitle, newIngredients, newServings
         newInstructions = obj.instructions;
 
     let newValues = {userId: userId, title:newTitle, ingredients:newIngredients, servings:newServings, instructions:newInstructions};
-    return await recipesCollection.replaceOne(key, newValues);
+    let result = await recipesCollection.replaceOne(key, newValues); 
+    let newRecipe = await getOneRecipe(userId, newValues.title); 
+
+    return {updateResult:result, recipe:newRecipe}
   }
   catch(err){
     logger.error("From updateRecipe(): " + err.message);
