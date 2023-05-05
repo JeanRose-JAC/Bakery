@@ -241,6 +241,8 @@ test('Failed_PostRecipe: Database connection lost', async()=>{
     expect(testResponse.statusCode).toBe(500);
 });
 
+
+
 //==========GET RECIPE==========
 test('Success_GetRecipe: Get one recipe', async()=>{
     let newRecipe = await addOneRecipeToCollection();
@@ -331,6 +333,12 @@ test('Success_PutRecipe: Update ingredients', async ()=>{
     expect(testResponse.body.ingredients).toBe(newIngredients);
     expect(testResponse.body.servings).toBe(newRecipe.servings);
     expect(testResponse.body.instructions).toBe(newRecipe.instructions);
+});
+
+test('Failed_PutRecipe: Recipe does not exist', async ()=>{
+    const testResponse = await testRequest.put('/recipe/' + 'noUser' + '/' + 'noTitle');
+    
+    expect(testResponse.status).toBe(400);
 });
 
 test('Failed_PutRecipe: Invalid servings', async ()=>{

@@ -251,6 +251,22 @@ test('Success_UpdateRecipe: Update one recipe', async () => {
     expect(recipeCol[0].instructions).toBe(newInstructions);
 });
 
+test('Failed_UpdateRecipe: Recipe does not exist', async ()=>{
+    try{
+        let newRecipe = await addOneRecipeToCollection();
+
+        let newTitle = "newTitle";
+        let newIngredients = "newIngredientList";
+        let newServings = "def";
+        let newInstructions = "instructions";
+    
+        await recipesModel.updateRecipe("user", "title", newTitle, newIngredients, newServings, newInstructions);   
+    }
+    catch(e){
+        expect(e instanceof InvalidInputError).toBe(true);
+    }
+});
+
 test('Failed_UpdateRecipe: Invalid servings', async ()=>{
     try{
         let newRecipe = await addOneRecipeToCollection();

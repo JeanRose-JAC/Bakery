@@ -169,6 +169,11 @@ async function updateRecipe(userId, title, newTitle, newIngredients, newServings
 
   try{
     let obj = await getOneRecipe(userId, title);
+
+    if(obj == null){
+      throw new InvalidInputError("Recipe does not exist.");
+    }
+
     let key = {_id: obj._id};
 
     if(newTitle == "")
@@ -230,7 +235,8 @@ async function deleteRecipe(userId, title){
       throw err;
     }
     else
-      throw new DatabaseError(err.message);  }
+      throw new DatabaseError(err.message);  
+  }
 }
 
 module.exports = {setCollection, getCollection, addNewRecipe, getOneRecipe, getRecipes, getRecipesOfOneUser, updateRecipe, deleteRecipe}

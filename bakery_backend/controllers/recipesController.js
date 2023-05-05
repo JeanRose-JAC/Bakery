@@ -226,31 +226,23 @@ async function updateRecipe(req, res){
         let userId = req.params.userId;
         let title = req.params.title;
 
-        let newTitle;
-        let newIngredients;
-        let newServings;
-        let newInstructions;
+        let newTitle = "";
+        let newIngredients = "";
+        let newServings = "";
+        let newInstructions = "";
 
+        //Checks which data fields have a new value 
         if(req.body.newTitle != null)
             newTitle= req.body.newTitle;
-        else
-            newTitle = "";
 
         if(req.body.newIngredients != null)
             newIngredients = req.body.newIngredients;
 
-        else
-            newIngredients = "";
-
         if(req.body.newServings != null)
             newServings = req.body.newServings;
-        else
-            newServings = "";
 
         if(req.body.newInstructions != null)
             newInstructions = req.body.newInstructions;
-        else
-            newInstructions = "";
 
         let result = await recipesModel.updateRecipe(userId, title, newTitle, newIngredients, newServings, newInstructions);
 
