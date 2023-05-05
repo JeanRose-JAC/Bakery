@@ -14,22 +14,22 @@ let db = "user_account_test"; // collection name
 
 // format: email, displayName, username, password
 const userData = [
-    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
-    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
-    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
-    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
-    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
-    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
-    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
-    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
-    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
-    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
-    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
-    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
-    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
-    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
-    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
-    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: "RandomUsername1", username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: "darkLordSon", username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: "DarkerLordSon", username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: "sundayDaisy", username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: "anotherDisplay", username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: "helloDarkness123", username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: "IloveWebProgramming", username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: "ThePersonAboveMeLied", username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: "gosunohairline", username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: "GodSlayer256", username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: "HotDawg514", username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: "CyberSlasher", username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: "epicdestroyer", username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: "irandoutofideas", username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: "bombobararocelclat", username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: "HisHighnessMishMish", username: faker.internet.userName() , password: "testPassword123!"},
 ]
 
 /** Since a  account can only be added to the DB once, we have to splice from the array. */
