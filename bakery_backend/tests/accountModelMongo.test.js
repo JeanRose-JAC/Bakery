@@ -1,4 +1,4 @@
-const { InvalidInputError } = require('../models/InvalidInputError');
+const { InvalidInputError } = require('../models/invalidInputError');
 const { DatabaseError } = require('../models/DatabaseError');
 // TODO: Require Faker JS
 
