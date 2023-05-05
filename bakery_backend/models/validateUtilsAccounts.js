@@ -83,7 +83,7 @@ function isUsernameValid(username){
         throw new InvalidInputError("\nUsername must be at least 6 characters long");
 
     // Check for special characters
-    if(!validator.isAlphanumeric(displayName))
+    if(!validator.isAlphanumeric(username))
         throw new InvalidInputError("\nSpecial Characters are not allowed");
 
     // If all checks pass, return true
