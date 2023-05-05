@@ -144,7 +144,7 @@ test("Cannot add account with an empty username", async () => {
     const emptyuserName = "";
     
     // expect InvalidInputError exception to be thrown
-    await expect(()=> model.addAccount(email, displayName, emptyuserName,password)).rejects.toThrow(DatabaseError);
+    await expect(()=> model.addAccount(email, displayName, emptyuserName,password)).rejects.toThrow(InvalidInputError);
 });
 test("Cannot add account with an empty displayName", async () => {
     const { email, displayName, username, password } = generateAccountData();
