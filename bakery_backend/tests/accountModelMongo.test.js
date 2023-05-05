@@ -64,7 +64,7 @@ beforeEach(async () => {
 
 // Close database connection after each test run
 afterEach(async () => {
-    //await model.close();
+    await model.close();
 });
 
 // =================================================================
@@ -113,7 +113,7 @@ test("Can add account to DB", async () => {
 test("Cannot add duplicate accounts to DB", async () => {
     // Generate account data
     const { email, displayName, username, password } = generateAccountData();
-        
+
     // Add first account to database  
     await model.addAccount(email, displayName, username, password);
 
@@ -148,7 +148,20 @@ test("Cannot add account with an empty displayName", async () => {
     // expect InvalidInputError exception to be thrown
     await expect(()=> model.addAccount(email, emptydisplayName, username ,password)).rejects.toThrow(InvalidInputError);
 });
-
+test("Cannot add account with an invalid username", async () => {
+    const { email, displayName, username, password } = generateAccountData();
+    const invalidUsername = "NoSpecialCharacters!_";
+    
+    // expect InvalidInputError exception to be thrown
+    await expect(()=> model.addAccount(email, displayName, invalidUsername ,password)).rejects.toThrow(InvalidInputError);
+});
+test.only("Cannot add account with an invalid Display Name", async () => {
+    const { email, displayName, username, password } = generateAccountData();
+    const invalidDisplayName = "NoSpecialCharacters!_";
+    
+    // expect InvalidInputError exception to be thrown
+    await expect(()=> model.addAccount(email, invalidDisplayName, username ,password)).rejects.toThrow(InvalidInputError);
+});
 
 // test("Cannot add account with a number non alphabet/number name", async () => {
 //     const { username, password } = generateAccountData();
