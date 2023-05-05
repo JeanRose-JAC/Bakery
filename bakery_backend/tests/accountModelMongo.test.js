@@ -118,6 +118,13 @@ test("Cannot add account with an empty username", async () => {
     // expect InvalidInputError exception to be thrown
     await expect(()=> model.addAccount(email, displayName, emptyuserName,password)).rejects.toThrow(InvalidInputError);
 });
+test("Cannot add account with an empty displayName", async () => {
+    const { email, displayName, username, password } = generateAccountData();
+    const emptydisplayName = "";
+    
+    // expect InvalidInputError exception to be thrown
+    await expect(()=> model.addAccount(email, emptydisplayName, username ,password)).rejects.toThrow(InvalidInputError);
+});
 
 
 // test("Cannot add account with a number non alphabet/number name", async () => {
