@@ -113,12 +113,7 @@ test("Can add account to DB", async () => {
 test("Cannot add duplicate accounts to DB", async () => {
     // Generate account data
     const { email, displayName, username, password } = generateAccountData();
-    let filter = { email: email, displayName: displayName, username: username, password: password };
-    
-    
-    // get collection
-    let collection = await model.getCollection();
-    
+        
     // Add first account to database  
     await model.addAccount(email, displayName, username, password);
 
