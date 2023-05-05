@@ -12,25 +12,24 @@ require("dotenv").config();
 jest.setTimeout(100000);
 let db = "user_account_test"; // collection name
 
-// TODO: Use fakeJS To generate user data when adding or manually make stuff up
+// format: email, displayName, username, password
 const userData = [
-    {username: 'Bulbasaur' , password: 'Grass'},
-    {username: 'Charamander' , password: 'Fire'},
-    {username: 'Squirtle' , password: 'Water'},
-    {username: 'Pikachu' , password: 'Electric'},
-    {username: 'Pidgeotto' , password: 'Psychic'},
-    {username: 'Chancey' , password: 'Normal'},
-    {username: 'Raichu' , password: 'Electric'},
-    {username: 'Venausaur' , password: 'Grass'},
-    {username:'Ivysaur' , password: 'Grass'},
-    {username:'Wartortle' , password: 'Water'},
-    {username: 'Blastoise' , password: 'Water'},
-    {username: 'Charmeleon' , password: 'Fire'},
-    {username: 'Charizard' , password: 'Fire'},
-    {username: 'Greninja' , password: 'Water'},
-    {username: 'Darkrai' , password: 'Normal'},
-    {username: 'Alakazam' , password: 'Psychic'},
-    {username: 'Snorlax' , password: 'Normal'}
+    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
+    {email:faker.internet.email(), displayName: faker.name.firstName(), username: faker.internet.userName() , password: "testPassword123!"},
 ]
 
 /** Since a  account can only be added to the DB once, we have to splice from the array. */
