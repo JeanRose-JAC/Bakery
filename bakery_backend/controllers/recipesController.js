@@ -45,7 +45,7 @@ async function createRecipe(req, res){
 
         if(result == null){
             output = "Something went wrong with user input. Recipe was not created.";
-            logger.info(output);
+            logger.error(output);
             throw new InvalidInputError(output);
         }
 
@@ -93,7 +93,7 @@ async function showRecipes(req, res){
 
         if(result == null){
             output = "Failed to retrieve recipes"
-            logger.info(output);
+            logger.error(output);
             throw new InvalidInputError(output);
         }
 
@@ -141,7 +141,7 @@ async function showRecipesOfOneUser(req, res){
 
         if(result == null){
             output = userId + " does not have any recipes.";
-            logger.info(output);
+            logger.error(output);
             throw new InvalidInputError(output);
         }
         else{
@@ -193,7 +193,7 @@ async function showOneRecipe(req, res){
 
         if(result == null){
             output = "Inexistent recipe by "+ userId +": " + title;
-            logger.info(output);
+            logger.error(output);
             throw new InvalidInputError(output);
         }
         else{
@@ -264,8 +264,7 @@ async function updateRecipe(req, res){
         if(result.updateResult.modifiedCount > 0){
             output = "Successfully updated recipe: " + title;
             res.status("200");
-            logger.info(output);
-
+            logger.error(output);
             res.send(result.recipe);
         }
         else{
@@ -326,7 +325,7 @@ async function deleteRecipe(req, res){
         }
         else{
             output = "Failed to delete recipe: " + title;
-            logger.info(output);
+            logger.error(output);
             throw new InvalidInputError(output);
         }
         
