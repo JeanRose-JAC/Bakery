@@ -1,0 +1,77 @@
+.App {
+    text-align: center;
+    background-color: rgb(253, 222, 227);
+    height: 100%;
+    min-height: 1500px;
+}
+
+.header{
+    margin-bottom: 10px;
+}
+
+body{
+    background: pink;
+    height: 100%;
+}
+
+button{
+    background: #fcc5a3;
+    color: rgb(250, 75, 206);
+    margin: 12px 12px 12px 12px;
+}
+
+input::placeholder {
+    color: rgb(253, 131, 204);
+}
+
+textarea::placeholder {
+    color: rgb(253, 131, 204);
+}
+
+.center {
+    margin: auto;
+    width: 50%;
+    border: 3px solid rgb(245, 253, 210);
+    padding: 10px;
+    margin-bottom: 50px;
+}
+
+.centerCard {
+    margin: auto;
+    width: 50%;
+    margin-left: 250px;
+}
+
+#simpleText{
+    padding: 20px;
+    padding-left: 280px;
+    padding-right: 280px;
+}
+
+label {
+    padding: 12px 12px 12px 12px;
+    display: inline-block;
+    width: 25%;
+    margin-top: 6px;
+    text-align: center;
+}
+
+input, textarea{
+    width: 50%;
+    margin-top: 6px;
+    font-family: Arial, sans-serif;
+}
+
+footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+
+
+
+
+

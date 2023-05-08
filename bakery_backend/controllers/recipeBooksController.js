@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const routeRoot = '/';
+const routeRoot = '/book';
 const logger = require('../logger.js');
 const recipeBooksModel = require("../models/recipeBooksModel.js");
+const model = require('../models/recipeBooksModel.js');
 const { DatabaseError } = require('../models/databaseError.js');
 const { InvalidInputError } = require('../models/invalidInputError.js');
-const model = require('../models/recipeBooksModel.js');
 
 
 

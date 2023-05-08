@@ -1,7 +1,8 @@
 const DatabaseError = require('./databaseError.js');
 const InvalidInputError = require('./invalidInputError.js');
 const logger = require('../logger.js');
-let collectionName = "recipe_books";
+let collectionName = "recipe_books_test";
+const validateUtils = require("./BookValidation.js");
 let collection;
 let databaseConnection;
 
@@ -60,23 +61,23 @@ async function getCollection(){
 /**
  * Adds recipes to the database by validating certain conditions which should be under 25 characterts
  * @param {*} name is the name of the recipes book to add in the database
- * @param {*} content of the recipes
+ * @param {*} SavedRecipes of the recipes
  * @returns the new recipe book if succesful otherwise either null or throw an error depending of the validation
  */
-async function addBook(userID,name,SavedRecipes){
+async function addBook(name,SavedRecipes){
   try{
 if (validateUtils.isValid2(name)){
-const book =  {UserID: userID, Name: name,SavedRecipes: SavedRecipes}
+const book =  {name: name,SavedRecipes: SavedRecipes}
 await collection.insertOne(book)
 return book
 }
-else throw new InvalidInputError("Recipe book" + name + " does not have a valid name or type");
+else throw new InvalidInputError("Recipe book" + name + " does not have a valid");
   }catch(err)
   {
 
       let isIt = err.message.includes('not')
       if(isIt){
-          throw new InvalidInputError("Recipe book " + name + "  is invalid. The Name or type was incorrect. Please do not add anything over 25 characters");
+          throw new InvalidInputError("Recipe book " + name + " is invalid. The Name was incorrect. Please do not add anything over 25 characters");
       }
 
       throw new DatabaseError("Error in the databse" + err);
@@ -139,7 +140,7 @@ async function deleteRecipeBook(find) {
 async function updateRecipeBoookName(name, newName) {
 
   try {
-      if((!validateUtils.isValid2(name, type))){
+      if((!validateUtils.isValid2(newName))){
           throw new InvalidInputError("Recipe " + name + " does not have a valid name");
       }
       let response = await collection.updateOne({ name: name }, { $set: { name: newName } })
@@ -160,7 +161,7 @@ async function updateRecipeBoookName(name, newName) {
 * The new type is of course validated to be sure that it follows the 
 * requirement of a proper type
 * @param {*} name of the recipe book that has to be updated
-* @param {*} content is the new type of the recipe
+* @param {*} SavedRecipes is the new type of the recipe content added to the recipe book
 * @returns wether the operation was succesfull or not.
 */
 async function updateRecipeBoookContent(name, update) {
