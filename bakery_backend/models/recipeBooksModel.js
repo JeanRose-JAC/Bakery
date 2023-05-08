@@ -1,7 +1,8 @@
 const DatabaseError = require('./databaseError.js');
 const InvalidInputError = require('./invalidInputError.js');
 const logger = require('../logger.js');
-let collectionName = "recipe_books";
+let collectionName = "recipe_books_test";
+const validateUtils = require("./BookValidation.js");
 let collection;
 let databaseConnection;
 
@@ -56,4 +57,126 @@ async function getCollection(){
   }
 }
 
-module.exports = {setCollection, getCollection}
+
+/**
+ * Adds recipes to the database by validating certain conditions which should be under 25 characterts
+ * @param {*} name is the name of the recipes book to add in the database
+ * @param {*} SavedRecipes of the recipes
+ * @returns the new recipe book if succesful otherwise either null or throw an error depending of the validation
+ */
+async function addBook(name,SavedRecipes){
+  try{
+if (validateUtils.isValid2(name)){
+const book =  {name: name,SavedRecipes: SavedRecipes}
+await collection.insertOne(book)
+return book
+}
+else throw new InvalidInputError("Recipe book" + name + " does not have a valid");
+  }catch(err)
+  {
+
+      let isIt = err.message.includes('not')
+      if(isIt){
+          throw new InvalidInputError("Recipe book " + name + " is invalid. The Name was incorrect. Please do not add anything over 25 characters");
+      }
+
+      throw new DatabaseError("Error in the databse" + err);
+  }
+
+}
+
+/**
+* This function will try to find a recipe book by their name to see if the recipe exists or not
+* @param {*} find is the name of the recipe book to find
+* @returns return true if the recipe was found otherwise false
+*/
+
+async function getSingleRecipeBook(find) {
+  try {
+  let response = await collection.findOne({ name: find })
+  return response
+  }
+  catch (err) {
+      throw new DatabaseError("Input" + err);
+  }
+
+}
+/**
+* Gets every recipes book in the database
+* @returns the whole collection of recipes in the database
+*/
+async function getAllRecipeBooks() {
+  try {
+      const cursor = collection.find({});
+      const allValues = await cursor.toArray();
+      return allValues;
+  }
+  catch (err) {
+      throw new DatabaseError("Input" + err);
+  }
+}
+/**
+* Deletes a recipe from the database based on the name of the recipe book
+* @param {*} find is the parameter used to find the recipe book to delete
+* @returns if the operation has somebody deleted or not
+*/
+async function deleteRecipeBook(find) {
+    try {
+  let response = await collection.deleteOne({ name: find })
+  return response
+    }
+    catch (err) {
+      throw new DatabaseError("Input" + err);
+  }
+}
+/**
+* This function is used to take name of a certain recipe book and update their name.
+* The new type is of course validated to be sure that it follows the 
+* requirement of a proper type
+* @param {*} name of the recipe book that has to be updated
+* @param {*} newName is the new name of the recipe book
+* @returns wether the operation was succesfull or not.
+*/
+async function updateRecipeBoookName(name, newName) {
+
+  try {
+      if((!validateUtils.isValid2(newName))){
+          throw new InvalidInputError("Recipe " + name + " does not have a valid name");
+      }
+      let response = await collection.updateOne({ name: name }, { $set: { name: newName } })
+      return response
+  }
+  catch (err) {
+      let isIt = err.message.includes('not')
+      if(isIt){
+          throw new InvalidInputError("Recipe " + name + " does not have a valid name");
+      }
+
+      throw new DatabaseError("Error in the databse" + err);
+  }
+}
+
+/**
+* This function is used to take name of a certain recipe book and update their content.
+* The new type is of course validated to be sure that it follows the 
+* requirement of a proper type
+* @param {*} name of the recipe book that has to be updated
+* @param {*} SavedRecipes is the new type of the recipe content added to the recipe book
+* @returns wether the operation was succesfull or not.
+*/
+async function updateRecipeBoookContent(name, update) {
+
+  try {
+      let response = await collection.updateOne({ name: name }, { $set: { SavedRecipes: update } })
+      return response
+  }
+  catch (err) {
+
+      throw new InvalidInputError("Error while updating the recipe book Content: " + err);
+  }
+}
+
+
+
+
+module.exports = {setCollection, getCollection,addBook,getSingleRecipeBook,getAllRecipeBooks,deleteRecipeBook,updateRecipeBoookName,updateRecipeBoookContent}

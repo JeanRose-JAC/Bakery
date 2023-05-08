@@ -1,70 +1,52 @@
-# Getting Started with Create React App
+# Geek Gourmet
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Run 'npm i' in both frontend and backend projects to install the node modules needed. Then, launch both front end and back end to open the website.
 
-## Available Scripts
+Website URL: http://localhost:3000/
 
-In the project directory, you can run:
+To get a customized welcome message, use the following. Add your name in {name}
 
-### `npm start`
+http://localhost:3000/?name={name}
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Home 
+- To add a recipe, fill all the input fields in 'Add your own recipe'. The submit button will appear once this is achieved. The newly added recipe will be shown in the card below. An example of input is:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Username: User6
 
-### `npm test`
+Title: Title6
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Ingredients: Ingredients6
 
-### `npm run build`
+Servings: 6
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Instructions: Instructions6
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- To get one recipe, provide the username of the author and the title. The recipe will also be shown below. An example of input is:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Username: User6
 
-### `npm run eject`
+Title: Title6
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## About Us
+- In this page, the user can read about the goal of our website.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Contact
+- This page displays our contact information.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Inventory
+- This page displays all the recipes available in the database. It shows the username and the title. Just click the button for them to appear.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Admin
+- To update a recipe, provide the username and title of the recipe. The user can update one or more information about the recipe. Click the button to send the request. An example of input is:
 
-## Learn More
+Username: User1
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Title: Title1
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+New Ingredients: Ingredient2
 
-### Code Splitting
+- To delete a recipe, provide the username and title of the recipe. A success message appears below. An example of input is:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Username: User1
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Title: Title1
