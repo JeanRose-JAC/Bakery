@@ -50,12 +50,12 @@ afterEach(async () => {
     //await recipesModel.close();
 });
 var userData = [
-    { name: 'Book1', SavedRecipes: null},
-    { name: 'Book2', SavedRecipes: null},
-    { name: 'Book3', SavedRecipes: null},
-    { name: 'Book4', SavedRecipes: null},
-    { name: 'Book5', SavedRecipes: null},
-    { name: 'Book6', SavedRecipes: null},
+    { userId: "user1", name: 'Book1', SavedRecipes: null},
+    { userId: "user2", name: 'Book2', SavedRecipes: null},
+    { userId: "user3", name: 'Book3', SavedRecipes: null},
+    { userId: "user4", name: 'Book4', SavedRecipes: null},
+    { userId: "user5", name: 'Book5', SavedRecipes: null},
+    { userId: "user6", name: 'Book6', SavedRecipes: null},
 ]
 
 async function getCollectionAsArray(){
@@ -64,20 +64,21 @@ async function getCollectionAsArray(){
     return await items.toArray();
 }
 
-async function addOneRecipeToCollection(name = "Book", content = null){
+async function addOneRecipeToCollection(userId = "user1", name = "Book", content = null){
     let collection = await recipesBookModel.getCollection();
-    await collection.insertOne({name: name, content: content})
-    return ({name: name, content: content});
+    await collection.insertOne({userId: userId, name: name, content: content})
+    return ({userId: userId, name: name, content: content});
 }
 
 
 //==========ADD RECIPE==========
 test('Success_PostRecipe: Add one recipe', async ()=> {
+    let username = "userTest"
     let name = "bookTest";
     let SavedRecipes = "SavedRecipes";
     
-
     const testResponse = await testRequest.post('/book').send({
+        userId: username,
 		name: name,
         SavedRecipes: SavedRecipes,
     });
@@ -89,6 +90,7 @@ test('Success_PostRecipe: Add one recipe', async ()=> {
     expect(Array.isArray(recipeCol)).toBe(true);
     expect(recipeCol.length).toBe(1);
 
+    expect(recipeCol[0].userId).toBe(username);    
     expect(recipeCol[0].name).toBe(name);
     expect(recipeCol[0].SavedRecipes).toBe(SavedRecipes);
   
@@ -101,7 +103,8 @@ test('Success_PostRecipe: Add one recipe', async ()=> {
   
 
     const testResponse = await testRequest.delete('/book').send({
-		name: name,
+		userId: newRecipeBook.userId,
+        name: newRecipeBook.name,
     });
 
     expect(testResponse.statusCode).toBe(200);
@@ -117,7 +120,8 @@ test('Success_PostRecipe: Add one recipe', async ()=> {
   
 
     const testResponse = await testRequest.get('/book').send({
-		name: name,
+		userId: newRecipeBook.userId,
+        name: newRecipeBook.name,
     });
 
     expect(testResponse.statusCode).toBe(200);

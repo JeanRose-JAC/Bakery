@@ -18,7 +18,7 @@ const { InvalidInputError } = require('../models/invalidInputError.js');
 router.post('/', add);
 async function add(request, response) {
     try{
-    const added = await model.addBook(request.body.name,request.body.SavedRecipes)
+    const added = await model.addBook(request.body.userId, request.body.name,request.body.SavedRecipes)
     if(added){
     response.status("200");
     response.send(added)
@@ -54,11 +54,11 @@ async function add(request, response) {
  * @param {*} response the response object from the server
  * @param {*} request the request object from the server
  */
-router.get('/find/:name', find);
+router.get('/find/:userId/:name', find);
 async function find(request, response) {
     try{
 
-        let answer = await model.getAllRecipeBooks(request.params.name)
+        let answer = await model.getAllRecipeBooks(request.params.userId, request.params.name)
     
         if(answer != null){
             response.status("200");
@@ -139,7 +139,7 @@ router.delete('/', deletes);
 async function deletes(request, response) {
     try{
 
-    let answer = await model.deleteRecipeBook(request.body.name)
+    let answer = await model.deleteRecipeBook(request.body.userId, request.body.name)
 
     if(answer.deletedCount == 1){
         response.status("200");
@@ -183,11 +183,11 @@ router.put('/name', updateName);
 async function updateName(request, response) {
     try{
 
-    let answer = await model.updateRecipeBoookName(request.body.name,request.body.newName)
+    let answer = await model.updateRecipeBoookName(request.body.userId, request.body.name,request.body.newName)
 
     if(answer.modifiedCount != 0){
         response.status("200");
-        const recipe =  {name: request.body.name, type: request.body.SavedRecipes}
+        const recipe =  {userId: request.body.userId, name: request.body.name, type: request.body.SavedRecipes}
         response.send(recipe);
     }
 
@@ -225,11 +225,11 @@ router.put('/content', updateContent);
 async function updateContent(request, response) {
     try{
 
-    let answer = await model.updateRecipeBoookContent(request.body.name,request.body.content)
+    let answer = await model.updateRecipeBoookContent(request.body.userId, request.body.name,request.body.content)
 
     if(answer.modifiedCount != 0){
         response.status("200");
-        const recipe =  {name: request.body.name, SavedRecipes: request.body.SavedRecipes}
+        const recipe =  {userId: request.body.userId, name: request.body.name, SavedRecipes: request.body.SavedRecipes}
         response.send(recipe);
     }
 
@@ -262,9 +262,4 @@ async function updateContent(request, response) {
 module.exports = {
     router,
     routeRoot,
-    add,
-    find,
-    findAll,
-    deletes,
-
 }
