@@ -47,8 +47,8 @@ function isEmailValid(email){
 }
 
 /**
- * Checks if Display is at least 4 characters long
- * Checks if Display Name does not contain any special characters
+ * Checks if Display name is only composed of letters and numbers
+ * Special characters and empty names are not allowed.
  * @param {string} displayName to validate
  * @throws InvalidInputError if display name does not meet requirements.
  * @returns {boolean} true if display name meets all requirements
@@ -71,7 +71,7 @@ function isDisplayNameValid(displayName){
 /**
  * Validates if string of username meets minimum requirements.
  * 
- * Minimum requirements are: 6 characters long, no special characters.
+ * Minimum requirements are: name is composed of letters and numbers exclusively.
  * @param {true} username to validate.
  * @throws {InvalidInputError} if username does not meet minimum requirements.
  * @returns true if username meets minimum requirements.
