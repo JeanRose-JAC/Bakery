@@ -55,9 +55,9 @@ function isEmailValid(email){
  */
 function isDisplayNameValid(displayName){
     
-    // Check length meets minimum requirements (4)
-    if(displayName.length < 4)
-        throw new InvalidInputError("\nUsername must be at least 4 characters long.");
+    // Check length meets minimum requirements (4) - REDACTED
+   // if(displayName.length < 4)
+    //    throw new InvalidInputError("\nUsername must be at least 4 characters long.");
     
     // Check for special characters
     if(!validator.isAlphanumeric(displayName))
@@ -78,9 +78,9 @@ function isDisplayNameValid(displayName){
  */
 function isUsernameValid(username){
 
-    // Check length meets minimum requirements.
-    if(username.length < 6)
-        throw new InvalidInputError("\nUsername must be at least 6 characters long");
+    // Check length meets minimum requirements. - REDACTED
+    // if(username.length < 6)
+     //   throw new InvalidInputError("\nUsername must be at least 6 characters long");
 
     // Check for special characters
     if(!validator.isAlphanumeric(username))
