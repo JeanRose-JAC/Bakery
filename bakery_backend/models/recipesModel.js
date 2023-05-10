@@ -62,6 +62,7 @@ async function getCollection(){
  * 
  * @param {string} userId username
  * @param {string} title title of recipe
+ * @param {string} type recipe type
  * @param {string} ingredients ingredients  of recipe
  * @param {string} servings number of servings of recipe
  * @param {string} instructions instructions of recipe 
@@ -69,11 +70,11 @@ async function getCollection(){
  * @throws DatabaseError if an error occurs in the database
  * @throws InvalidInputError if any of the input fields are invalid
  */
-async function addNewRecipe(userId, title, ingredients, servings, instructions){
+async function addNewRecipe(userId, title, ingredients, servings, instructions, type = undefined){
   recipesValidateUtils.areFieldsValid(userId, title, ingredients, servings, instructions);
 
   try{
-      await recipesCollection.insertOne({userId: userId, title: title, ingredients: ingredients, servings: servings, instructions: instructions});
+      await recipesCollection.insertOne({userId: userId, title: title, type: type, ingredients: ingredients, servings: servings, instructions: instructions});
       let newRecipe = await getOneRecipe(userId, title);
       return newRecipe;
   }
@@ -158,6 +159,7 @@ async function getOneRecipe(userId, title){
  * @param {string} userId username
  * @param {string} title title of the recipe
  * @param {string} newTitle new title of the recipe
+ * @param {string} newType new type of the recipe
  * @param {string} newIngredients new ingredients of the recipe
  * @param {string} newServings new serving size of the recipe
  * @param {string} newInstructions new instructions of the recipe
@@ -165,7 +167,7 @@ async function getOneRecipe(userId, title){
  * @throws DatabaseError if an error occurs in the database
  * @throws InvalidInputError if any of the input fields are invalid
  */
-async function updateRecipe(userId, title, newTitle = "", newIngredients = "", newServings = "", newInstructions = ""){
+async function updateRecipe(userId, title, newTitle = "", newType = "", newIngredients = "", newServings = "", newInstructions = ""){
   recipesValidateUtils.areKeyValid(userId, title);
 
   try{
@@ -180,6 +182,9 @@ async function updateRecipe(userId, title, newTitle = "", newIngredients = "", n
     if(newTitle == "")
         newTitle = obj.title;
 
+    if(newType == "")
+      newType = obj.type;
+
     if(newIngredients == "")
         newIngredients = obj.ingredients;
 
@@ -192,7 +197,7 @@ async function updateRecipe(userId, title, newTitle = "", newIngredients = "", n
     if(newInstructions == "")
         newInstructions = obj.instructions;
 
-    let newValues = {userId: userId, title:newTitle, ingredients:newIngredients, servings:newServings, instructions:newInstructions};
+    let newValues = {userId: userId, title:newTitle, type:newType, ingredients:newIngredients, servings:newServings, instructions:newInstructions};
     let result = await recipesCollection.replaceOne(key, newValues); 
     let newRecipe = await getOneRecipe(userId, newValues.title); 
 
