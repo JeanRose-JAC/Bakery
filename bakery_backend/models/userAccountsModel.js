@@ -119,7 +119,7 @@ async function addAccount(email, displayName, username, password) {
  * TODO: password validation?
  * @param {*} currentUsername to be changed.
  * @param {*} newUsername to replace current.
- * @returns object with new and old username if successful
+ * @returns true if username was updated successfully, false otherwise.
  * @throws DatabaseError if new username is taken.
  * @throws InvalidInputError if newUsename does not meet requirements (Has special characters)
  */
@@ -136,16 +136,21 @@ async function updateUsername(currentUsername, newUsername) {
 
     // validate new username 
     // ----------------------
-    else if (validateUtilsAcc.isAccountValid(email, displayName, username, password)) {
-      // creates and returns new account object if successful
-      if (await !collection.insertOne({email: email, displayName: displayName, username: username, password: password,})
-      )
-        throw new DatabaseError(
-          `Error while inserting account into db: ${username}, ${password}`
-        );
+    else if (validateUtilsAcc.isUsernameValid(newUsername)) {
 
-      // Return account object
-      return { email: email, displayName: displayName, username: username, password: password };
+      // filter to find account to update
+      const filter = {username: currentUsername}
+
+      // updates to be made on document
+      const updateFilter = {$set: {username: newUsername}};
+
+      const result = await collection.updateOne(filter, updateFilter);
+
+      // Return result values 
+      if(result.modifiedCount > 0)
+        return true;
+        
+      return false;
     }
   } catch (err) {
     if (err instanceof InvalidInputError) {
