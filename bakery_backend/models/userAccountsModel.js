@@ -127,14 +127,15 @@ async function updateUsername(currentUsername, newUsername) {
   try {
 
     // Check if new username is already taken
-    // ----------------------------------------------------------------
+    // ----------------------------------------
     if (await collection.findOne({ username: username })) {
       throw new DatabaseError(
         "\nCannot update username: username " + username + " is already taken"
       );
     }
-    // check for valid username and password
-    // ----------------------------------------------------------------
+
+    // validate new username 
+    // ----------------------
     else if (validateUtilsAcc.isAccountValid(email, displayName, username, password)) {
       // creates and returns new account object if successful
       if (await !collection.insertOne({email: email, displayName: displayName, username: username, password: password,})
