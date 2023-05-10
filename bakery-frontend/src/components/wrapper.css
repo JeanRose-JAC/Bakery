@@ -8,7 +8,7 @@ justify-content: center;
 
 .child {
 margin: 4px;
-flex: 0 1 calc(35% - 180px); /* <-- adjusting for margin */
+/* flex: 0 1 calc(35% - 180px); <-- adjusting for margin */
 }
 
 .line{

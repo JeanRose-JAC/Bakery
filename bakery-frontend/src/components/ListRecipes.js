@@ -15,8 +15,8 @@ function ListRecipes({recipes}){
             <div className="child">
                 <Card>
                     <div>
-                        <h2>{recipe.title}</h2>
-                        <h3>by {recipe.userId}</h3>
+                        <p>{recipe.title}</p>
+                        <p>by {recipe.userId}</p>
                     </div>
                 </Card>
             </div>  
