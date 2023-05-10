@@ -22,6 +22,7 @@ async function createRecipe(req, res){
     try{
         let userId = "";
         let title = "";
+        let type ="";
         let ingredients = "";
         let servings = "";
         let instructions = "";
@@ -32,6 +33,9 @@ async function createRecipe(req, res){
         if(req.body.title != null)
             title = req.body.title;
 
+        if(req.body.type != null)
+            type = req.body.type;
+
         if(req.body.ingredients != null)
             ingredients = req.body.ingredients;
 
@@ -41,7 +45,7 @@ async function createRecipe(req, res){
         if(req.body.instructions != null)
             instructions = req.body.instructions
 
-        let result = await recipesModel.addNewRecipe(userId, title, ingredients, servings, instructions);
+        let result = await recipesModel.addNewRecipe(userId, title, ingredients, servings, instructions, type);
 
         if(result == null){
             output = "Something went wrong with user input. Recipe was not created.";
@@ -242,6 +246,7 @@ async function updateRecipe(req, res){
         let title = req.params.title;
 
         let newTitle = "";
+        let newType = "";
         let newIngredients = "";
         let newServings = "";
         let newInstructions = "";
@@ -249,6 +254,9 @@ async function updateRecipe(req, res){
         //Checks which data fields have a new value 
         if(req.body.newTitle != null)
             newTitle= req.body.newTitle;
+
+        if(req.body.newType != null)
+            newType= req.body.newType;
 
         if(req.body.newIngredients != null)
             newIngredients = req.body.newIngredients;
@@ -259,7 +267,7 @@ async function updateRecipe(req, res){
         if(req.body.newInstructions != null)
             newInstructions = req.body.newInstructions;
 
-        let result = await recipesModel.updateRecipe(userId, title, newTitle, newIngredients, newServings, newInstructions);
+        let result = await recipesModel.updateRecipe(userId, title, newTitle, newType, newIngredients, newServings, newInstructions);
 
         if(result.updateResult.modifiedCount > 0){
             output = "Successfully updated recipe: " + title;
