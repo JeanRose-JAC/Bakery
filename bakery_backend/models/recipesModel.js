@@ -182,7 +182,7 @@ async function updateRecipe(userId, title, newTitle = "", newType = "", newIngre
     if(newTitle == "")
         newTitle = obj.title;
 
-    if(newType = "")
+    if(newType == "")
       newType = obj.type;
 
     if(newIngredients == "")
