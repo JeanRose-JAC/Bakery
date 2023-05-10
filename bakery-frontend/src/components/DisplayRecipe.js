@@ -10,14 +10,16 @@ function DisplayRecipe(props){
 
     return(
         <Card id="recipeCard">
-            <h1>{props.recipe.title}</h1>
-            <h3>Published by {props.recipe.userId}</h3>
+            <h3>{props.recipe.title}</h3>
+            <p>Published by {props.recipe.userId}</p>
             
-            <h2>Ingredients: {props.recipe.ingredients}</h2>
+            <p>Type: {props.recipe.type}</p>
+
+            <p>Ingredients: {props.recipe.ingredients}</p>
             
-            <h2>Servings: {props.recipe.servings}</h2>
+            <p>Servings: {props.recipe.servings}</p>
             
-            <h2>Instructions: {props.recipe.instructions}</h2>
+            <p>Instructions: {props.recipe.instructions}</p>
 
         </Card>
     )

@@ -11,6 +11,7 @@ import './style.css';
 function AddRecipeForm(props){
     const [userId, setUserId] = useState(null);
     const [title, setTitle] = useState(null);
+    const [type, setType] = useState(null);
     const [ingredients, setIngredient] = useState(null);
     const [servings, setServings] = useState(null);
     const [instructions, setInstructions] = useState(null);
@@ -24,6 +25,7 @@ function AddRecipeForm(props){
             body: JSON.stringify({
                 userId: userId, 
                 title: title, 
+                type: type, 
                 ingredients: ingredients, 
                 servings: servings, 
                 instructions: instructions}),
@@ -58,6 +60,11 @@ function AddRecipeForm(props){
 
         <label htmlFor="Title" column sm="2">Title</label>
         <input type="text" placeholder="Title..." onChange={(e) => setTitle(e.target.value)}></input>
+
+        <p/>
+
+        <label htmlFor="Type" column sm="2">Type</label>
+        <input type="text" placeholder="Type..." onChange={(e) => setType(e.target.value)}></input>
 
         <p/>
 

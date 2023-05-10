@@ -12,6 +12,7 @@ function UpdateRecipeForm(props){
     const [userId, setUserId] = useState(null);
     const [title, setTitle] = useState(null);
     const [newTitle, setNewTitle] = useState(null);
+    const [newType, setNewType] = useState(null);
     const [newIngredients, setNewIngredient] = useState(null);
     const [newServings, setNewServings] = useState(null);
     const [newInstructions, setNewInstructions] = useState(null);
@@ -25,6 +26,7 @@ function UpdateRecipeForm(props){
             body: JSON.stringify({
                 newTitle:newTitle, 
                 newIngredients:newIngredients, 
+                newType:newType,
                 newServings:newServings, 
                 newInstructions:newInstructions}),
             headers: {
@@ -63,6 +65,11 @@ function UpdateRecipeForm(props){
 
         <label htmlFor="New Title" column sm="2">New Title</label>
         <input type="text" placeholder="New Title..." onChange={(e) => setNewTitle(e.target.value)}></input>
+        
+        <p/>
+
+        <label htmlFor="New Type" column sm="2">New Type</label>
+        <input type="text" placeholder="New Type..." onChange={(e) => setNewType(e.target.value)}></input>
         
         <p/>
     
