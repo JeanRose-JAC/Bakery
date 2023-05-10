@@ -56,23 +56,23 @@ async function getCollectionAsArray(){
     return await items.toArray();
 }
 
-async function addOneRecipeToCollection(userId = "user1", title = "title1", ingredients = "ingredientList", servings = "1", instructions = "instructionList"){
+async function addOneRecipeToCollection(userId = "user1", title = "title1", type = "type", ingredients = "ingredientList", servings = "1", instructions = "instructionList"){
     let collection = await recipesModel.getCollection();
-    await collection.insertOne({userId: userId, title: title, ingredients: ingredients, servings: servings, instructions: instructions})
-    return ({userId: userId, title: title, ingredients: ingredients, servings: servings, instructions: instructions});
+    await collection.insertOne({userId: userId, title: title, type: type, ingredients: ingredients, servings: servings, instructions: instructions})
+    return ({userId: userId, title: title, type: type, ingredients: ingredients, servings: servings, instructions: instructions});
 }
 
 async function addMultipleRecipesToCollection(){
     let details = [
-        {userId: "user1", title: "title1", ingredients:"ingredientList", servings:"1", instructions: "instructionList"},
-        {userId: "user1", title: "title2", ingredients:"ingredientList", servings:"1", instructions: "instructionList"},
-        {userId: "user1", title: "title3", ingredients:"ingredientList", servings:"1", instructions: "instructionList"},
-        {userId: "user4", title: "title4", ingredients:"ingredientList", servings:"1", instructions: "instructionList"},
-        {userId: "user5", title: "title5", ingredients:"ingredientList", servings:"1", instructions: "instructionList"}
+        {userId: "user1", title: "title1", type: "type", ingredients:"ingredientList", servings:"1", instructions: "instructionList"},
+        {userId: "user1", title: "title2", type: "type", ingredients:"ingredientList", servings:"1", instructions: "instructionList"},
+        {userId: "user1", title: "title3", type: "type", ingredients:"ingredientList", servings:"1", instructions: "instructionList"},
+        {userId: "user4", title: "title4", type: "type", ingredients:"ingredientList", servings:"1", instructions: "instructionList"},
+        {userId: "user5", title: "title5", type: "type", ingredients:"ingredientList", servings:"1", instructions: "instructionList"}
     ];
 
     for(let count = 0; count < details.length; count++){
-        await addOneRecipeToCollection(details[count].userId, details[count].title, details[count].ingredients, details[count].servings, details[count].instructions)
+        await addOneRecipeToCollection(details[count].userId, details[count].title, details[count].type, details[count].ingredients, details[count].servings, details[count].instructions)
     }
 }
 
@@ -80,6 +80,7 @@ async function addMultipleRecipesToCollection(){
 test('Success_PostRecipe: Add one recipe', async ()=> {
     let userId = "userTest";
     let title = "titleTest";
+    let type = "typeTest";
     let ingredients = "ingredientList";
     let servings = "1";
     let instructions = "instructionList";
@@ -87,6 +88,7 @@ test('Success_PostRecipe: Add one recipe', async ()=> {
     const testResponse = await testRequest.post('/recipe').send({
 		userId: userId,
         title: title,
+        type: type,
         ingredients: ingredients,
         servings: servings,
         instructions: instructions
@@ -109,6 +111,7 @@ test('Success_PostRecipe: Add one recipe', async ()=> {
 test('Failed_PostRecipe: Invalid userId', async()=>{
     let userId = "";
     let title = "titleTest";
+    let type = "typeTest";
     let ingredients = "ingredientList";
     let servings = "1";
     let instructions = "instructionList";
@@ -116,6 +119,7 @@ test('Failed_PostRecipe: Invalid userId', async()=>{
     const testResponse = await testRequest.post('/recipe').send({
 		userId: userId,
         title: title,
+        type: type, 
         ingredients: ingredients,
         servings: servings,
         instructions: instructions
@@ -132,6 +136,7 @@ test('Failed_PostRecipe: Invalid userId', async()=>{
 test('Failed_PostRecipe: Invalid title', async()=>{
     let userId = "userTest";
     let title = "";
+    let type = "typeTest";
     let ingredients = "ingredientList";
     let servings = "1";
     let instructions = "instructionList";
@@ -139,6 +144,7 @@ test('Failed_PostRecipe: Invalid title', async()=>{
     const testResponse = await testRequest.post('/recipe').send({
 		userId: userId,
         title: title,
+        type : type,
         ingredients: ingredients,
         servings: servings,
         instructions: instructions
@@ -156,12 +162,14 @@ test('Failed_PostRecipe: Invalid ingredients', async()=>{
     let userId = "userTest";
     let title = "titleTest";
     let ingredients = "";
+    let type = "typeTest";
     let servings = "1";
     let instructions = "instructionList";
 
     const testResponse = await testRequest.post('/recipe').send({
 		userId: userId,
         title: title,
+        type : type,
         ingredients: ingredients,
         servings: servings,
         instructions: instructions
@@ -178,6 +186,7 @@ test('Failed_PostRecipe: Invalid ingredients', async()=>{
 test('Failed_PostRecipe: Invalid servings', async()=>{
     let userId = "userTest";
     let title = "titleTest";
+    let type = "typeTest";
     let ingredients = "ingredientList";
     let servings = "abc";
     let instructions = "instructionList";
@@ -185,6 +194,7 @@ test('Failed_PostRecipe: Invalid servings', async()=>{
     const testResponse = await testRequest.post('/recipe').send({
 		userId: userId,
         title: title,
+        type : type,
         ingredients: ingredients,
         servings: servings,
         instructions: instructions
@@ -202,12 +212,14 @@ test('Failed_PostRecipe: Invalid instructions', async()=>{
     let userId = "userTest";
     let title = "titleTest";
     let ingredients = "ingredientList";
+    let type = "typeTest";
     let servings = "1";
     let instructions = "";
 
     const testResponse = await testRequest.post('/recipe').send({
 		userId: userId,
         title: title,
+        type: type,
         ingredients: ingredients,
         servings: servings,
         instructions: instructions
@@ -224,6 +236,7 @@ test('Failed_PostRecipe: Invalid instructions', async()=>{
 test('Failed_PostRecipe: Database connection lost', async()=>{
     let userId = "userTest";
     let title = "titleTest";
+    let type = "typeTest";
     let ingredients = "ingredientList";
     let servings = "1";
     let instructions = "instructionList";
@@ -233,6 +246,7 @@ test('Failed_PostRecipe: Database connection lost', async()=>{
     const testResponse = await testRequest.post('/recipe').send({
 		userId: userId,
         title: title,
+        type: type,
         ingredients: ingredients,
         servings: servings,
         instructions: instructions
@@ -294,11 +308,13 @@ test('Success_PutRecipe: Update one recipe', async ()=>{
 
     let newTitle = "newTitle";
     let newIngredients = "newIngredientList";
+    let newType = "newType";
     let newServings = "2";
     let newInstructions = "newInstructionList";
 
     const testResponse = await testRequest.put('/recipe/' + newRecipe.userId + '/' + newRecipe.title).send({
         newTitle: newTitle,
+        newType: newType,
         newIngredients: newIngredients,
         newServings: newServings,
         newInstructions: newInstructions
@@ -316,12 +332,14 @@ test('Success_PutRecipe: Update ingredients', async ()=>{
     let newRecipe = await addOneRecipeToCollection();
 
     let newTitle = null;
+    let newType = null;
     let newIngredients = "newIngredientList";
     let newServings = null;
     let newInstructions = null;
 
     const testResponse = await testRequest.put('/recipe/' + newRecipe.userId + '/' + newRecipe.title).send({
         newTitle: newTitle,
+        newType : newType,
         newIngredients: newIngredients,
         newServings: newServings,
         newInstructions: newInstructions
@@ -345,12 +363,14 @@ test('Failed_PutRecipe: Invalid servings', async ()=>{
     let newRecipe = await addOneRecipeToCollection();
 
     let newTitle = "newTitle";
+    let newType = "newType";
     let newIngredients = "newIngredientList";
     let newServings = "def";
     let newInstructions = "newInstructionList";
 
     const testResponse = await testRequest.put('/recipe/' + newRecipe.userId + '/' + newRecipe.title).send({
         newTitle: newTitle,
+        newType: newType,
         newIngredients: newIngredients,
         newServings: newServings,
         newInstructions: newInstructions

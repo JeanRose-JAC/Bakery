@@ -50,23 +50,23 @@ async function getCollectionAsArray(){
     return await items.toArray();
 }
 
-async function addOneRecipeToCollection(userId = "user1", title = "title1", ingredients = "ingredientList", servings = "1", instructions = "instructionList"){
+async function addOneRecipeToCollection(userId = "user1", title = "title1", type = "type", ingredients = "ingredientList", servings = "1", instructions = "instructionList"){
     let collection = await recipesModel.getCollection();
-    await collection.insertOne({userId: userId, title: title, ingredients: ingredients, servings: servings, instructions: instructions})
-    return ({userId: userId, title: title, ingredients: ingredients, servings: servings, instructions: instructions});
+    await collection.insertOne({userId: userId, title: title, type: type, ingredients: ingredients, servings: servings, instructions: instructions})
+    return ({userId: userId, title: title, type: type, ingredients: ingredients, servings: servings, instructions: instructions});
 }
 
 async function addMultipleRecipesToCollection(){
     let details = [
-        {userId: "user1", title: "title1", ingredients:"ingredientList", servings:"1", instructions: "instructionList"},
-        {userId: "user1", title: "title2", ingredients:"ingredientList", servings:"1", instructions: "instructionList"},
-        {userId: "user1", title: "title3", ingredients:"ingredientList", servings:"1", instructions: "instructionList"},
-        {userId: "user4", title: "title4", ingredients:"ingredientList", servings:"1", instructions: "instructionList"},
-        {userId: "user5", title: "title5", ingredients:"ingredientList", servings:"1", instructions: "instructionList"}
+        {userId: "user1", title: "title1", type: "type", ingredients:"ingredientList", servings:"1", instructions: "instructionList"},
+        {userId: "user1", title: "title2", type: "type", ingredients:"ingredientList", servings:"1", instructions: "instructionList"},
+        {userId: "user1", title: "title3", type: "type", ingredients:"ingredientList", servings:"1", instructions: "instructionList"},
+        {userId: "user4", title: "title4", type: "type", ingredients:"ingredientList", servings:"1", instructions: "instructionList"},
+        {userId: "user5", title: "title5", type: "type", ingredients:"ingredientList", servings:"1", instructions: "instructionList"}
     ];
 
     for(let count = 0; count < details.length; count++){
-        await addOneRecipeToCollection(details[count].userId, details[count].title, details[count].ingredients, details[count].servings, details[count].instructions)
+        await addOneRecipeToCollection(details[count].userId, details[count].title, details[count].type, details[count].ingredients, details[count].servings, details[count].instructions)
     }
 }
 
@@ -74,11 +74,12 @@ async function addMultipleRecipesToCollection(){
 test('Success_AddNewRecipe: Add one recipe', async()=>{
     let userId = "userTest";
     let title = "titleTest";
+    let type = "typeTest";
     let ingredients = "ingredientList";
     let servings = "1";
     let instructions = "instructionList";
 
-    await recipesModel.addNewRecipe(userId, title, ingredients,servings, instructions);
+    await recipesModel.addNewRecipe(userId, title, ingredients,servings, instructions, type);
     let recipeCol = await getCollectionAsArray();
 
     expect(Array.isArray(recipeCol)).toBe(true);
@@ -89,17 +90,19 @@ test('Success_AddNewRecipe: Add one recipe', async()=>{
     expect(recipeCol[0].ingredients).toBe(ingredients);
     expect(recipeCol[0].servings).toBe(servings);
     expect(recipeCol[0].instructions).toBe(instructions);
+    expect(recipeCol[0].type).toBe(type);
 });
 
 test('Failed_AddNewRecipe: Invalid userId', async ()=>{
     try{
     let userId = "";
     let title = "titleTest";
+    let type = "typeTest";
     let ingredients = "ingredientList";
     let servings = "1";
     let instructions = "instructionList";
 
-    await recipesModel.addNewRecipe(userId, title, ingredients,servings, instructions);
+    await recipesModel.addNewRecipe(userId, title, ingredients,servings, instructions, type);
     }
     catch(e){
         expect(e instanceof InvalidInputError).toBe(true);
@@ -110,11 +113,12 @@ test('Failed_AddNewRecipe: Invalid title', async ()=>{
     try{
     let userId = "userTest";
     let title = "";
+    let type = "typeTest";
     let ingredients = "ingredientList";
     let servings = "1";
     let instructions = "instructionList";
 
-    await recipesModel.addNewRecipe(userId, title, ingredients,servings, instructions);
+    await recipesModel.addNewRecipe(userId, title, ingredients,servings, instructions, type);
     }
     catch(e){
         expect(e instanceof InvalidInputError).toBe(true);
@@ -125,11 +129,12 @@ test('Failed_AddNewRecipe: Invalid ingredients', async ()=>{
     try{
     let userId = "userTest";
     let title = "titleTest";
+    let type = "typeTest";
     let ingredients = "";
     let servings = "1";
     let instructions = "instructionList";
 
-    await recipesModel.addNewRecipe(userId, title, ingredients,servings, instructions);
+    await recipesModel.addNewRecipe(userId, title, ingredients,servings, instructions, type);
     }
     catch(e){
         expect(e instanceof InvalidInputError).toBe(true);
@@ -140,11 +145,12 @@ test('Failed_AddNewRecipe: Invalid servings', async ()=>{
     try{
     let userId = "userTest";
     let title = "titleTest";
+    let type = "typeTest";
     let ingredients = "ingredientList";
     let servings = "abc";
     let instructions = "instructionList";
 
-    await recipesModel.addNewRecipe(userId, title, ingredients,servings, instructions);
+    await recipesModel.addNewRecipe(userId, title, ingredients,servings, instructions, type);
     }
     catch(e){
         expect(e instanceof InvalidInputError).toBe(true);
@@ -155,11 +161,12 @@ test('Failed_AddNewRecipe: Invalid instructions', async ()=>{
     try{
     let userId = "userTest";
     let title = "titleTest";
+    let type = "typeTest";
     let ingredients = "ingredientList";
     let servings = "1";
     let instructions = "";
 
-    await recipesModel.addNewRecipe(userId, title, ingredients,servings, instructions);
+    await recipesModel.addNewRecipe(userId, title, ingredients,servings, instructions, type);
     }
     catch(e){
         expect(e instanceof InvalidInputError).toBe(true);
@@ -235,11 +242,12 @@ test('Success_UpdateRecipe: Update one recipe', async () => {
     let newRecipe = await addOneRecipeToCollection();
 
     let newTitle = "newTitle";
+    let newType = "newType";
     let newIngredients = "newIngredientList";
     let newServings = "2";
     let newInstructions = "newInstructionList";
 
-    let result = await recipesModel.updateRecipe(newRecipe.userId, newRecipe.title, newTitle, newIngredients, newServings, newInstructions);
+    let result = await recipesModel.updateRecipe(newRecipe.userId, newRecipe.title, newTitle, newType, newIngredients, newServings, newInstructions);
 
     let recipeCol = await getCollectionAsArray();
     expect(recipeCol.length).toBe(1);
@@ -272,11 +280,12 @@ test('Failed_UpdateRecipe: Recipe does not exist', async ()=>{
         let newRecipe = await addOneRecipeToCollection();
 
         let newTitle = "newTitle";
+        let newType = "newType";
         let newIngredients = "newIngredientList";
         let newServings = "def";
         let newInstructions = "instructions";
     
-        await recipesModel.updateRecipe("user", "title", newTitle, newIngredients, newServings, newInstructions);   
+        await recipesModel.updateRecipe("user", "title", newTitle, newType, newIngredients, newServings, newInstructions);   
     }
     catch(e){
         expect(e instanceof InvalidInputError).toBe(true);
@@ -289,10 +298,11 @@ test('Failed_UpdateRecipe: Invalid servings', async ()=>{
 
         let newTitle = "newTitle";
         let newIngredients = "newIngredientList";
+        let newType = "newType";
         let newServings = "def";
         let newInstructions = "instructions";
     
-        await recipesModel.updateRecipe(newRecipe.userId, newRecipe.title, newTitle, newIngredients, newServings, newInstructions);   
+        await recipesModel.updateRecipe(newRecipe.userId, newRecipe.title, newTitle, newType, newIngredients, newServings, newInstructions);   
     }
     catch(e){
         expect(e instanceof InvalidInputError).toBe(true);

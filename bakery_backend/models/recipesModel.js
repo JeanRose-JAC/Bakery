@@ -159,6 +159,7 @@ async function getOneRecipe(userId, title){
  * @param {string} userId username
  * @param {string} title title of the recipe
  * @param {string} newTitle new title of the recipe
+ * @param {string} newType new type of the recipe
  * @param {string} newIngredients new ingredients of the recipe
  * @param {string} newServings new serving size of the recipe
  * @param {string} newInstructions new instructions of the recipe
