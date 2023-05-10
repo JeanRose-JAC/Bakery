@@ -113,14 +113,24 @@ async function addAccount(email, displayName, username, password) {
   }
 }
 
+/**
+ * Update an accounts username with the new username passed in.
+ * 
+ * TODO: password validation?
+ * @param {*} currentUsername to be changed.
+ * @param {*} newUsername to replace current.
+ * @returns object with new and old username if successful
+ * @throws DatabaseError if new username is taken.
+ * @throws InvalidInputError if newUsename does not meet requirements (Has special characters)
+ */
 async function updateUsername(currentUsername, newUsername) {
   try {
 
-    // Check if an account already exists
+    // Check if new username is already taken
     // ----------------------------------------------------------------
     if (await collection.findOne({ username: username })) {
       throw new DatabaseError(
-        "\nAccount with username is taken. Username: " + username
+        "\nCannot update username: username " + username + " is already taken"
       );
     }
     // check for valid username and password
