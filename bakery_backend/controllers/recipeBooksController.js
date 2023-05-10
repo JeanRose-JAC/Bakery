@@ -58,7 +58,7 @@ router.get('/find/:userId/:name', find);
 async function find(request, response) {
     try{
 
-        let answer = await model.getAllRecipeBooks(request.params.userId, request.params.name)
+        let answer = await model.getSingleRecipeBook(request.params.userId, request.params.name)
     
         if(answer != null){
             response.status("200");
