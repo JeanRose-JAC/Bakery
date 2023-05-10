@@ -112,4 +112,40 @@ async function addAccount(email, displayName, username, password) {
     throw err;
   }
 }
+
+async function updateUsername(currentUsername, newUsername) {
+  try {
+
+    // Check if an account already exists
+    // ----------------------------------------------------------------
+    if (await collection.findOne({ username: username })) {
+      throw new DatabaseError(
+        "\nAccount with username is taken. Username: " + username
+      );
+    }
+    // check for valid username and password
+    // ----------------------------------------------------------------
+    else if (validateUtilsAcc.isAccountValid(email, displayName, username, password)) {
+      // creates and returns new account object if successful
+      if (await !collection.insertOne({email: email, displayName: displayName, username: username, password: password,})
+      )
+        throw new DatabaseError(
+          `Error while inserting account into db: ${username}, ${password}`
+        );
+
+      // Return account object
+      return { email: email, displayName: displayName, username: username, password: password };
+    }
+  } catch (err) {
+    if (err instanceof InvalidInputError) {
+      logger.error("Input Error while adding account: " + err.message);
+    }
+    else if (err instanceof DatabaseError) {
+      logger.error("Database Error while adding account: " + err.message);
+    } else {
+      logger.error("Unexpected error while adding account: " + err.message);
+    }
+    throw err;
+  }
+}
 module.exports = { setCollection, getCollection, addAccount, close };
