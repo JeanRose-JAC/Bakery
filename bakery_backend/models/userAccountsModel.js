@@ -130,7 +130,7 @@ async function updateUsername(currentUsername, newUsername) {
     // ----------------------------------------
     if (await collection.findOne({ username: username })) {
       throw new DatabaseError(
-        "\nCannot update username: username " + username + " is already taken"
+        "\nUsername \" " + username + "\" is already taken"
       );
     }
 
@@ -149,17 +149,17 @@ async function updateUsername(currentUsername, newUsername) {
       // Return result values 
       if(result.modifiedCount > 0)
         return true;
-        
+
       return false;
     }
   } catch (err) {
     if (err instanceof InvalidInputError) {
-      logger.error("Input Error while adding account: " + err.message);
+      logger.error("Input Error while updating account username: " + err.message);
     }
     else if (err instanceof DatabaseError) {
-      logger.error("Database Error while adding account: " + err.message);
+      logger.error("Database Error while updating account username: " + err.message);
     } else {
-      logger.error("Unexpected error while adding account: " + err.message);
+      logger.error("Unexpected error while updating account username: " + err.message);
     }
     throw err;
   }
