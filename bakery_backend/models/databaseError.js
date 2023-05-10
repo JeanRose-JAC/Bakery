@@ -4,4 +4,4 @@
 class DatabaseError extends Error {
 
 }
-module.exports = {DatabaseError}
+module.exports = DatabaseError
