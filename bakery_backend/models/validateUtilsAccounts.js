@@ -56,7 +56,7 @@ function isEmailValid(email){
 function isDisplayNameValid(displayName){
     
     // Check length meets minimum requirements (4) - REDACTED
-   // if(displayName.length < 4)
+   // if(displayName.   Q1`ASlength < 4)
     //    throw new InvalidInputError("\nUsername must be at least 4 characters long.");
     
     // Check for special characters
