@@ -160,7 +160,7 @@ test("Cannot add account with an invalid Username", async () => {
     // expect InvalidInputError exception to be thrown
     await expect(()=> model.addAccount(email, displayName, invalidUsername ,password)).rejects.toThrow(InvalidInputError);
 });
-test.only("Cannot add account with an invalid Display Name", async () => {
+test("Cannot add account with an invalid Display Name", async () => {
     const { email, displayName, username, password } = generateAccountData_Old();
     const invalidDisplayName = "";
     
