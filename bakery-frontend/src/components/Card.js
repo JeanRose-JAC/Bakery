@@ -9,7 +9,7 @@ import "./wrapper.css"
  */
 function Card({ children}){
     return(
-        <div className="card">
+        <div >
             {children}
         </div>
     );

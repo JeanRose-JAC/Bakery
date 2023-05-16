@@ -5,9 +5,11 @@
  */
 function Contact(){
     return(
-        <div className="TrendCulture">
-         <h1>Contact us to: 438-506-6933</h1>
-         <h2 id="simpleText">You can call from 9-17h everyday of the week</h2>
+        <div className="Extra">
+         <h2 id="simpleText">Contact us at for culinary adventures that will tantalize your taste buds. We're here to answer your questions, 
+         share recipe suggestions, and make your gastronomic dreams a reality. 
+         Call us at 438-506-6933 and embark on a journey of delectable delights.
+          Let your inner foodie rejoice with Geek Gourmet!</h2>
         </div>
     );
 }

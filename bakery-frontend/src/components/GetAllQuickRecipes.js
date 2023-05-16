@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect,useState } from "react";
 import { ListRecipes } from "./ListQuickRecipes";
 
 /**
@@ -8,23 +8,21 @@ import { ListRecipes } from "./ListQuickRecipes";
  */
 function GetAllQuickRecipes(){
     const[recipe, setRecipe] = useState([]);
+    useEffect(()=> {
+        GetAllQuickRecipesControl(setRecipe)
 
-
-    const GetAllQuickRecipes  = async () => {
-        const response = await fetch ("http://localhost:1339/recipe/", {method: "GET"})
-        const result = await response.json();
-        setRecipe(result);
-
-    }
-    
-
+    },[recipe])
     return(
         <div className="center">
-            <h1>Recipes</h1>
-            <button onClick={GetAllQuickRecipes}>Get Quick Recipes</button>
+            <h1> recipes</h1>
             {recipe[0] && <ListRecipes recipes={recipe}/>}
         </div>
     );
+}
+async function GetAllQuickRecipesControl(setRecipe){
+    const response = await fetch ("http://localhost:1339/recipe/", {method: "GET"})
+    const result = await response.json();
+    setRecipe(result);
 
 }
 

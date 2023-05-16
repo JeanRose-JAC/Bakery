@@ -63,7 +63,7 @@ function Header() {
               <MDBNavbarLink href='/Culture'>Culture</MDBNavbarLink>
             </MDBNavbarItem>
             <MDBNavbarItem>
-              <MDBNavbarLink href='/about'>AboutUs</MDBNavbarLink>
+              <MDBNavbarLink href='/about'>About Us</MDBNavbarLink>
             </MDBNavbarItem>
             <MDBNavbarItem>
               <MDBNavbarLink href='/contact'>Contact</MDBNavbarLink>
@@ -90,10 +90,7 @@ function Header() {
        
       />
     </a>
-          <form className='d-flex input-group w-auto'>
-            <input type='search' className='form-control' placeholder='Type query' aria-label='Search' />
-            <MDBBtn color='primary'>Search</MDBBtn>
-          </form>
+        
       
         </MDBCollapse>
       </MDBContainer>

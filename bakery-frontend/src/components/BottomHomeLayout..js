@@ -14,7 +14,7 @@ function BottomHomeLayout(){
     
             <div className="TrendVideo">
             <div>
-                <h1>Trending</h1>
+                <h1>Tips & Tricks Of The Week</h1>
             <div className="flex-container">
         
                 <div className="child">
@@ -25,9 +25,7 @@ function BottomHomeLayout(){
                             </iframe>
 
                             </div>
-                        </div>
-    
-                
+                        </div>           
                 </div>  
              
                 <div className="child">
@@ -38,9 +36,7 @@ function BottomHomeLayout(){
                      </iframe>
 
                      </div>
-                 </div>
-
-         
+                 </div>         
          </div> 
          <div className="child">
                  

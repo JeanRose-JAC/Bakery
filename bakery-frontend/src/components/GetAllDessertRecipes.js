@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect,useState } from "react";
 import { ListRecipes } from "./ListDessertRecipes";
 
 /**
@@ -8,23 +8,21 @@ import { ListRecipes } from "./ListDessertRecipes";
  */
 function GetAllDessertRecipes(){
     const[recipe, setRecipe] = useState([]);
+    useEffect(()=> {
+        GetAllDessertRecipesControl(setRecipe)
 
-
-    const GetAllDessertRecipes  = async () => {
-        const response = await fetch ("http://localhost:1339/recipe/", {method: "GET"})
-        const result = await response.json();
-        setRecipe(result);
-
-    }
-    
-
+    },[recipe])
     return(
         <div className="center">
-            <h1>Recipes</h1>
-            <button onClick={GetAllDessertRecipes}>Get All Breakfast Recipes</button>
+            <h1> recipes</h1>
             {recipe[0] && <ListRecipes recipes={recipe}/>}
         </div>
     );
+}
+async function GetAllDessertRecipesControl(setRecipe){
+    const response = await fetch ("http://localhost:1339/recipe/", {method: "GET"})
+    const result = await response.json();
+    setRecipe(result);
 
 }
 
