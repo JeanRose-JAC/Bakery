@@ -1,4 +1,4 @@
-import { GetAllRecipes } from "components/GetAllRecipes";
+import { ProfileLayout } from "components/ProfileLayout";
 
 /**
  * Displays all the recipes
@@ -8,8 +8,8 @@ import { GetAllRecipes } from "components/GetAllRecipes";
 function Profile(){
     return (
        
-        <div id="wrapper">
-            <GetAllRecipes/>
+        <div>
+            <ProfileLayout/>
         </div>
         );
 }

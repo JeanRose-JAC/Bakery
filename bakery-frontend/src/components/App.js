@@ -10,7 +10,7 @@ import { UserError } from 'pages/UserError';
 import { SystemError } from 'pages/SystemError';
 import { Quick } from 'pages/Quick';
 import { Breakfast } from 'pages/Breakfast';
-import { Lunch } from 'pages/Lunch';
+import { Snack } from 'pages/Snack';
 import { Dinner } from 'pages/Dinner';
 import { Dessert } from 'pages/Dessert';
 import { Profile } from 'pages/Profile';
@@ -37,7 +37,7 @@ function App() {
             <Route path="systemerror" element={<SystemError/>}/>
             <Route path="Quick" element={<Quick/>}/>
             <Route path="Breakfast" element={<Breakfast/>}/>
-            <Route path="Lunch" element={<Lunch/>}/>
+            <Route path="Snack" element={<Snack/>}/>
             <Route path="Dinner" element={<Dinner/>}/>
             <Route path="Dessert" element={<Dessert/>}/>
             <Route path="Culture" element={<Culture/>}/>

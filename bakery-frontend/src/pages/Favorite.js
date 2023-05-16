@@ -1,4 +1,4 @@
-import { GetAllRecipes } from "components/GetAllRecipes";
+import { GetAllRecipes } from "components/FavoriteLayout";
 
 /**
  * Displays all the recipes

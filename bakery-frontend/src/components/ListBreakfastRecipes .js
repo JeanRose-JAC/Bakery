@@ -11,17 +11,15 @@ function ListRecipes({recipes}){
 let list = [];
 for (let i = 0;i < recipes.length;i++){
     let type = recipes[i].type;
-if(type != '')
+if(type == 'Breakfast' || type == 'breakfast')
 list.push(recipes[i])
 }
-
-
     return(
         <div>
         <div className="flex-container">
         {list.map((recipe)=>(
             <div className="child">
-                <Card>
+                
                     <div className="centerCard">
                         <div className="centerTitle">
                         <p>{recipe.title}</p>
@@ -32,7 +30,7 @@ list.push(recipes[i])
                         <p>by {recipe.userId}</p>
                         </div>
                     </div>
-                </Card>
+                
             </div>  
         ))}
         </div>

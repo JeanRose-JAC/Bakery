@@ -1,17 +1,17 @@
-import { GetAllRecipes } from "components/GetAllRecipes";
+import { GetAllSnackRecipes } from "components/GetAllSnackRecipes";
 
 /**
  * Displays all the recipes
  * 
  * @returns Element for getting all the Lunch recipes
  */
-function Lunch(){
+function Snack(){
 
     return (
         <div id="wrapper">
-            <GetAllRecipes/>
+            <GetAllSnackRecipes/>
         </div>
         );
 }
 
-export {Lunch};
+export {Snack};

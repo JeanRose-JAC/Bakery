@@ -1,4 +1,4 @@
-import { GetAllRecipes } from "components/GetAllRecipes";
+import { CultureLayout } from "components/CultureLayout";
 
 /**
  * Displays all the recipes
@@ -9,7 +9,7 @@ function Culture(){
 
     return (
         <div id="wrapper">
-            <GetAllRecipes/>
+            <CultureLayout/>
         </div>
         );
 }

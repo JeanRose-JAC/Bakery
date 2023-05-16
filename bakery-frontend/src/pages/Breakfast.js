@@ -1,4 +1,5 @@
-import { GetAllRecipes } from "components/GetAllRecipes";
+import { GetAllBreakfastRecipes } from "components/GetAllBreakfastRecipes";
+
 
 /**
  * Displays all the recipes
@@ -9,7 +10,7 @@ function Breakfast(){
 
     return (
         <div id="wrapper">
-            <GetAllRecipes/>
+            <GetAllBreakfastRecipes/>
         </div>
         );
 }
