@@ -12,7 +12,7 @@ import {
  * @param {*} param An array of recipes 
  * @returns A list of recipes formatted in a card
  */
-function ListRecipes({recipes}){
+function ListRecipesFromSearch({recipes}){
 
     return(
         <div>
@@ -24,8 +24,7 @@ function ListRecipes({recipes}){
                             {recipe.instructions}
                         </MDBCardText>
                     <MDBBtn>Read More</MDBBtn>
-                    <MDBBtn>Edit</MDBBtn>
-                    <MDBBtn>Delete</MDBBtn>
+                    <MDBBtn>Add to recipe book</MDBBtn>
                 </MDBCardBody>
             </MDBCard>
          ))}
@@ -34,4 +33,4 @@ function ListRecipes({recipes}){
     );
 }
 
-export {ListRecipes};
+export {ListRecipesFromSearch};

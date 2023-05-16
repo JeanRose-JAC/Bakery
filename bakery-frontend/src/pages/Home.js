@@ -2,6 +2,7 @@ import { useSearchParams } from "react-router-dom";
 import { AddRecipe } from "components/AddRecipe";
 import { GetSingleRecipe } from "components/GetSingleRecipe";
 import { ErrorBoundary } from "components/ErrorBoundary";
+import { SearchRecipe } from "components/SearchRecipe";
 
 
 /**
@@ -17,8 +18,9 @@ function Home(){
     <ErrorBoundary>
         <h1>Hi {searchParams.get("name")}!</h1>
         <h2>Welcome to Geek Gourmet</h2>
-        <AddRecipe/>
-        <GetSingleRecipe/>   
+        {/* <AddRecipe/>
+        <GetSingleRecipe/>   */}
+        <SearchRecipe/> 
     </ErrorBoundary>
     );
     
