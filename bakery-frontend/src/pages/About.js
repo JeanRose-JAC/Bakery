@@ -8,7 +8,7 @@ import "../components/style.css"
 function About(){
 
     return(
-        <div>
+        <div className="TrendCulture">
          <h1>We are the Geek gourmet</h1>
          <p id="simpleText">Welcome to our website, where we're dedicated to bringing you the best and most delicious recipes from around the world! Our team of expert chefs and foodies are passionate about creating and sharing mouth-watering dishes that will delight your taste buds and leave you wanting more.
 

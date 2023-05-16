@@ -1,4 +1,4 @@
-import { GetAllRecipes } from "components/GetAllRecipes";
+import { GetAllDinnerRecipes } from "components/GetAllDinnerRecipes";
 
 /**
  * Displays all the recipes
@@ -9,7 +9,7 @@ function Dinner(){
 
     return (
         <div id="wrapper">
-            <GetAllRecipes/>
+            <GetAllDinnerRecipes/>
         </div>
         );
 }

@@ -53,7 +53,7 @@ function Header() {
                 <MDBDropdownMenu>
                   <MDBDropdownItem link href='/Quick'>Quick</MDBDropdownItem>
                   <MDBDropdownItem link href='/Breakfast'>Breakfast</MDBDropdownItem>
-                  <MDBDropdownItem link href='/Lunch'>Lunch</MDBDropdownItem>
+                  <MDBDropdownItem link href='/Snack'>Snack</MDBDropdownItem>
                   <MDBDropdownItem link href='/Dinner'>Dinner</MDBDropdownItem>
                   <MDBDropdownItem link href='/Dessert'>Dessert</MDBDropdownItem>
                 </MDBDropdownMenu>

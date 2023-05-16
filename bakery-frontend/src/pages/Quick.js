@@ -1,4 +1,4 @@
-import { GetAllRecipes } from "components/GetAllRecipes";
+import { GetAllQuickRecipes } from "components/GetAllQuickRecipes";
 
 /**
  * Displays all the recipes
@@ -9,7 +9,7 @@ function Quick(){
 
     return (
         <div id="wrapper">
-            <GetAllRecipes/>
+            <GetAllQuickRecipes/>
         </div>
         );
 }

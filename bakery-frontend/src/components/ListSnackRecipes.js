@@ -11,7 +11,7 @@ function ListRecipes({recipes}){
 let list = [];
 for (let i = 0;i < recipes.length;i++){
     let type = recipes[i].type;
-if(type == 'Breakfast')
+if(type == 'Snack')
 list.push(recipes[i])
 }
 

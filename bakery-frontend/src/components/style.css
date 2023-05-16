@@ -1,9 +1,13 @@
 .App {
     text-align: center;
-    background-color: rgb(253, 222, 227);
+    background-color: rgb(255, 207, 215);
     height: 100%;
-    min-height: 1500px;
+    min-height: 4000px;
 }
+h1{
+    font-weight: bold;
+}
+
 
 .header{
     margin-bottom: 10px;
@@ -15,8 +19,8 @@ body{
 }
 
 button{
-    background: #fcc5a3;
-    color: rgb(250, 75, 206);
+    background: #ffb3b4;
+    color: rgb(252, 214, 242);
     margin: 12px 12px 12px 12px;
 }
 
@@ -28,19 +32,118 @@ textarea::placeholder {
     color: rgb(253, 131, 204);
 }
 
-.center {
-    margin: auto;
-    width: 50%;
-    border: 3px solid rgb(245, 253, 210);
+.MealOfTheWeek{
+    margin-left: 50px;
+    width: 42%;
+    border: 5px solid rgb(0, 0, 0);
+    background-color: rgb(249, 242, 206);
     padding: 10px;
     margin-bottom: 50px;
+    margin-top: 5px;
+    max-height: 835px;
+}
+.Trend{
+    margin: auto;
+    width: 45%;
+    background-color: rgb(200, 211, 141);
+    padding: 10px;
+    margin-bottom: 50px;
+    margin-top: 5px;
+}
+.TrendVideo{
+   
+    margin: auto;
+    width: 90%;
+    background-color: rgb(200, 211, 141);
+    padding: 10px;
+    margin-bottom: 50px;
+    margin-top: 5px;
+}
+.TrendCulture{
+   
+    margin: auto;
+    width: 90%;
+    background-color: rgb(200, 211, 141);
+    padding: 10px;
+    margin-bottom: 50px;
+    margin-top: 5px;
+}
+
+.centerTrend {
+    display: flex;
+    margin: auto;
+    width: 90%;
+    border: 3px solid rgb(255, 255, 255);
+    background-color: rgb(200, 211, 141);
+    padding: 10px;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+.centerVideos {
+    display: flex;
+    margin: auto;
+    width: 90%;
+    border: 3px solid rgb(255, 255, 255);
+    background-color: rgb(200, 211, 141);
+    padding: 20px;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+
+.center {
+ 
+    margin: auto;
+    width: 90%;
+    border: 3px solid rgb(238, 249, 188);
+    background-color: rgb(250, 254, 231);
+    padding: 10px;
+    margin-bottom: 50px;
+    margin-top: 50px;
 }
 
 .centerCard {
-    margin: auto;
-    width: 50%;
-    margin-left: 250px;
+    min-width: 250px;
+    min-height: 100px;
+    border: 5px solid rgb(0, 0, 0);
+    background-color: rgb(255, 246, 189);
+    padding-right: 20px;
+    margin-bottom: 25px;
+    margin-left: 10px;
 }
+.centerCardVideo {
+    min-width: 250px;
+    min-height: 100px;
+    border: 5px solid rgb(0, 0, 0);
+    background-color: rgb(255, 246, 189);
+    padding-right: 30px;
+    margin-bottom: 25px;
+    padding-top: 2%;
+}
+.centerTrendingCard {
+    min-width: 250px;
+    min-height: 100px;
+    border: 5px solid rgb(0, 0, 0);
+    background-color: rgb(255, 246, 189);
+    padding-right: 20px;
+    margin-bottom: 25px;
+    margin-left: 20px;
+}
+.centerTitle {
+   font-size: 16px;
+   padding-left: 40px;
+   font-weight: bold;
+   font-family:'Times New Roman', Times, serif;
+   color: black;
+   
+}
+.cardText {
+    font-size: 14px;
+    font-weight: bold;
+    font-family:'Times New Roman', Times, serif;
+    color: black;
+ }
 
 #simpleText{
     padding: 20px;

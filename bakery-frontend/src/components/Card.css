@@ -1,13 +1,9 @@
 .card{
     text-align: left;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    background-color: rgb(245, 253, 210);
     padding: 2px 16px;
-    display: flex;
-    flex-direction: column;
     font-size: calc(10px);
-    margin: 16px 2px;
-    width: 50%;
+    margin: 16px 20px;
+    width: 100%;
     margin: auto;
 }
