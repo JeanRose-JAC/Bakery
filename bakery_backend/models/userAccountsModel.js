@@ -125,10 +125,20 @@ async function addAccount(email, displayName, username, password) {
  */
 async function updateUsername(currentUsername, newUsername) {
   try {
+    // Query database for instance of account, returns null if not found
+    let account = await collection.findOne({ username: currentUsername });
 
+    // Check if the account we are updating exists
+    if (account == null) {
+      throw new DatabaseError(
+        "\nAccount with username '" + currentUsername + "does not exist"
+      );
+    } 
     // Check if new username is already taken
     // ----------------------------------------
-    if (await collection.findOne({ username: username })) {
+    account = await collection.findOne({ username: newUsername })
+
+    if (account != null) {
       throw new DatabaseError(
         "\nUsername \" " + username + "\" is already taken"
       );
