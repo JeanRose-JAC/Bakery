@@ -326,4 +326,13 @@ async function updateDisplayName(username, newDisplayName) {
   }
 
 }
-module.exports = { setCollection, getCollection, addAccount,getSingleAccount,getAllAccounts, updateUsername, updateDisplayName ,close };
+module.exports = {
+    setCollection,
+    getCollection,
+    addAccount,
+    getSingleAccount,
+    getAllAccounts,
+    updateUsername, 
+    updateDisplayName,
+    updatePassword,
+    close };
