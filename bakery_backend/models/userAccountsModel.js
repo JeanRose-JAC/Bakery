@@ -164,4 +164,8 @@ async function updateUsername(currentUsername, newUsername) {
     throw err;
   }
 }
+
+async function updateDisplayName(oldDisplayName, newDisplayName, password) {
+
+}
 module.exports = { setCollection, getCollection, addAccount, close };
