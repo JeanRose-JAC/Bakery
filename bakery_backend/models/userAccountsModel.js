@@ -120,8 +120,8 @@ async function addAccount(email, displayName, username, password) {
  * @param {*} currentUsername to be changed.
  * @param {*} newUsername to replace current.
  * @returns true if username was updated successfully, false otherwise.
- * @throws DatabaseError if new username is taken.
- * @throws InvalidInputError if newUsename does not meet requirements (Has special characters)
+ * @throws DatabaseError if new username is taken. Or if account with current username does not exist.
+ * @throws InvalidInputError if newUsername does not meet requirements (Has special characters).
  */
 async function updateUsername(currentUsername, newUsername) {
   try {
@@ -175,7 +175,19 @@ async function updateUsername(currentUsername, newUsername) {
   }
 }
 
-async function updateDisplayName(oldDisplayName, newDisplayName) {
+async function updatePassword(username, password, newPassword){
 
 }
-module.exports = { setCollection, getCollection, addAccount, close };
+/**
+ * Update an accounts display name with the new name passed in.
+ * 
+ * TODO: password validation?
+ * @param {*} displayName to be changed.
+ * @param {*} newDisplayName to replace current.
+ * @returns true if display name was updated successfully, false otherwise.
+ * @throws InvalidInputError if new display does not meet requirements (Has special characters)
+ */
+async function updateDisplayName(displayName, newDisplayName) {
+
+}
+module.exports = { setCollection, getCollection, addAccount, updateUsername, close };
