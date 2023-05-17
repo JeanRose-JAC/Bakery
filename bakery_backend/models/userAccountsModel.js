@@ -218,6 +218,28 @@ async function updateUsername(currentUsername, newUsername) {
 
 async function updatePassword(username, password, newPassword){
 
+  try {
+    // Query account 
+
+    // validate new password is infact new 
+
+    // validate newPassword 
+
+    // update and return
+
+  } catch (err) {
+    if (err instanceof InvalidInputError) {
+      logger.error("Input Error while updating password: " + err.message);
+    }
+    else if (err instanceof DatabaseError) {
+      logger.error("Database Error while updating account password: " + err.message);
+    } else {
+      logger.error("Unexpected error while updating account password: " + err.message);
+    }
+    throw err;
+    
+  }
+
 }
 /**
  * Update an accounts display name with the new name passed in.
