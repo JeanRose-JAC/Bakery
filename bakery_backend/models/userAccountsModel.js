@@ -270,4 +270,4 @@ async function updateDisplayName(username, newDisplayName) {
   }
 
 }
-module.exports = { setCollection, getCollection, addAccount, updateUsername, close };
+module.exports = { setCollection, getCollection, addAccount,getSingleAccount, updateUsername, updateDisplayName ,close };
