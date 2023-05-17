@@ -112,9 +112,30 @@ async function addAccount(email, displayName, username, password) {
     throw err;
   }
 }
-
+/**
+ * Queries database for a single instance of an account with the username
+ * that was passed in.
+ * @param {*} username to find in database.
+ * @returns Account object
+ * @throws DatabaseError if fails to read from database.
+ * @throws DatabaseError no account was found.
+ */
 async function getSingleAccount(username){
+// Try reading from database
+let account;
+try {
+    // Query database
+    account = await collection.findOne({username: username});
 
+    // If no account was found, throw
+    if(account == null)
+      throw new DatabaseError("Account not found");
+
+      // If account is found, return it
+    return account;
+} catch (error) {
+    throw new DatabaseError("Error while reading account data from database: " + error.message)
+}
 }
 /**
  * Query all account objects inside a MongoDb collection.
