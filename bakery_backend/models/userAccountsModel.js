@@ -219,13 +219,37 @@ async function updateUsername(currentUsername, newUsername) {
 async function updatePassword(username, password, newPassword){
 
   try {
-    // Query account 
 
+  // Query database for instance of account, returns null if not found
+ let account = await collection.findOne({ username: currentUsername });
+
+ // Check if the account we are updating exists
+ if (account == null) {
+   throw new DatabaseError(
+     "\nAccount with username '" + currentUsername + "does not exist"
+   );
+ } 
     // validate new password is infact new 
-
+    if (password == newPassword){
+      throw new InvalidInputError("New password cannot be old password");
+    }
     // validate newPassword 
+    if(validateUtilsAcc.isPasswordValid(newPassword)){
+       // filter to find account to update
+       const filter = {username: username}
 
-    // update and return
+       // updates to be made on document
+       const updateFilter = {$set: {password: newPassword}};
+ 
+       const result = await collection.updateOne(filter, updateFilter);
+
+       // Return true if the account was updated successfully
+      if(result.modifiedCount > 0)
+        return true;
+    }
+
+    // Return false by default
+    return false;
 
   } catch (err) {
     if (err instanceof InvalidInputError) {
