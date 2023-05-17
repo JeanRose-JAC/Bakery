@@ -180,43 +180,33 @@ async function updatePassword(username, password, newPassword){
 }
 /**
  * Update an accounts display name with the new name passed in.
- * 
- * TODO: password validation?
- * @param {*} displayName to be changed.
+ * Only require username to query for the account since they are unique.
+ * @param {*} username of the account to update. 
  * @param {*} newDisplayName to replace current.
  * @returns true if display name was updated successfully, false otherwise.
  * @throws InvalidInputError if new display does not meet requirements (Has special characters)
  */
-async function updateDisplayName(displayName, newDisplayName) {
+async function updateDisplayName(username, newDisplayName) {
   try {
     // Query database for instance of account, returns null if not found
-    let account = await collection.findOne({ username: currentUsername });
+    let account = await collection.findOne({ username: username });
 
     // Check if the account we are updating exists
     if (account == null) {
       throw new DatabaseError(
-        "\nAccount with username '" + currentUsername + "does not exist"
+        "\nAccount with username '" + username + "' does not exist"
       );
     } 
-    // Check if new username is already taken
-    // ----------------------------------------
-    account = await collection.findOne({ username: newUsername })
-
-    if (account != null) {
-      throw new DatabaseError(
-        "\nUsername \" " + username + "\" is already taken"
-      );
-    }
 
     // validate new username 
     // ----------------------
-    else if (validateUtilsAcc.isUsernameValid(newUsername)) {
+    else if (validateUtilsAcc.isDisplayNameValid(newDisplayName)) {
 
       // filter to find account to update
-      const filter = {username: currentUsername}
+      const filter = {username: username}
 
       // updates to be made on document
-      const updateFilter = {$set: {username: newUsername}};
+      const updateFilter = {$set: {displayName: newDisplayName}};
 
       const result = await collection.updateOne(filter, updateFilter);
 
@@ -228,12 +218,12 @@ async function updateDisplayName(displayName, newDisplayName) {
     }
   } catch (err) {
     if (err instanceof InvalidInputError) {
-      logger.error("Input Error while updating account username: " + err.message);
+      logger.error("Input Error while updating account display name: " + err.message);
     }
     else if (err instanceof DatabaseError) {
-      logger.error("Database Error while updating account username: " + err.message);
+      logger.error("Database Error while updating account display name: " + err.message);
     } else {
-      logger.error("Unexpected error while updating account username: " + err.message);
+      logger.error("Unexpected error while updating account display name: " + err.message);
     }
     throw err;
   }
