@@ -116,9 +116,22 @@ async function addAccount(email, displayName, username, password) {
 async function getSingleAccount(username){
 
 }
-
+/**
+ * Query all account objects inside a MongoDb collection.
+ * Collection specified by accountCollection.
+ * @returns array containing account objects.
+ * @throws DatabaseError if query is unsuccessful.
+ */
 async function getAllAccounts(){
-  
+  let accountsArray;
+    // Try reading from database and converting result to an array
+    try {
+        accountsArray = await collection.find().toArray();
+       return accountsArray;
+
+    } catch (error) {
+        throw new DatabaseError("Error while reading account data from database: " + error.message);
+    }
 }
 /**
  * Update an accounts username with the new username passed in.
