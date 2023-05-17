@@ -216,6 +216,16 @@ async function updateUsername(currentUsername, newUsername) {
   }
 }
 
+/**
+ * Update an account document inside a mongoDB with a new password.
+ * Validates if the password is strong and if it is not the same as the old password.
+ * @param {*} username of the account to update.
+ * @param {*} password of the current account.
+ * @param {*} newPassword to replace the current password.
+ * @returns True if account password was updated, false otherwise.
+ * @throws Database error if account with username does not exist.
+ * @throws InvalidInputError if the newPassword does not meet requirments.
+ */
 async function updatePassword(username, password, newPassword){
 
   try {
