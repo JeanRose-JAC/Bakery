@@ -1,5 +1,6 @@
 const validator = require('validator');
 const { InvalidInputError } = require("./invalidInputError.js");
+const logger = require("../logger.js");
 //test from desktop
 
 /**
@@ -40,6 +41,7 @@ const { InvalidInputError } = require("./invalidInputError.js");
  */
 function isEmailValid(email){
 
+    logger.info("Email is " + email);
     // User validator isEmail(str,[, options]) ** only checks for format
     if (!validator.isEmail(email))
         throw new InvalidInputError("\nEmail format is invalid. Accepted format: xyz@domain.com");

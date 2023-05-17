@@ -1,5 +1,5 @@
 const { InvalidInputError } = require('../models/invalidInputError');
-const { DatabaseError } = require('../models/DatabaseError');
+const { DatabaseError } = require('../models/databaseError');
 const {faker} = require('@faker-js/faker');
 const logger = require("../logger.js");
 
@@ -37,7 +37,7 @@ const generateAccountData_Old = () => userData.splice(Math.floor((Math.random() 
 
 // Updated version of generating account data using faker.js 
 function generateAccountData(){
-    return  {email:faker.internet.email(), displayName: "HisHighnessMishMish", username: "username16"  , password: faker.internet.password()};
+    return  {email:faker.internet.email(), displayName: "HisHighnessMishMish", username: "username16"  , password: "testPassword123!"};
 }
 
 // Prep mock database
@@ -92,7 +92,7 @@ afterEach(async () => {
 */
 test("Can add account to DB", async () => {
     // Generate account data
-    const { email, displayName, username, password } = generateAccountData_Old();
+    const { email, displayName, username, password } = generateAccountData();
     let filter = { email: email, displayName: displayName, username: username, password: password };
     
     
@@ -117,7 +117,7 @@ test("Can add account to DB", async () => {
 });
 test("Cannot add duplicate accounts to DB", async () => {
     // Generate account data
-    const { email, displayName, username, password } = generateAccountData_Old();
+    const { email, displayName, username, password } = generateAccountData();
 
     // Add first account to database  
     await model.addAccount(email, displayName, username, password);
@@ -140,35 +140,35 @@ test("Cannot add duplicate accounts to DB", async () => {
 });
 
 test("Cannot add account with an empty Username", async () => {
-    const { email, displayName, username, password } = generateAccountData_Old();
+    const { email, displayName, username, password } = generateAccountData();
     const emptyuserName = "";
     
     // expect InvalidInputError exception to be thrown
     await expect(()=> model.addAccount(email, displayName, emptyuserName,password)).rejects.toThrow(InvalidInputError);
 });
 test("Cannot add account with an empty Display Name", async () => {
-    const { email, displayName, username, password } = generateAccountData_Old();
+    const { email, displayName, username, password } = generateAccountData();
     const emptydisplayName = "";
     
     // expect InvalidInputError exception to be thrown
     await expect(()=> model.addAccount(email, emptydisplayName, username ,password)).rejects.toThrow(InvalidInputError);
 });
 test("Cannot add account with an invalid Username", async () => {
-    const { email, displayName, username, password } = generateAccountData_Old();
+    const { email, displayName, username, password } = generateAccountData();
     const invalidUsername = "NoSpecialCharacters!_";
     
     // expect InvalidInputError exception to be thrown
     await expect(()=> model.addAccount(email, displayName, invalidUsername ,password)).rejects.toThrow(InvalidInputError);
 });
 test("Cannot add account with an invalid Display Name", async () => {
-    const { email, displayName, username, password } = generateAccountData_Old();
+    const { email, displayName, username, password } = generateAccountData();
     const invalidDisplayName = "";
     
     // expect InvalidInputError exception to be thrown
     await expect(()=> model.addAccount(email, invalidDisplayName, username ,password)).rejects.toThrow(InvalidInputError);
 });
 test("Cannot add account with an invalid password", async () => {
-    const { email, displayName, username, password } = generateAccountData_Old();
+    const { email, displayName, username, password } = generateAccountData();
     const invalidPassword = "lamepassword";
     
     // expect InvalidInputError exception to be thrown
