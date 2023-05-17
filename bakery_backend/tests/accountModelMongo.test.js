@@ -175,23 +175,6 @@ test("Cannot add account with an invalid password", async () => {
     await expect(()=> model.addAccount(email, displayName, username ,invalidPassword)).rejects.toThrow(InvalidInputError);
 });
 
-
-// test("Cannot add account with a number non alphabet/number name", async () => {
-//     const { username, password } = generateAccountData();
-//     const nameWithNumber = "Pikachu1-_";
-
-//     // expect InvalidInputError exception to be thrown
-//     await expect(()=> model.addAccount(nameWithNumber,password)).rejects.toThrow(InvalidInputError);
-// });
-
-// test("Cannot add account with invalid password", async () => {
-//     const { username, password } = generateAccountData();
-//     const  invalidPassword = "Pikachu1_"; //TODO: Allow passwords to have other characters
-
-//     // expect InvalidInputError exception to be thrown
-//     await expect(()=> model.addAccount(username,invalidPassword)).rejects.toThrow(InvalidInputError);
-// });
-
 // // -------------
 // // Read 
 // // -------------
