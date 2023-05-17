@@ -188,6 +188,55 @@ async function updatePassword(username, password, newPassword){
  * @throws InvalidInputError if new display does not meet requirements (Has special characters)
  */
 async function updateDisplayName(displayName, newDisplayName) {
+  try {
+    // Query database for instance of account, returns null if not found
+    let account = await collection.findOne({ username: currentUsername });
+
+    // Check if the account we are updating exists
+    if (account == null) {
+      throw new DatabaseError(
+        "\nAccount with username '" + currentUsername + "does not exist"
+      );
+    } 
+    // Check if new username is already taken
+    // ----------------------------------------
+    account = await collection.findOne({ username: newUsername })
+
+    if (account != null) {
+      throw new DatabaseError(
+        "\nUsername \" " + username + "\" is already taken"
+      );
+    }
+
+    // validate new username 
+    // ----------------------
+    else if (validateUtilsAcc.isUsernameValid(newUsername)) {
+
+      // filter to find account to update
+      const filter = {username: currentUsername}
+
+      // updates to be made on document
+      const updateFilter = {$set: {username: newUsername}};
+
+      const result = await collection.updateOne(filter, updateFilter);
+
+      // Return result values 
+      if(result.modifiedCount > 0)
+        return true;
+
+      return false;
+    }
+  } catch (err) {
+    if (err instanceof InvalidInputError) {
+      logger.error("Input Error while updating account username: " + err.message);
+    }
+    else if (err instanceof DatabaseError) {
+      logger.error("Database Error while updating account username: " + err.message);
+    } else {
+      logger.error("Unexpected error while updating account username: " + err.message);
+    }
+    throw err;
+  }
 
 }
 module.exports = { setCollection, getCollection, addAccount, updateUsername, close };
