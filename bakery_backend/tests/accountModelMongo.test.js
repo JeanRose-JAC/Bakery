@@ -36,6 +36,7 @@ const userData = [
 const generateAccountData_Old = () => userData.splice(Math.floor((Math.random() * userData.length)), 1)[0];
 
 // Updated version of generating account data using faker.js 
+// Default password isntead of faker js because reg expression suck
 function generateAccountData(){
     return  {email:faker.internet.email(), displayName: "HisHighnessMishMish", username: "username16"  , password: "testPassword123!"};
 }
