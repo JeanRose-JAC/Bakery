@@ -113,6 +113,13 @@ async function addAccount(email, displayName, username, password) {
   }
 }
 
+async function getSingleAccount(username){
+
+}
+
+async function getAllAccounts(){
+  
+}
 /**
  * Update an accounts username with the new username passed in.
  * 
