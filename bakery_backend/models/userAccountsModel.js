@@ -117,7 +117,7 @@ async function addAccount(email, displayName, username, password) {
  * that was passed in.
  * @param {*} username to find in database.
  * @returns Account object
- * @throws DatabaseError if fails to read from database.
+ * @throws DatabaseError if fails to read from database. or
  * @throws DatabaseError no account was found.
  */
 async function getSingleAccount(username){

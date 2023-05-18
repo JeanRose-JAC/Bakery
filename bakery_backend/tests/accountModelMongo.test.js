@@ -235,23 +235,38 @@ test("Can read existing account using model ", async () => {
  
 });
 
-// test("Cannot read account that doesn't exist (Valid name)", async () => {
+test("Cannot read account that doesn't exist (Valid name)", async () => {
 
-//     // Add some accounts to the database
-//     const { username, password } = generateAccountData();
-//     let filter = { username: username, password: password };
-//     let collection = await model.getCollection();
+    // Add some accounts to the database
+    const { email, displayName, username, password } = generateAccountData();
+    let filter = { username: username, password: password };
+    let collection = await model.getCollection();
     
-//     // TODO: use fakerJS for fake usernames and passwords
-//     await collection.insertOne(filter);// add account to database  
+    // TODO: use fakerJS for fake usernames and passwords
+    await collection.insertOne(filter);// add account to database  
 
-//     let notRealUsername = "KuiHuaReal";
-//     let result = await collection.findOne({username: notRealUsername});
+    let notRealUsername = "KuiHuaReal";
+    let result = await collection.findOne({username: notRealUsername});
 
-//     // Check account that doesn't exist
-//     await expect(result == null).toBe(true);
-// });
+    // Check account that doesn't exist
+    await expect(result == null).toBe(true);
+});
+test("Cannot read account that doesn't exist (Valid name) using model", async () => {
 
+    // Add some accounts to the database
+    const { email, displayName, username, password } = generateAccountData();
+    let collection = await model.getCollection();
+    
+    // add account to database 
+    let filter = { username: username, password: password }; 
+    await collection.insertOne(filter);
+
+    // Fake Data 
+    let notRealUsername = "KuiHuaReal";
+    
+    // Check account that doesn't exist
+    await expect(()=> model.getSingleAccount(notRealUsername).rejects.toThrow(DatabaseError));
+});
 // // Read many 
 // test("Can read entire collection", async () => {
 
