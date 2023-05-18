@@ -356,17 +356,18 @@ async function editDisplayName(request, response){
  * 
  */
 async function deleteAccount(request, response){
+
     // Body params for new username
-    let name = request.body.username;
+    let username = request.body.username;
     let password = request.body.password;
-    logger.debug("remove account json request info - name: " + name + ", password: " + password);
+    logger.debug("remove account json request info - name: " + username + ", password: " + password);
 
    // deleting account
    try {
 
-         let account = await model.deleteOneAccount(name, password);
+         let account = await accountModel.removeAccount(username, password);
          logger.debug("Account value : " + account);
-         // if account is null, handle appropriately
+         // if account is null, handle appropriately (unexpected)
          if(account == null || account == undefined) {
         
              response.status(500)
