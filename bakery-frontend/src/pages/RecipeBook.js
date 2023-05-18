@@ -4,7 +4,7 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 function RecipeBook(){
-    const state = useLocation();
+    const {state} = useLocation();
     const [recipes, setRecipes] = useState([]);
 
     const callGetRecipes = async() => {
