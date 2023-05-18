@@ -16,6 +16,7 @@ import { Dessert } from 'pages/Dessert';
 import { Profile } from 'pages/Profile';
 import { Favorite } from 'pages/Favorite';
 import { Culture } from 'pages/Culture';
+import { Search } from 'pages/Search';
 
 
 /**
@@ -41,6 +42,7 @@ function App() {
             <Route path="Dinner" element={<Dinner/>}/>
             <Route path="Dessert" element={<Dessert/>}/>
             <Route path="Culture" element={<Culture/>}/>
+            <Route path="Search" element={<Search/>}/>
             <Route path="Profile" element={<Profile/>}/>
             <Route path="Favorite" element={<Favorite/>}/>     
           </Route>

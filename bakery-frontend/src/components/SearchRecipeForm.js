@@ -32,7 +32,6 @@ function SearchRecipeForm(props){
     return(
         <form onSubmit={handleSubmit}>
 
-        <label htmlFor="Search" column sm="2">Search</label>
         <input type="text" placeholder="Search..." onChange={(e) => setQuery(e.target.value)}></input>
 
         {query  && <button type="submit">Get Recipes</button>}
