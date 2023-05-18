@@ -20,7 +20,7 @@ function Recipe(){
             {state.fromBook && isLoggedIn ? <div>                        <p></p>
                         <Link to="/recipe/edit" state={{recipe: state.recipe}}>Edit Recipe</Link>
                         <p></p>
-                        <Link to="/recipe/removal" state={{recipe: state.recipe}}>Delete Recipe</Link>
+                        <Link to="/recipe/removal" state={{recipe: state.recipe, book: state.book}}>Delete Recipe</Link>
             </div> : null} 
         </div>
     );

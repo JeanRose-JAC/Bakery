@@ -6,6 +6,7 @@ const logger = require('../logger.js');
 let collectionName = "recipes";
 let recipesCollection;
 let databaseConnection;
+var ObjectId = require('mongodb').ObjectId; 
 
 /**
  * Sets the collection in the database
@@ -258,11 +259,11 @@ async function deleteRecipe(userId, title){
  * @throws InvalidInputError if any of the input fields are invalid
  */
 async function getOneRecipeById(userId, id){
-  recipesValidateUtils.areKeyValid(userId, title);
-
   try{
 
-    return await recipesCollection.findOne({userId: userId, _id: id});
+    let _id = new ObjectId(id);
+
+    return await recipesCollection.findOne({userId: userId, _id: _id});
   }
   catch (err) {
     logger.error("From getOneRecipeById(): " + err.message);

@@ -29,13 +29,13 @@ function UpdateBookRecipeRemoval(props){
             alert(result.errMessage);
         }
         else{
-            navigate("/book", {state:{book: props.book}})
+            navigate("/favorite")        
         }
     }
 
     return(
         <div className="center">
-            <h1>Remove Recipe From Book {props.book.name}</h1>
+            <h1>Remove Recipe</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="Title" column sm="2">Title</label>
                 <input value={title} type="text" placeholder="Title..." onChange={(e) => setTitle(e.target.value)}></input>

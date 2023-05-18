@@ -19,7 +19,7 @@ function ListRecipeObjects({recipes, name, book}){
                         <MDBCardText>
                             {recipe.instructions}
                         </MDBCardText>
-                        <Link to="/recipe" state={ {recipe: recipe, fromSearch: false, fromBook: true}}>Read More</Link>
+                        <Link to="/recipe" state={ {recipe: recipe, fromSearch: false, fromBook: true, book: book}}>Read More</Link>
                         <p></p>
                         <Link to="/recipe/edit" state={{recipe: recipe}}>Edit Recipe</Link>
                         <p></p>

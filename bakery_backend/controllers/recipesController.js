@@ -277,12 +277,12 @@ async function showOneRecipeById(req, res){
         let result = await recipesModel.getOneRecipeById(userId, id);
 
         if(result == null){
-            output = "Inexistent recipe by "+ userId +": " + title;
+            output = "Inexistent recipe by "+ userId +": " + result.title;
             logger.error(output);
             throw new InvalidInputError(output);
         }
         else{
-            output = "Successfully retrieved recipe: " + title;
+            output = "Successfully retrieved recipe: " + result.title;
             res.status("200");
             logger.info(output);
             res.send(result);
