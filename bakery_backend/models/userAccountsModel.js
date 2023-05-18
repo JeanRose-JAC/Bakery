@@ -231,12 +231,12 @@ async function updatePassword(username, password, newPassword){
   try {
 
   // Query database for instance of account, returns null if not found
- let account = await collection.findOne({ username: currentUsername });
+ let account = await collection.findOne({ username: username });
 
  // Check if the account we are updating exists
  if (account == null) {
    throw new DatabaseError(
-     "\nAccount with username '" + currentUsername + "does not exist"
+     "\nAccount with username '" + username + "does not exist"
    );
  } 
     // validate new password is infact new 

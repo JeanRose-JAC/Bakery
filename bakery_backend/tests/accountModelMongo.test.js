@@ -331,6 +331,32 @@ test("Update username success case", async () => {
     expect(databaseResult.username == newUsername).toBe(true);
 
 });
+test("Update username success case using model", async () => {
+    
+    // create account
+    const { email, displayName, username, password } = generateAccountData();
+    await model.addAccount(email, displayName, username ,password) // add account to database
+
+    // Prep for update
+    let newUsername = "newUsernameGoCrazy";
+    let filter = { username: username, password: password };
+
+    // Easy access to collection
+    let collection = await model.getCollection();
+    
+    // Update specific document in database
+    let results = await model.updateUsername(username, newUsername);
+
+    // Find updated document using the new username
+    let databaseResult = await collection.findOne({username: newUsername}); // this returns document directly
+
+    // Check that model returned true
+    expect(results === true).toBe(true);
+    // Verify new username is equal is what we set it to
+    expect(databaseResult.username == newUsername).toBe(true);
+
+
+});
 test("Update display name success case", async () => {
     
     // create account
@@ -352,6 +378,31 @@ test("Update display name success case", async () => {
 
     // Check that an update was made
     expect(results.modifiedCount === 1).toBe(true);
+    // Verify new username is equal is what we set it to
+    expect(databaseResult.displayName == newDisplayName).toBe(true);
+
+});
+test("Update display name success case using model", async () => {
+    
+    // create account
+    const { email, displayName, username, password } = generateAccountData();
+    await model.addAccount(email, displayName, username ,password) // add account to database
+
+    // Prep for update
+    let newDisplayName = "newUsernameGoCrazy";
+    let filter = { username: username, password: password };
+
+    // Easy access to collection
+    let collection = await model.getCollection();
+    
+    // Update specific document in database
+    let results = await model.updateDisplayName(username, newDisplayName);
+
+    // Find updated document using username
+    let databaseResult = await collection.findOne({username: username}); // this returns document directly
+
+    // Check that model returns appropriate boolean
+    expect(results === true).toBe(true);
     // Verify new username is equal is what we set it to
     expect(databaseResult.displayName == newDisplayName).toBe(true);
 
@@ -381,30 +432,57 @@ test("Update password success case", async () => {
     expect(databaseResult.password == newPassword).toBe(true);
 
 });
-
-// test("Can't update account with an invalid username", async () => {
-     
-//     // create account
-//      const { username, password } = generateAccountData();
-//      let filter = { username: username, password: password };
-//      let collection = await model.getCollection();
-//      await collection.insertOne(filter);
+test("Update password success case using model", async () => {
     
-//      let invalidUsername = "newPikachu_!";
+    // create account
+    const { email, displayName, username, password } = generateAccountData();
+    await model.addAccount(email, displayName, username ,password) // add account to database
+
+    // Prep for update
+    let newPassword = "newPasswordReallyGood123!";
+
+    // Easy access to collection
+    let collection = await model.getCollection();
+    
+    // Update specific document in database
+    let results = await model.updatePassword(username,password, newPassword)
+
+    // Find updated document using username
+    let databaseResult = await collection.findOne({username: username}); // this returns document directly
+
+    // Check that an update was made
+    expect(results === true).toBe(true);
+    // Verify new username is equal is what we set it to
+    expect(databaseResult.password == newPassword).toBe(true);
+
+});
+
+test("Update username failure case - empty name", async () => {
+     
+    // create account
+    const { email, displayName, username, password } = generateAccountData();
+    let filter = { email: email, displayName: displayName, username: username, password: password };
+
+    let collection = await model.getCollection();
+    await collection.insertOne(filter);
+    
+    let invalidUsername = "";
 
         
-//     // Expect method to throw
-//     await expect(()=> model.updateOneUsername(username, invalidUsername)).rejects.toThrow(InvalidInputError);
+    // Expect method to throw
+    await expect(()=> model.updateUsername(username, invalidUsername)).rejects.toThrow(InvalidInputError);
 
-//      // check if current account has updated
-//      let accountCollection = await model.getCollection(); // convenient access to collection
-//      let databaseResult = await accountCollection.findOne({username: username}); // this returns document directly
+     // check if current account has updated
+     let accountCollection = await model.getCollection(); // convenient access to collection
+     let databaseResult = await accountCollection.findOne({username: username}); // this returns document directly
 
-//      // Check database for proper update
-//      expect(databaseResult.username.toLowerCase() == username.toLowerCase()).toBe(true);
-//      expect(databaseResult.password.toLowerCase() == password.toLowerCase()).toBe(true);
+     // Check that document added has not changed
+     expect(databaseResult.email == email).toBe(true);
+     expect(databaseResult.displayName == displayName).toBe(true);
+     expect(databaseResult.username == username).toBe(true);
+     expect(databaseResult.password == password).toBe(true);
 
-// });
+});
 // test("Can't update existing account with an already existing username", async () => {
 //     let existingUsername = "newPikachu";
      
