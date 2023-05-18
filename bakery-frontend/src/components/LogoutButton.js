@@ -15,9 +15,10 @@ function LogoutButton(){
             
             const response = await fetch("http://localhost:1339/session/logout", requestOptions);
 
-            if(response.status == 401){
+            if(response.status === 401){
                 alert("Already logged out on server. Will log out on front-end as well.");
                 setIsLoggedIn(false);
+                navigate("/");
                 return;
             }
             else if (response.status === 200){
@@ -28,11 +29,13 @@ function LogoutButton(){
             else{
                 alert("Something went wrong. Will log out on front-end.");
                 setIsLoggedIn(false);
+                navigate("/");
             }
         }
         catch(error){
             alert("Something went wrong. Logging out.");
             setIsLoggedIn(false);
+            navigate("/");
         }
     }
 
