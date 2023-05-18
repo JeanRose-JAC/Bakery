@@ -30,7 +30,7 @@ function UpdateBookNameForm(props){
             alert(result.errMessage);
         }
         else if (response.status === 200){
-            navigate("/book", {state:{book: props.book}})
+            navigate("/favorite");
         }
         else{
             alert(result.errMessage);
