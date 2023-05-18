@@ -230,18 +230,22 @@ async function updatePassword(username, password, newPassword){
 
   try {
 
-  // Query database for instance of account, returns null if not found
- let account = await collection.findOne({ username: username });
+      // Query database for instance of account, returns null if not found
+    let account = await collection.findOne({ username: username });
 
- // Check if the account we are updating exists
- if (account == null) {
-   throw new DatabaseError(
-     "\nAccount with username '" + username + "does not exist"
-   );
- } 
+    // Check if the account we are updating exists
+    if (account == null) {
+      throw new DatabaseError(
+        "\nAccount with username '" + username + "does not exist"
+      );
+    } 
     // validate new password is infact new 
     if (password == newPassword){
-      throw new InvalidInputError("New password cannot be old password");
+      throw new InvalidInputError("New password cannot be old password.");
+    }
+    // Validate that the current password passed in is correct
+    if(account.password != password){
+      throw new InvalidInputError("Current password is incorrect.");
     }
     // validate newPassword 
     if(validateUtilsAcc.isPasswordValid(newPassword)){
