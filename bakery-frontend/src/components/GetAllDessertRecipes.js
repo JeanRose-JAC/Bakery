@@ -14,7 +14,7 @@ function GetAllDessertRecipes(){
     },[recipe])
     return(
         <div className="center">
-            <h1> recipes</h1>
+            <h1>Dessert Recipes</h1>
             {recipe[0] && <ListRecipesFromSearch recipes={recipe}/>}
         </div>
     );
