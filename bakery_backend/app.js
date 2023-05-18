@@ -1,4 +1,5 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const app = express();
 const logger = require('./logger');
 const pinohttp = require('pino-http');
@@ -24,7 +25,6 @@ res.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, DELETE, OPT
 next();
 });
 app.use(cookieParser());
-
 
 const controllers = ['userAccountsController', 'recipesController', 'recipeBooksController', 'sessionController', 'errorController'];
 
