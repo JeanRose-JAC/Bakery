@@ -56,7 +56,6 @@ function Header() {
                   <MDBDropdownItem link href='/snack'>Snack</MDBDropdownItem>
                   <MDBDropdownItem link href='/dinner'>Dinner</MDBDropdownItem>
                   <MDBDropdownItem link href='/dessert'>Dessert</MDBDropdownItem>
-                  <MDBDropdownItem link href='/search'>Search</MDBDropdownItem>
                 </MDBDropdownMenu>
               </MDBDropdown>
             </MDBNavbarItem>
