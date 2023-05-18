@@ -545,9 +545,6 @@ test("Update username failure case - username is taken", async () => {
     let collection = await model.getCollection();
     await collection.insertOne(filter);
     await collection.insertOne(secondaccount);
-    
-    let invalidUsername = "badUsername!_";
-
         
     // Expect method to throw -- updating one account with username of second account
     await expect(()=> model.updateUsername(username, secondaccount.username)).rejects.toThrow(DatabaseError);
