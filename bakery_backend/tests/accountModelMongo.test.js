@@ -639,6 +639,133 @@ test("Update displayName failure case - account does not exist", async () => {
      expect(databaseResult.password == password).toBe(true);
 
 });
+test("Update password failure case - empty password", async () => {
+     
+    // create account
+    const { email, displayName, username, password } = generateAccountData();
+    let filter = { email: email, displayName: displayName, username: username, password: password };
+
+    let collection = await model.getCollection();
+    await collection.insertOne(filter);
+    
+    let invalidPassword = "";
+
+        
+    // Expect method to throw
+    await expect(()=> model.updatePassword(username,password, invalidPassword)).rejects.toThrow(InvalidInputError);
+
+     // check if current account has updated
+     let accountCollection = await model.getCollection(); // convenient access to collection
+     let databaseResult = await accountCollection.findOne({username: username}); // this returns document directly
+
+     // Check that document added has not changed
+     expect(databaseResult.email == email).toBe(true);
+     expect(databaseResult.displayName == displayName).toBe(true);
+     expect(databaseResult.username == username).toBe(true);
+     expect(databaseResult.password == password).toBe(true);
+
+});
+test("Update password failure case - invalidPassword", async () => {
+     
+    // create account
+    const { email, displayName, username, password } = generateAccountData();
+    let filter = { email: email, displayName: displayName, username: username, password: password };
+
+    let collection = await model.getCollection();
+    await collection.insertOne(filter);
+    
+    let invalidPassword = "notstrongenough";
+
+        
+    // Expect method to throw
+    await expect(()=> model.updatePassword(username,password, invalidPassword)).rejects.toThrow(InvalidInputError);
+
+     // check if current account has updated
+     let accountCollection = await model.getCollection(); // convenient access to collection
+     let databaseResult = await accountCollection.findOne({username: username}); // this returns document directly
+
+     // Check that document added has not changed
+     expect(databaseResult.email == email).toBe(true);
+     expect(databaseResult.displayName == displayName).toBe(true);
+     expect(databaseResult.username == username).toBe(true);
+     expect(databaseResult.password == password).toBe(true);
+
+});
+test("Update password failure case - same password", async () => {
+     
+    // create account
+    const { email, displayName, username, password } = generateAccountData();
+    let filter = { email: email, displayName: displayName, username: username, password: password };
+
+    let collection = await model.getCollection();
+    await collection.insertOne(filter);
+        
+    // Expect method to throw
+    await expect(()=> model.updatePassword(username,password, password)).rejects.toThrow(InvalidInputError);
+
+     // check if current account has updated
+     let accountCollection = await model.getCollection(); // convenient access to collection
+     let databaseResult = await accountCollection.findOne({username: username}); // this returns document directly
+
+     // Check that document added has not changed
+     expect(databaseResult.email == email).toBe(true);
+     expect(databaseResult.displayName == displayName).toBe(true);
+     expect(databaseResult.username == username).toBe(true);
+     expect(databaseResult.password == password).toBe(true);
+
+});
+test("Update password failure case - account does not exist", async () => {
+     
+    // create account
+    const { email, displayName, username, password } = generateAccountData();
+    let filter = { email: email, displayName: displayName, username: username, password: password };
+
+    let collection = await model.getCollection();
+    await collection.insertOne(filter);
+    
+    let invalidPassword = "notstrongenough";
+
+        
+    // Expect method to throw
+    await expect(()=> model.updatePassword("FakeAccount",password, invalidPassword)).rejects.toThrow(DatabaseError);
+
+     // check if current account has updated
+     let accountCollection = await model.getCollection(); // convenient access to collection
+     let databaseResult = await accountCollection.findOne({username: username}); // this returns document directly
+
+     // Check that document added has not changed
+     expect(databaseResult.email == email).toBe(true);
+     expect(databaseResult.displayName == displayName).toBe(true);
+     expect(databaseResult.username == username).toBe(true);
+     expect(databaseResult.password == password).toBe(true);
+
+});
+test("Update password failure case - account current password passed in doesnt match currentPass passed in", async () => {
+     
+    // create account
+    const { email, displayName, username, password } = generateAccountData();
+    let filter = { email: email, displayName: displayName, username: username, password: password };
+
+    let collection = await model.getCollection();
+    await collection.insertOne(filter);
+    
+    let strongPassword = "goodPassword123!";
+
+        
+    // Expect method to throw
+    await expect(()=> model.updatePassword(username,"wrongPassword", strongPassword)).rejects.toThrow(InvalidInputError);
+
+     // check if current account has updated
+     let accountCollection = await model.getCollection(); // convenient access to collection
+     let databaseResult = await accountCollection.findOne({username: username}); // this returns document directly
+
+     // Check that document added has not changed
+     expect(databaseResult.email == email).toBe(true);
+     expect(databaseResult.displayName == displayName).toBe(true);
+     expect(databaseResult.username == username).toBe(true);
+     expect(databaseResult.password == password).toBe(true);
+
+});
 // // Delete
 // test("Can delete existing account", async () => {
      
