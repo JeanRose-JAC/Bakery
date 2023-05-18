@@ -384,4 +384,5 @@ module.exports = {
     updateUsername, 
     updateDisplayName,
     updatePassword,
+    removeAccount,
     close };
