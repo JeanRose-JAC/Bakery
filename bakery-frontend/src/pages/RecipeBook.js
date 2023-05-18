@@ -12,6 +12,7 @@ function RecipeBook(){
 
         const requestOptions = {
             method: "GET",
+            credentials: "include", 
             headers: {
                 "Content-Type": "application/json; charset=UTF-8"
             }
@@ -28,7 +29,7 @@ function RecipeBook(){
     
     return(
         <div className="center">
-            <h1>Recipes</h1>
+            {state && <h1>Recipes from {state.book.name}</h1>}
             <NavLink to="/book/addition" state={{book:state.book}}><button>Add Recipes</button></NavLink>
             <p></p>
             <button onClick={callGetRecipes}>Get Recipes</button>
