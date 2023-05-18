@@ -7,12 +7,13 @@ function UpdateBookRecipeAddition({book}){
     const getAllRecipes = async()=>{
         const requestOptions = {
             method: "GET",
+            credentials : "include",
             headers: {
                 "Content-Type": "application/json; charset=UTF-8"
             }
         }
     
-        const response = await fetch ("http://localhost:1339/recipe/recipe", requestOptions);
+        const response = await fetch ("http://localhost:1339/recipe", requestOptions);
         const result = await response.json();
         setRecipes(result);
     }

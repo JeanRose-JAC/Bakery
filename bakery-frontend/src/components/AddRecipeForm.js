@@ -12,7 +12,7 @@ function AddRecipeForm(props){
     const [title, setTitle] = useState(props.recipe.title);
     const [type, setType] = useState(props.recipe.type);
     const [ingredients, setIngredient] = useState(props.recipe.ingredients);
-    const [servings, setServings] = useState(props.recipe.servings);
+    const [servings, setServings] = useState(null);
     const [instructions, setInstructions] = useState(props.recipe.instructions);
     const navigate = useNavigate();
 
@@ -36,10 +36,10 @@ function AddRecipeForm(props){
         const response = await fetch ("http://localhost:1339/recipe", requestOptions)
         const result = await response.json();
         if(response.status === 400){
-            alert(response.errorMessage);
+            alert("Status 400:" + response.errorMessage);
         }
         else if (response.status === 500){
-            alert(response.errorMessage);
+            alert("Status 500:" + response.errorMessage);
         }
         else{
             navigate("/recipe", {state:{recipe: result, fromSearch: false}})

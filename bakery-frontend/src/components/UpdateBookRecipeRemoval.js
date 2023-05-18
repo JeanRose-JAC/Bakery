@@ -10,6 +10,7 @@ function UpdateBookRecipeRemoval(props){
 
         const requestOptions = {
             method: "PUT",
+            credentials : "include",
             body: JSON.stringify({
                 recipeId: props.recipe._id,
                 name: props.book.name

@@ -11,6 +11,7 @@ function UpdateBookNameForm(props){
 
         const requestOptions = {
             method: "PUT",
+            credentials : "include",
             body: JSON.stringify({
                 name: name,
                 newName: newName,
@@ -28,8 +29,11 @@ function UpdateBookNameForm(props){
         else if (response.status === 500){
             alert(result.errMessage);
         }
-        else{
+        else if (response.status === 200){
             navigate("/book", {state:{book: props.book}})
+        }
+        else{
+            alert(result.errMessage);
         }
     }
 

@@ -23,7 +23,7 @@ async function loginUser(request, response) {
                 logger.info("Successfully logged in for " + username);
     
                 // Create a session object that will expire in 20 minutes
-                const sessionId = createSession(username, 20); 
+                const sessionId = createSession(username, 30); 
     
                     // Save cookie that will expire.
                 response.cookie("sessionId", sessionId, { expires: getSession(sessionId).expiresAt , httpOnly: true});

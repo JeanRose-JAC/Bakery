@@ -22,6 +22,7 @@ function UpdateRecipeForm(props){
 
         const requestOptions = {
             method: "PUT",
+            credentials : "include",
             body: JSON.stringify({
                 newTitle:newTitle, 
                 newIngredients:newIngredients, 
