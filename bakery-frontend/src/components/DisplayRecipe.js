@@ -9,19 +9,15 @@ import { Card } from "./Card";
 function DisplayRecipe(props){
 
     return(
-        <Card id="recipeCard">
+        <div>
             <h3>{props.recipe.title}</h3>
-            <p>Published by {props.recipe.userId}</p>
-            
-            <p>Type: {props.recipe.type}</p>
 
             <p>Ingredients: {props.recipe.ingredients}</p>
             
             <p>Servings: {props.recipe.servings}</p>
             
             <p>Instructions: {props.recipe.instructions}</p>
-
-        </Card>
+        </div>
     )
 
 }

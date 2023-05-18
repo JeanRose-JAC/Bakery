@@ -6,6 +6,8 @@ import {
     MDBBtn
   } from 'mdb-react-ui-kit';
 
+  import { Link } from 'react-router-dom';
+
 /**
  * Displays a list of all recipes with username and title 
  * 
@@ -23,8 +25,13 @@ function ListRecipesFromSearch({recipes}){
                         <MDBCardText>
                             {recipe.instructions}
                         </MDBCardText>
-                    <MDBBtn>Read More</MDBBtn>
-                    <MDBBtn>Add to recipe book</MDBBtn>
+                        <Link  to="/recipe" state={ {recipe: recipe, fromSearch: true}}>
+                            Read More
+                        </Link>
+                        <p></p>
+                        <Link to="/recipe/creation" state={ {recipe: recipe, fromSearch: true}}>
+                            Add to recipe book
+                        </Link>
                 </MDBCardBody>
             </MDBCard>
          ))}
