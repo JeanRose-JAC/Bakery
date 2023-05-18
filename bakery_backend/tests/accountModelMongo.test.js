@@ -345,17 +345,18 @@ test("Update display name success case", async () => {
     let collection = await model.getCollection();
     
     // Update specific document in database
-    let results = await collection.updateOne(filter,{$set:{username:newDisplayName}})
+    let results = await collection.updateOne(filter,{$set:{displayName:newDisplayName}})
 
-    // Find updated document using the new username
-    let databaseResult = await collection.findOne({username: newDisplayName}); // this returns document directly
+    // Find updated document using username
+    let databaseResult = await collection.findOne({username: username}); // this returns document directly
 
     // Check that an update was made
     expect(results.modifiedCount === 1).toBe(true);
     // Verify new username is equal is what we set it to
-    expect(databaseResult.username == newDisplayName).toBe(true);
+    expect(databaseResult.displayName == newDisplayName).toBe(true);
 
 });
+
 // test("Can't update account with an invalid username", async () => {
      
 //     // create account
