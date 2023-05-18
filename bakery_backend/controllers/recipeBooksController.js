@@ -6,6 +6,7 @@ const recipeBooksModel = require("../models/recipeBooksModel.js");
 const model = require('../models/recipeBooksModel.js');
 const DatabaseError  = require('../models/databaseError.js');
 const  InvalidInputError  = require('../models/invalidInputError.js');
+const {authenticateUser, refreshSession} = require('./sessionController.js');
 
 /**
  * Adds a recipe book into the database and sends a response status depending of the result
@@ -16,7 +17,15 @@ const  InvalidInputError  = require('../models/invalidInputError.js');
 router.post('/', addBook);
 async function addBook(request, response) {
     try{
-    const added = await model.addBook(request.body.userId, request.body.name);
+
+        const authenticatedSession = authenticateUser(request);
+        if (!authenticatedSession) {
+            response.sendStatus(401); // Unauthorized access
+            return;
+        }
+        refreshSession(request, response);
+
+    const added = await model.addBook(authenticatedSession.userSession.username, request.body.name);
     if(added){
     response.status("200");
     response.send(added)
@@ -52,11 +61,18 @@ async function addBook(request, response) {
  * @param {*} response the response object from the server
  * @param {*} request the request object from the server
  */
-router.get('/:userId/:name', findBook);
+router.get('/user/:name', findBook);
 async function findBook(request, response) {
     try{
 
-        let answer = await model.getSingleRecipeBook(request.params.userId, request.params.name)
+        const authenticatedSession = authenticateUser(request);
+        if (!authenticatedSession) {
+            response.sendStatus(401); // Unauthorized access
+            return;
+        }
+        refreshSession(request, response);
+
+        let answer = await model.getSingleRecipeBook(authenticatedSession.userSession.username, request.params.name)
     
         if(answer != null){
             response.status("200");
@@ -97,6 +113,13 @@ router.get('/', findAllBooks);
 async function findAllBooks(request, response) {
     try{
 
+        const authenticatedSession = authenticateUser(request);
+        if (!authenticatedSession) {
+            response.sendStatus(401); // Unauthorized access
+            return;
+        }
+        refreshSession(request, response);
+
     let answer = await model.getAllRecipeBooks()
  
     if(answer != null){
@@ -105,7 +128,7 @@ async function findAllBooks(request, response) {
     }
 
     else{
-    response.send("There is no recipe book in the database currenctly");
+    response.send("There is no recipe book in the database currently");
     }
 
     }
@@ -113,17 +136,58 @@ async function findAllBooks(request, response) {
     {
         if(err instanceof DatabaseError){
             response.status("500");
-            response.send("system error while trying to all recipes book: "+ err.message);
+            response.send("system error while trying to get all recipes book: "+ err.message);
         }
         else if(err instanceof InvalidInputError){
             response.status("400");
-            response.send("Validation error while trying to all find recipes book" + err.message);
+            response.send("Validation error while trying to get all find recipes book" + err.message);
         }
         else{
             response.status("500");
-            response.send("unexpected error while trying to all find recipes book: "+ err.message);
+            response.send("unexpected error while trying to get all find recipes book: "+ err.message);
         }
     }
+}
+
+router.get("/user", showAllRecipeBookOfOneUser);
+async function showAllRecipeBookOfOneUser(request, response){
+    try{
+
+        const authenticatedSession = authenticateUser(request);
+        if (!authenticatedSession) {
+            response.sendStatus(401); // Unauthorized access
+            return;
+        }
+        refreshSession(request, response);
+
+    let answer = await model.getAllRecipeBooksOfUser(authenticatedSession.userSession.username)
+ 
+    if(answer != null){
+        response.status("200");
+        response.send(answer)
+    }
+
+    else{
+    response.send("This is user does not have any recipe books.");
+    }
+
+    }
+    catch(err)
+    {
+        if(err instanceof DatabaseError){
+            response.status("500");
+            response.send("system error while trying to get all recipes book: "+ err.message);
+        }
+        else if(err instanceof InvalidInputError){
+            response.status("400");
+            response.send("Validation error while trying to get all find recipes book" + err.message);
+        }
+        else{
+            response.status("500");
+            response.send("unexpected error while trying to get all find recipes book: "+ err.message);
+        }
+    }
+
 }
 
 /**
@@ -136,7 +200,14 @@ router.delete('/', deleteBook);
 async function deleteBook(request, response) {
     try{
 
-    let answer = await model.deleteRecipeBook(request.body.userId, request.body.name)
+        const authenticatedSession = authenticateUser(request);
+        if (!authenticatedSession) {
+            response.sendStatus(401); // Unauthorized access
+            return;
+        }
+        refreshSession(request, response);
+
+    let answer = await model.deleteRecipeBook(authenticatedSession.userSession.username, request.body.name)
 
     if(answer.deletedCount == 1){
         response.status("200");
@@ -178,11 +249,18 @@ router.put('/name', updateBookName);
 async function updateBookName(request, response) {
     try{
 
-    let answer = await model.updateRecipeBookName(request.body.userId, request.body.name,request.body.newName)
+        const authenticatedSession = authenticateUser(request);
+        if (!authenticatedSession) {
+            response.sendStatus(401); // Unauthorized access
+            return;
+        }
+        refreshSession(request, response);
+
+    let answer = await model.updateRecipeBookName(authenticatedSession.userSession.username, request.body.name,request.body.newName)
 
     if(answer.modifiedCount != 0){
         response.status("200");
-        const recipe =  await model.getSingleRecipeBook(request.body.userId, request.body.newName);
+        const recipe =  await model.getSingleRecipeBook(authenticatedSession.userSession.username, request.body.newName);
         response.send(recipe);
     }
 
@@ -220,11 +298,18 @@ router.put('/content/new', addRecipeInBook);
 async function addRecipeInBook(request, response) {
     try{
 
-        let answer = await model.updateBookAddRecipe(request.body.userId, request.body.name,request.body.recipeId)
+        const authenticatedSession = authenticateUser(request);
+        if (!authenticatedSession) {
+            response.sendStatus(401); // Unauthorized access
+            return;
+        }
+        refreshSession(request, response);
+
+        let answer = await model.updateBookAddRecipe(authenticatedSession.userSession.username, request.body.name,request.body.recipeId)
     
         if(answer.modifiedCount != 0){
             response.status("200");
-            const recipe =  await model.getSingleRecipeBook(request.body.userId, request.body.name);
+            const recipe =  await model.getSingleRecipeBook(authenticatedSession.userSession.username, request.body.name);
             response.send(recipe);
         }
     
@@ -263,11 +348,18 @@ router.put('/content/removal', deleteRecipeInBook);
 async function deleteRecipeInBook(request, response) {
     try{
 
-        let answer = await model.updateBookDeleteRecipe(request.body.userId, request.body.name,request.body.recipeId)
+        const authenticatedSession = authenticateUser(request);
+        if (!authenticatedSession) {
+            response.sendStatus(401); // Unauthorized access
+            return;
+        }
+        refreshSession(request, response);
+
+        let answer = await model.updateBookDeleteRecipe(authenticatedSession.userSession.username, request.body.name,request.body.recipeId)
     
         if(answer.modifiedCount != 0){
             response.status("200");
-            const recipe =  await model.getSingleRecipeBook(request.body.userId, request.body.name);
+            const recipe =  await model.getSingleRecipeBook(authenticatedSession.userSession.username, request.body.name);
             response.send(recipe);
         }
     

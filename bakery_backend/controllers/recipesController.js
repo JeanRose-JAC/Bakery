@@ -3,7 +3,7 @@ const router = express.Router();
 const routeRoot = '/';
 const logger = require('../logger.js');
 const recipesModel = require("../models/recipesModel.js");
-
+const {authenticateUser, refreshSession} = require('./sessionController.js');
 const InvalidInputError = require('../models/invalidInputError.js');
 const DatabaseError = require('../models/databaseError.js');
 
@@ -14,21 +14,24 @@ router.post('/recipe', createRecipe);
  * 
  * @param {object} req request object with body containing : userId, title, ingredients, serving and instructions 
  * @param {object} res response object with body containing the recipe object
- * 
  */
 async function createRecipe(req, res){
     let output;
 
     try{
-        let userId = "";
+        const authenticatedSession = authenticateUser(request);
+        if (!authenticatedSession) {
+            response.sendStatus(401); // Unauthorized access
+            return;
+        }
+        refreshSession(request, response);
+        
+        let userId = authenticatedSession.userSession.username;
         let title = "";
         let type ="";
         let ingredients = "";
         let servings = "";
         let instructions = "";
-
-        if(req.body.userId != null)            
-            userId = req.body.userId;
 
         if(req.body.title != null)
             title = req.body.title;
@@ -92,6 +95,12 @@ async function showRecipes(req, res){
     let output;
 
     try{
+        const authenticatedSession = authenticateUser(request);
+        if (!authenticatedSession) {
+            response.sendStatus(401); // Unauthorized access
+            return;
+        }
+        refreshSession(request, response);
 
         let result = await recipesModel.getRecipes();
 
@@ -128,7 +137,7 @@ async function showRecipes(req, res){
     }
 }
 
-router.get('/recipe/:userId/', showRecipesOfOneUser);
+router.get('/recipe/user/', showRecipesOfOneUser);
 /**
  * Handles the retrieving of all recipes of one user
  * 
@@ -139,7 +148,14 @@ async function showRecipesOfOneUser(req, res){
     let output;
 
     try{
-        let userId = req.params.userId;
+        const authenticatedSession = authenticateUser(request);
+        if (!authenticatedSession) {
+            response.sendStatus(401); // Unauthorized access
+            return;
+        }
+        refreshSession(request, response);
+
+        let userId = authenticatedSession.userSession.username;
 
         let result = await recipesModel.getRecipesOfOneUser(userId);
 
@@ -179,7 +195,7 @@ async function showRecipesOfOneUser(req, res){
 }
 
 
-router.get('/recipe/:userId/:title', showOneRecipe);
+router.get('/recipe/user/:title', showOneRecipe);
 /**
  * Handles the retrieving of a recipe
  * 
@@ -190,7 +206,14 @@ async function showOneRecipe(req, res){
     let output;
 
     try{
-        let userId = req.params.userId;
+        const authenticatedSession = authenticateUser(request);
+        if (!authenticatedSession) {
+            response.sendStatus(401); // Unauthorized access
+            return;
+        }
+        refreshSession(request, response);
+
+        let userId = authenticatedSession.userSession.username;
         let title = req.params.title;
 
         let result = await recipesModel.getOneRecipe(userId, title);
@@ -230,7 +253,7 @@ async function showOneRecipe(req, res){
     }
 }
 
-router.put('/recipe/:userId/:title', updateRecipe);
+router.put('/recipe/:title', updateRecipe);
 /**
  * Handles the updating of a recipe
  * 
@@ -242,7 +265,14 @@ async function updateRecipe(req, res){
     let output;
 
     try{
-        let userId = req.params.userId;
+        const authenticatedSession = authenticateUser(request);
+        if (!authenticatedSession) {
+            response.sendStatus(401); // Unauthorized access
+            return;
+        }
+        refreshSession(request, response);
+
+        let userId = authenticatedSession.userSession.username;
         let title = req.params.title;
 
         let newTitle = "";
@@ -303,7 +333,7 @@ async function updateRecipe(req, res){
     }
 }
 
-router.delete('/recipe/:userId/:title', deleteRecipe);
+router.delete('/recipe/:title', deleteRecipe);
 /**
  * Handles the deleting of a recipe
  * 
@@ -314,7 +344,14 @@ async function deleteRecipe(req, res){
     let output;
 
     try{
-        let userId = "";
+        const authenticatedSession = authenticateUser(request);
+        if (!authenticatedSession) {
+            response.sendStatus(401); // Unauthorized access
+            return;
+        }
+        refreshSession(request, response);
+
+        let userId = authenticatedSession.userSession.username;
         let title = "";
 
         if(req.params.userId != null)
