@@ -345,7 +345,7 @@ async function removeAccount(username, password){
   try {
       
       // search only if input passed in is valid -- automatically throws
-      if(validateUtilsAcc.isUsernameValid() && validateUtilsAcc.isPasswordValid(password)){
+      if(validateUtilsAcc.isUsernameValid(username) && validateUtilsAcc.isPasswordValid(password)){
   
         // filter for query
         let filter = {username: username, password: password};
