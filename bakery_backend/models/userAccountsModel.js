@@ -158,21 +158,21 @@ async function getAllAccounts(){
  * Update an accounts username with the new username passed in.
  * 
  * TODO: password validation?
- * @param {*} currentUsername to be changed.
+ * @param {*} username to be changed.
  * @param {*} newUsername to replace current.
  * @returns true if username was updated successfully, false otherwise.
  * @throws DatabaseError if new username is taken. Or if account with current username does not exist.
  * @throws InvalidInputError if newUsername does not meet requirements (Has special characters).
  */
-async function updateUsername(currentUsername, newUsername) {
+async function updateUsername(username, newUsername) {
   try {
     // Query database for instance of account, returns null if not found
-    let account = await collection.findOne({ username: currentUsername });
+    let account = await collection.findOne({ username: username });
 
     // Check if the account we are updating exists
     if (account == null) {
       throw new DatabaseError(
-        "\nAccount with username '" + currentUsername + "does not exist"
+        "\nAccount with username '" + username + "does not exist"
       );
     } 
     // Check if new username is already taken
@@ -190,7 +190,7 @@ async function updateUsername(currentUsername, newUsername) {
     else if (validateUtilsAcc.isUsernameValid(newUsername)) {
 
       // filter to find account to update
-      const filter = {username: currentUsername}
+      const filter = {username: username}
 
       // updates to be made on document
       const updateFilter = {$set: {username: newUsername}};
