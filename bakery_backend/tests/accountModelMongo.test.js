@@ -304,30 +304,31 @@ test("Can read entire collection", async () => {
     expect(results[2].username.toLowerCase() == a3.username.toLowerCase()).toBe(true);
     expect(results[2].password.toLowerCase() == a3.password.toLowerCase()).toBe(true);
 });
+
 // // Update
-// test("Can update existing accounts username with valid username", async () => {
-//     // create account
-//     const { username, password } = generateAccountData();
-//     await model.addAccount(username,password); // kept model method for simplicity sake
-
-//     let newUsername = "newPikachu";
-//     let filter = { username: username, password: password };
-//     let collection = await model.getCollection();
+test("Update username success case", async () => {
     
+    // create account
+    const { email, displayName, username, password } = generateAccountData();
+    await model.addAccount(email, displayName, username ,password) // add account to database
 
-//     let results = await collection.updateOne(filter,{$set:{username:newUsername}})
+    // Prep for update
+    let newUsername = "newUsernameGoCrazy";
+    let filter = { username: username, password: password };
+    let collection = await model.getCollection();
+    
+    // Update specific document in database
+    let results = await collection.updateOne(filter,{$set:{username:newUsername}})
 
-//     let accountCollection = await model.getCollection(); // convenient access to collection
-//     let databaseResult = await accountCollection.findOne({username: newUsername}); // this returns document directly
+    // Find updated document using the new username
+    let databaseResult = await collection.findOne({username: newUsername}); // this returns document directly
 
-//     // Check method returns properly
-//     expect(results.modifiedCount === 1).toBe(true);
-//     // Check database for proper update
-//     // Only check for username, assuming duplpicates cannot be added,
-//     // which is complete but needs to be commented out.
-//     expect(databaseResult.username.toLowerCase() == newUsername.toLowerCase()).toBe(true);
+    // Check that an update was made
+    expect(results.modifiedCount === 1).toBe(true);
+    // Verify new username is equal is what we set it to
+    expect(databaseResult.username == newUsername).toBe(true);
 
-// });
+});
 // test("Can't update account with an invalid username", async () => {
      
 //     // create account
