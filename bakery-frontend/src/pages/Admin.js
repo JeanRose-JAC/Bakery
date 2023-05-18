@@ -1,5 +1,5 @@
-import { UpdateRecipe } from "components/UpdateRecipe";
-import { DeleteRecipe } from "components/DeleteRecipe";
+import { UpdateRecipe } from "pages/UpdateRecipe";
+import { DeleteRecipe } from "pages/DeleteRecipe";
 import { ErrorBoundary } from "components/ErrorBoundary";
 
 /**

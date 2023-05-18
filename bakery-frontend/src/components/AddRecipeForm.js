@@ -5,7 +5,7 @@ import './style.css';
 /**
  * Displays the form for adding a recipe
  * 
- * @param {*} props function for keeping track of the added recipe
+ * @param {*} props recipes
  * @returns Element that contains the add form
  */
 function AddRecipeForm(props){
@@ -21,6 +21,7 @@ function AddRecipeForm(props){
 
         const requestOptions = {
             method: "POST",
+            credentials: "include",
             body: JSON.stringify({
                 title: title, 
                 type: type, 
@@ -35,10 +36,10 @@ function AddRecipeForm(props){
         const response = await fetch ("http://localhost:1339/recipe", requestOptions)
         const result = await response.json();
         if(response.status === 400){
-            navigate("/", {state: {errorMessage: result.errorMessage, link: "/", linkLabel:"Home"}});
+            alert(response.errorMessage);
         }
         else if (response.status === 500){
-            navigate("/", {state: {errorMessage: result.errorMessage, link: "/", linkLabel:"Home"}});
+            alert(response.errorMessage);
         }
         else{
             navigate("/recipe", {state:{recipe: result, fromSearch: false}})
@@ -46,7 +47,7 @@ function AddRecipeForm(props){
     }
 
     return(
-        <>
+        <div className="center">
         <h1>Add your own recipe!</h1>
         <h3>Fill up all the fields to add a new recipe.</h3>
         <form onSubmit={handleSubmit} className="recipeForm">
@@ -78,7 +79,7 @@ function AddRecipeForm(props){
 
         {title && ingredients && servings && instructions && <button type="submit">Add Recipe</button>}
         </form> 
-        </>   
+        </div>   
     );
 }
 

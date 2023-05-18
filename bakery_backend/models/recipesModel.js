@@ -248,4 +248,27 @@ async function deleteRecipe(userId, title){
   }
 }
 
-module.exports = {setCollection, getCollection, addNewRecipe, getOneRecipe, getRecipes, getRecipesOfOneUser, updateRecipe, deleteRecipe}
+/**
+ * Gets the recipe based on the userId and title
+ * 
+ * @param {string} userId username
+ * @param {int} id recipeId
+ * @returns Recipe object
+ * @throws DatabaseError if an error occurs in the database
+ * @throws InvalidInputError if any of the input fields are invalid
+ */
+async function getOneRecipeById(userId, id){
+  recipesValidateUtils.areKeyValid(userId, title);
+
+  try{
+
+    return await recipesCollection.findOne({userId: userId, _id: id});
+  }
+  catch (err) {
+    logger.error("From getOneRecipeById(): " + err.message);
+    throw new DatabaseError(err.message);
+  }  
+
+}
+
+module.exports = {setCollection, getCollection, addNewRecipe, getOneRecipe, getRecipes, getRecipesOfOneUser, updateRecipe, deleteRecipe, getOneRecipeById}

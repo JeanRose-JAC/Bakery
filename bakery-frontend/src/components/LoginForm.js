@@ -35,7 +35,7 @@ function LoginForm(){
                     navigate('/favorite');
                 }
                 else{
-                    alert("Failed Login: " + response.errMessage);
+                    alert("Failed Login: credentials are incorrect");
                     setIsLoggedIn(false);
                 }    
             }

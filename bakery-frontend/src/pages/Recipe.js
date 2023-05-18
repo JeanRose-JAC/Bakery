@@ -14,9 +14,14 @@ function Recipe(){
     const [isLoggedIn, setIsLoggedIn] = useContext(LoggedInContext);
 
     return(
-        <div id="wrapper">
+        <div className="center">
             {state && state.recipe && <DisplayRecipe recipe={state.recipe}/>}
             {state.fromSearch && isLoggedIn ? <Link to="/recipe/creation" state={ {recipe: state.recipe}}> Save </Link> : null}
+            {state.fromBook && isLoggedIn ? <div>                        <p></p>
+                        <Link to="/recipe/edit" state={{recipe: state.recipe}}>Edit Recipe</Link>
+                        <p></p>
+                        <Link to="/recipe/removal" state={{recipe: state.recipe}}>Delete Recipe</Link>
+            </div> : null} 
         </div>
     );
 }

@@ -137,7 +137,7 @@ async function showRecipes(req, res){
     }
 }
 
-router.get('/recipe/user/', showRecipesOfOneUser);
+router.get('/recipe/user', showRecipesOfOneUser);
 /**
  * Handles the retrieving of all recipes of one user
  * 
@@ -217,6 +217,64 @@ async function showOneRecipe(req, res){
         let title = req.params.title;
 
         let result = await recipesModel.getOneRecipe(userId, title);
+
+        if(result == null){
+            output = "Inexistent recipe by "+ userId +": " + title;
+            logger.error(output);
+            throw new InvalidInputError(output);
+        }
+        else{
+            output = "Successfully retrieved recipe: " + title;
+            res.status("200");
+            logger.info(output);
+            res.send(result);
+        }
+
+    }
+    catch(error){
+        if(error instanceof DatabaseError){
+            output = "***A database error occurred: " + error.message;
+            res.status("500");
+            logger.error(output);
+            res.send({errorMessage: output});
+        }
+        else if(error instanceof InvalidInputError){
+            output = "***An input error occurred: " + error.message;
+            res.status("400");
+            logger.error(output);
+            res.send({errorMessage: output});
+        }
+        else{
+            output = "***Unexpected error encountered: " + error.message;
+            res.status("500");
+            logger.error(output);
+            res.send({errorMessage: output});
+        }
+    }
+}
+
+router.get('/recipe/user/id/:id', showOneRecipe);
+/**
+ * Handles the retrieving of a recipe using Id
+ * 
+ * @param {object} req request object with the parameters containing the userId and title
+ * @param {object} res response object with the body containing the specified recipe object 
+ */
+async function showOneRecipe(req, res){
+    let output;
+
+    try{
+        const authenticatedSession = authenticateUser(request);
+        if (!authenticatedSession) {
+            response.sendStatus(401); // Unauthorized access
+            return;
+        }
+        refreshSession(request, response);
+
+        let userId = authenticatedSession.userSession.username;
+        let id = req.params.id;
+
+        let result = await recipesModel.getOneRecipeById(userId, id);
 
         if(result == null){
             output = "Inexistent recipe by "+ userId +": " + title;

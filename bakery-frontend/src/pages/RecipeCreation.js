@@ -7,7 +7,7 @@ function RecipeCreation(){
 
     return(
         <div>
-            {state.recipe != null ? <AddRecipeForm recipe={state.recipe}/> : <AddRecipeForm recipe={emptyRecipe}/>}
+            {state && state.recipe ? <AddRecipeForm recipe={state.recipe}/> : <AddRecipeForm recipe={emptyRecipe}/>}
         </div>
     )
 }
