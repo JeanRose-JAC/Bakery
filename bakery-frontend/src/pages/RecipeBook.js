@@ -29,7 +29,7 @@ function RecipeBook(){
     
     return(
         <div className="center">
-            {state && <h1>Recipes from {state.book.name}</h1>}
+            {state.book && <h1>Recipes from {state.book.name}</h1>}
             <NavLink to="/book/addition" state={{book:state.book}}><button>Add Recipes</button></NavLink>
             <p></p>
             <button onClick={callGetRecipes}>Get Recipes</button>
