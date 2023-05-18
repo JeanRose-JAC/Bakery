@@ -31,9 +31,31 @@ function DeleteRecipeForm(props){
         else if (response.status === 500){
             alert(response.errorMessage);
         }
-        else{
-            navigate("/book", {state:{book: props.book}})
+
+        const requestOptions2 = {
+            method: "PUT",
+            credentials : "include",
+            body: JSON.stringify({
+                recipeId: props.recipe._id,
+                name: props.book.name
+            }),
+            headers: {
+                "Content-Type": "application/json; charset=UTF-8"
+            },
         }
+
+        const response2 = await fetch ("http://localhost:1339/book/content/removal", requestOptions)
+        const result2 = await response.json();
+        if(response2.status === 400){
+            alert(result2.errMessage);
+        }
+        else if (response2.status === 500){
+            alert(result2.errMessage);
+        }
+        else{
+            navigate("/favorite")        
+        }
+
     }
 
     return(
