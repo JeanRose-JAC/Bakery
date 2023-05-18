@@ -767,22 +767,45 @@ test("Update password failure case - account current password passed in doesnt m
 
 });
 // // Delete
-// test("Can delete existing account", async () => {
+test("Delete Account success case", async () => {
      
-//     // create account
-//      const { username, password } = generateAccountData();
-//      let filter = {username: username, password: password}
+    // create account
+    const { email, displayName, username, password } = generateAccountData();
+    let filter = { email: email, displayName: displayName, username: username, password: password };
 
-//      await model.addAccount(username,password);
+    await model.addAccount(email, displayName, username, password);
 
-//      let accountCollection = await model.getCollection();
-//      let result = await accountCollection.deleteOne(filter,true); // true = delete just one
 
-//     // validate deleteOne 
-//     await expect(result.deletedCount == 1).toBe(true);
-//     await expect(result.acknowledged == true).toBe(true);
+     let accountCollection = await model.getCollection();
+     let result = await accountCollection.deleteOne(filter,true); // true = delete just one
 
-// });
+    // validate deleteOne 
+    await expect(result.deletedCount == 1).toBe(true);
+    await expect(result.acknowledged == true).toBe(true);
+
+});
+test("Delete Account success case - using model", async () => {
+    
+    // easy access to collection
+    let collection = await model.getCollection();
+
+    // create account
+    const { email, displayName, username, password } = generateAccountData();
+    let filter = { email: email, displayName: displayName, username: username, password: password };
+
+    await model.addAccount(email, displayName, username, password);
+
+    let deleteAccount = await model.removeAccount(username, password);
+
+    // validate deleteOne 
+    await expect(deleteAccount.username == username).toBe(true);
+    await expect(deleteAccount.password == password).toBe(true);
+
+    // make sure account is no longer inside database
+    results = await collection.findOne(filter);
+    await expect(results == null).toBe(true);
+
+});
 // test("Can delete existing account using model", async () => {
      
 //     // create account
