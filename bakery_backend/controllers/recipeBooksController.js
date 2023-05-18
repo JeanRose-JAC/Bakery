@@ -7,18 +7,16 @@ const model = require('../models/recipeBooksModel.js');
 const DatabaseError  = require('../models/databaseError.js');
 const  InvalidInputError  = require('../models/invalidInputError.js');
 
-
-
 /**
  * Adds a recipe book into the database and sends a response status depending of the result
  * being positive or negative 
  * @param {*} response the response object from the server
  * @param {*} request the request object from the server
  */
-router.post('/', add);
-async function add(request, response) {
+router.post('/', addBook);
+async function addBook(request, response) {
     try{
-    const added = await model.addBook(request.body.userId, request.body.name,request.body.SavedRecipes)
+    const added = await model.addBook(request.body.userId, request.body.name);
     if(added){
     response.status("200");
     response.send(added)
@@ -54,8 +52,8 @@ async function add(request, response) {
  * @param {*} response the response object from the server
  * @param {*} request the request object from the server
  */
-router.get('/find/:userId/:name', find);
-async function find(request, response) {
+router.get('/:userId/:name', findBook);
+async function findBook(request, response) {
     try{
 
         let answer = await model.getSingleRecipeBook(request.params.userId, request.params.name)
@@ -95,8 +93,8 @@ async function find(request, response) {
  * @param {*} response the response object from the server
  * @param {*} request the request object from the server
  */
-router.get('/', findAll);
-async function findAll(request, response) {
+router.get('/', findAllBooks);
+async function findAllBooks(request, response) {
     try{
 
     let answer = await model.getAllRecipeBooks()
@@ -128,15 +126,14 @@ async function findAll(request, response) {
     }
 }
 
-
 /**
  * delete a recipe book into the database and sends a response status depending of the result
  * being positive or negative
  * @param {*} response the response object from the server
  * @param {*} request the request object from the server
  */
-router.delete('/', deletes);
-async function deletes(request, response) {
+router.delete('/', deleteBook);
+async function deleteBook(request, response) {
     try{
 
     let answer = await model.deleteRecipeBook(request.body.userId, request.body.name)
@@ -171,23 +168,21 @@ async function deletes(request, response) {
 }
 
 
-
-
 /**
  * update a recipe book name into the database and sends a response status depending of the result
  * being positive or negative
  * @param {*} response the response object from the server
  * @param {*} request the request object from the server
  */
-router.put('/name', updateName);
-async function updateName(request, response) {
+router.put('/name', updateBookName);
+async function updateBookName(request, response) {
     try{
 
-    let answer = await model.updateRecipeBoookName(request.body.userId, request.body.name,request.body.newName)
+    let answer = await model.updateRecipeBookName(request.body.userId, request.body.name,request.body.newName)
 
     if(answer.modifiedCount != 0){
         response.status("200");
-        const recipe =  {userId: request.body.userId, name: request.body.name, type: request.body.SavedRecipes}
+        const recipe =  await model.getSingleRecipeBook(request.body.userId, request.body.newName);
         response.send(recipe);
     }
 
@@ -216,45 +211,89 @@ async function updateName(request, response) {
 }
 
 /**
- * update a recipe book content into the database and sends a response status depending of the result
+ * update a recipe book content by adding a recipe in the saved recipes into the database and sends a response status depending of the result
  * being positive or negative
  * @param {*} response the response object from the server
  * @param {*} request the request object from the server
  */
-router.put('/content', updateContent);
-async function updateContent(request, response) {
+router.put('/content/new', addRecipeInBook);
+async function addRecipeInBook(request, response) {
     try{
 
-    let answer = await model.updateRecipeBoookContent(request.body.userId, request.body.name,request.body.content)
-
-    if(answer.modifiedCount != 0){
-        response.status("200");
-        const recipe =  {userId: request.body.userId, name: request.body.name, SavedRecipes: request.body.SavedRecipes}
-        response.send(recipe);
-    }
-
-    else{
-        response.status("400");
-        response.send({ errMessage: "Validation error while trying to update recipe book : " + request.body.name + " does not exist or the new content is invalid"});
-    }
-
-    }
-    catch(err)
-    {
-        console.log("Failed to delete a recipe: " + err.message);
-        if(err instanceof DatabaseError){
-            response.status("500");
-            response.send({ errMessage: "system error while trying to update recipe book: "+ err.message});
+        let answer = await model.updateBookAddRecipe(request.body.userId, request.body.name,request.body.recipeId)
+    
+        if(answer.modifiedCount != 0){
+            response.status("200");
+            const recipe =  await model.getSingleRecipeBook(request.body.userId, request.body.name);
+            response.send(recipe);
         }
-        else if(err instanceof InvalidInputError){
-            response.status("400");
-            response.send({ errMessage: "Validation error while trying to update recipe book: "+ err.message});
-        }
+    
         else{
-            response.status("500");
-            response.send({ errMessage: "Unexpected error while trying to update recipe book: "+ err.message});
+            response.status("400");
+            response.send({ errMessage: "Validation error while trying to update recipe book : " + request.body.name + " does not exist or the new content is invalid"});
         }
-    }
+    
+        }
+        catch(err)
+        {
+            console.log("Failed to delete a recipe: " + err.message);
+            if(err instanceof DatabaseError){
+                response.status("500");
+                response.send({ errMessage: "system error while trying to update recipe book: "+ err.message});
+            }
+            else if(err instanceof InvalidInputError){
+                response.status("400");
+                response.send({ errMessage: "Validation error while trying to update recipe book: "+ err.message});
+            }
+            else{
+                response.status("500");
+                response.send({ errMessage: "Unexpected error while trying to update recipe book: "+ err.message});
+            }
+        }
+    
+}
+
+/**
+ * update a recipe book name by deleting a recipe in the saved recipes into the database and sends a response status depending of the result
+ * being positive or negative
+ * @param {*} response the response object from the server
+ * @param {*} request the request object from the server
+ */
+router.put('/content/removal', deleteRecipeInBook);
+async function deleteRecipeInBook(request, response) {
+    try{
+
+        let answer = await model.updateBookDeleteRecipe(request.body.userId, request.body.name,request.body.recipeId)
+    
+        if(answer.modifiedCount != 0){
+            response.status("200");
+            const recipe =  await model.getSingleRecipeBook(request.body.userId, request.body.name);
+            response.send(recipe);
+        }
+    
+        else{
+            response.status("400");
+            response.send({ errMessage: "Validation error while trying to update recipe book : " + request.body.name + " does not exist or the new content is invalid"});
+        }
+    
+        }
+        catch(err)
+        {
+            console.log("Failed to delete a recipe: " + err.message);
+            if(err instanceof DatabaseError){
+                response.status("500");
+                response.send({ errMessage: "system error while trying to update recipe book: "+ err.message});
+            }
+            else if(err instanceof InvalidInputError){
+                response.status("400");
+                response.send({ errMessage: "Validation error while trying to update recipe book: "+ err.message});
+            }
+            else{
+                response.status("500");
+                response.send({ errMessage: "Unexpected error while trying to update recipe book: "+ err.message});
+            }
+        }
+    
 }
 
 
