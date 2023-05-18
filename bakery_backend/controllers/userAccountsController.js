@@ -346,6 +346,59 @@ async function editDisplayName(request, response){
         }
    }
 }
+
+/**
+ * Deletes account document from json body request containing username and password.
+ * @param {*} request Express request expecting JSON body with username and password.
+ * @param {*} response 200 level response if delete was successful.
+ *                     406 level response if username or password is invalid.
+ *                     500 level response if delete was unsuccessful.
+ * 
+ */
+async function deleteAccount(request, response){
+    // Body params for new username
+    let name = request.body.username;
+    let password = request.body.password;
+    logger.debug("remove account json request info - name: " + name + ", password: " + password);
+
+   // deleting account
+   try {
+
+         let account = await model.deleteOneAccount(name, password);
+         logger.debug("Account value : " + account);
+         // if account is null, handle appropriately
+         if(account == null || account == undefined) {
+        
+             response.status(500)
+             response.send({errorMessage:`Unexpected error while deleting account with: \n Name: ${account.name}`});
+         }else{
+             response.status(200)
+             response.send(account);
+         }
+
+            
+
+   } catch (err){
+        // User Input Error
+        if(err instanceof InvalidInputError){
+         logger.error("Invalid Input Error while deleting an account" + err.message);
+            response.status(406); // not acceptable status code
+            response.send({errorMessage:"Error while deleting account: " + err.message});
+        }
+        // Database Error
+        else if(err instanceof DatabaseError){
+         logger.error("Database Error while deleting an account" + err.message);
+            response.status(500)
+            response.send({errorMessage:"Error while deleting account: " + err.message});
+        }
+        // Unknown Error
+        else{
+         logger.warn("Unexpected Error while deleting an account" + err.message);
+            response.status(500)
+            response.send({errorMessage:"Unexpected error while delete account: " + err.message});
+        }
+   }
+}
 module.exports = {
     router,
     routeRoot
