@@ -560,43 +560,32 @@ test("Update username failure case - username is taken", async () => {
      expect(databaseResult.password == password).toBe(true);
 
 });
-// test("Can't update existing account with an already existing username", async () => {
-//     let existingUsername = "newPikachu";
+test("Update displayName failure case - empty name", async () => {
      
-//     // create account
-//      const { username, password } = generateAccountData();
-//      await model.addAccount(username,password)
-//      await model.addAccount(existingUsername,password);
+    // create account
+    const { email, displayName, username, password } = generateAccountData();
+    let filter = { email: email, displayName: displayName, username: username, password: password };
+
+    let collection = await model.getCollection();
+    await collection.insertOne(filter);
+    
+    let invalidDisplayName = "";
+
         
-//         // Expect method to throw
-//     await expect(()=> model.updateOneUsername(username, existingUsername)).rejects.toThrow(DatabaseError);
+    // Expect method to throw
+    await expect(()=> model.updateDisplayName(username, invalidDisplayName)).rejects.toThrow(InvalidInputError);
 
-//      // check if current account has updated
-//      let accountCollection = await model.getCollection(); // convenient access to collection
-//      let databaseResult = await accountCollection.findOne({username: username}); // this returns document directly
+     // check if current account has updated
+     let accountCollection = await model.getCollection(); // convenient access to collection
+     let databaseResult = await accountCollection.findOne({username: username}); // this returns document directly
 
-//      // Check database for proper update
-//      // Only check for username, assuming duplpicates cannot be added,
-//      // which is complete but needs to be commented out.
-//      expect(databaseResult.username.toLowerCase() == username.toLowerCase()).toBe(true);
-//      expect(databaseResult.password.toLowerCase() == password.toLowerCase()).toBe(true);
-     
+     // Check that document added has not changed
+     expect(databaseResult.email == email).toBe(true);
+     expect(databaseResult.displayName == displayName).toBe(true);
+     expect(databaseResult.username == username).toBe(true);
+     expect(databaseResult.password == password).toBe(true);
 
-// });
-// test("Can't update account that doesn't exist", async () => {
-     
-//     // create account
-//      const { username, password } = generateAccountData();
-//      await model.addAccount(username,password);
-
-//      let nonExistingUsername = "DarkLordTheThird";
-//      let newName = "oldDarkLord";
-//      let result = await model.updateOneUsername(nonExistingUsername, newName);
-
-//     // validate updateOneUsername return value
-//     await expect(result == false).toBe(true);
-
-// });
+});
 // // Delete
 // test("Can delete existing account", async () => {
      
