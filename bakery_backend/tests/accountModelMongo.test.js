@@ -806,79 +806,34 @@ test("Delete Account success case - using model", async () => {
     await expect(results == null).toBe(true);
 
 });
-// test("Can delete existing account using model", async () => {
+
+test("Delete account failure case -- account does not exist", async () => {
      
-//     // create account
-//      const { username, password } = generateAccountData();
+     // create account
+     const { email, displayName, username, password } = generateAccountData();
 
-//      await model.addAccount(username,password);
+     await model.addAccount(email, displayName, username, password);
 
-//      let result = await model.deleteOneAccount(username,password);
 
-//     // validate model result
-//     await expect(result.username.toLowerCase() == username.toLowerCase() && result.password.toLowerCase() == password.toLowerCase()).toBe(true);
+     let nonExistingUsername = "DarkLordTheThird";
+     let filter = { username: nonExistingUsername, password:password };
 
-// });
-// test("Can't delete an account that doesn't exist", async () => {
+     let accountCollection = await model.getCollection();
+     let result = await accountCollection.deleteOne(filter,true); // true = delete just one
+
+     // check that no documents were deleted
+     await expect(result.deletedCount == 0).toBe(true);
+
+});
+
+test("Delete account failure case - using model - account does not exist", async () => {
      
-//     // create account
-//      const { username, password } = generateAccountData();
-//      await model.addAccount(username,password);
+     // create account
+     const { email, displayName, username, password } = generateAccountData();
 
-//      let nonExistingUsername = "DarkLordTheThird";
-//      let filter = { username: nonExistingUsername, password:password };
+     await model.addAccount(email, displayName, username, password);
 
-//      let accountCollection = await model.getCollection();
-//      let result = await accountCollection.deleteOne(filter,true); // true = delete just one
-
-//      // check that no documents were deleted
-//      await expect(result.deletedCount == 0).toBe(true);
-
-// });
-
-// test("Can't delete an account that doesn't exist using model", async () => {
-     
-//     // create account
-//      const { username, password } = generateAccountData();
-//      await model.addAccount(username,password);
-
-//      let nonExistingUsername = "DarkLordTheThird";
-//      // expect model method to throw
-//      await expect(()=> model.deleteOneAccount(nonExistingUsername, password)).rejects.toThrow(DatabaseError);
-// });
-
-
-// test("Can't delete an account with non-matching password", async () => {
-     
-//     // create account
-//      const { username, password } = generateAccountData();
-//      await model.addAccount(username,password);
-
-//      let wrongPassword = "oldDarkLord";
-//      let filter = {username: username, password: wrongPassword}
-
-//      let accountCollection = await model.getCollection();
-//      let result = await accountCollection.deleteOne(filter,true);
-
-//     // check that no documents were deleted
-//     await expect(result.deletedCount == 0).toBe(true);
-
-// });
-
-// test("Can't delete an account with non-matching username", async () => {
-     
-//     // create account
-//     const { username, password } = generateAccountData();
-//     await model.addAccount(username,password);
-
-//     let nonExistingUsername = "DarkLordTheThird";
-//     let filter = {username: nonExistingUsername, password: password}
-
-//     let accountCollection = await model.getCollection();
-//     let result = await accountCollection.deleteOne(filter,true);
-
-//    // check that no documents were deleted
-//    await expect(result.deletedCount == 0).toBe(true);
-
-// });
-
+     let nonExistingUsername = "DarkLordTheThird";
+     // expect model method to throw
+     await expect(()=> model.removeAccount(nonExistingUsername, password)).rejects.toThrow(DatabaseError);
+});
