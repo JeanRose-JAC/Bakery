@@ -586,6 +586,32 @@ test("Update displayName failure case - empty name", async () => {
      expect(databaseResult.password == password).toBe(true);
 
 });
+test("Update displayName failure case - Invalid display name", async () => {
+     
+    // create account
+    const { email, displayName, username, password } = generateAccountData();
+    let filter = { email: email, displayName: displayName, username: username, password: password };
+
+    let collection = await model.getCollection();
+    await collection.insertOne(filter);
+    
+    let invalidDisplayName = "badName!_";
+
+        
+    // Expect method to throw
+    await expect(()=> model.updateDisplayName(username, invalidDisplayName)).rejects.toThrow(InvalidInputError);
+
+     // check if current account has updated
+     let accountCollection = await model.getCollection(); // convenient access to collection
+     let databaseResult = await accountCollection.findOne({username: username}); // this returns document directly
+
+     // Check that document added has not changed
+     expect(databaseResult.email == email).toBe(true);
+     expect(databaseResult.displayName == displayName).toBe(true);
+     expect(databaseResult.username == username).toBe(true);
+     expect(databaseResult.password == password).toBe(true);
+
+});
 // // Delete
 // test("Can delete existing account", async () => {
      
