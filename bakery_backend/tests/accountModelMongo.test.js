@@ -535,6 +535,34 @@ test("Update username failure case - account does not exist", async () => {
      expect(databaseResult.password == password).toBe(true);
 
 });
+test("Update username failure case - username is taken", async () => {
+     
+    // create account
+    const { email, displayName, username, password } = generateAccountData();
+    let filter = { email: email, displayName: displayName, username: username, password: password };
+    let secondaccount = generateAccountData();
+
+    let collection = await model.getCollection();
+    await collection.insertOne(filter);
+    await collection.insertOne(secondaccount);
+    
+    let invalidUsername = "badUsername!_";
+
+        
+    // Expect method to throw -- updating one account with username of second account
+    await expect(()=> model.updateUsername(username, secondaccount.username)).rejects.toThrow(DatabaseError);
+
+     // check if current account has updated
+     let accountCollection = await model.getCollection(); // convenient access to collection
+     let databaseResult = await accountCollection.findOne({username: username}); // this returns document directly
+
+     // Check that document added has not changed
+     expect(databaseResult.email == email).toBe(true);
+     expect(databaseResult.displayName == displayName).toBe(true);
+     expect(databaseResult.username == username).toBe(true);
+     expect(databaseResult.password == password).toBe(true);
+
+});
 // test("Can't update existing account with an already existing username", async () => {
 //     let existingUsername = "newPikachu";
      
