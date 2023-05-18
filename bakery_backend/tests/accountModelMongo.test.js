@@ -219,8 +219,8 @@ test("Can read existing account using model ", async () => {
     // Query database
     let account =  await collection.findOne(filter);
 
-    let modelAccount = model.getSingleAccount(username);
-    
+    let modelAccount = await model.getSingleAccount(username);
+    logger.info("Account info is " + modelAccount);
     // Check details from getSingleAccount
     expect(account.username == username).toBe(true);
     expect(account.password == password).toBe(true);
@@ -228,6 +228,10 @@ test("Can read existing account using model ", async () => {
     expect(account.displayName == displayName).toBe(true);
 
     // Check model results
+    expect(modelAccount.username == username).toBe(true);
+    expect(modelAccount.password == password).toBe(true);
+    expect(modelAccount.email.toLowerCase() == email.toLowerCase()).toBe(true);
+    expect(modelAccount.displayName == displayName).toBe(true);
  
 });
 
