@@ -253,14 +253,14 @@ async function showOneRecipe(req, res){
     }
 }
 
-router.get('/recipe/user/id/:id', showOneRecipe);
+router.get('/recipe/user/id/:id', showOneRecipeById);
 /**
  * Handles the retrieving of a recipe using Id
  * 
  * @param {object} req request object with the parameters containing the userId and title
  * @param {object} res response object with the body containing the specified recipe object 
  */
-async function showOneRecipe(req, res){
+async function showOneRecipeById(req, res){
     let output;
 
     try{
