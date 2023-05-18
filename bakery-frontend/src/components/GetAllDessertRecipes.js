@@ -1,5 +1,5 @@
 import { useEffect,useState } from "react";
-import { ListRecipes } from "./ListDessertRecipes";
+import { ListRecipesFromSearch } from "./ListRecipesFromSearch";
 
 /**
  * Displays all of the recipes in the database
@@ -15,12 +15,20 @@ function GetAllDessertRecipes(){
     return(
         <div className="center">
             <h1> recipes</h1>
-            {recipe[0] && <ListRecipes recipes={recipe}/>}
+            {recipe[0] && <ListRecipesFromSearch recipes={recipe}/>}
         </div>
     );
 }
 async function GetAllDessertRecipesControl(setRecipe){
-    const response = await fetch ("http://localhost:1339/recipe/", {method: "GET"})
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json; charset=UTF-8",
+            "X-Api-Key" : "9tMQWPbv5v9Bs46FPlhgOw==Fq96b3KRP2L1EGdG"
+        },
+    }
+
+    const response = await fetch("https://api.api-ninjas.com/v1/recipe?query=dessert", requestOptions);
     const result = await response.json();
     setRecipe(result);
 
