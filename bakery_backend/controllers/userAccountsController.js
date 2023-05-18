@@ -10,8 +10,9 @@ const {InvalidInputError} = require("../models/invalidInputError.js");
 
 // End Points
 // refer to project documentation for more information
-router.post('/account', CreateAccount);
-
+router.post('/account', createAccount);
+router.get('/account/:username', showAccount);
+router.get('/account/', showAllAccounts);
 
 
  /**
@@ -20,7 +21,7 @@ router.post('/account', CreateAccount);
  * @param {*} response Sends a successful response, 400 level response if input is invalid
  *                       a 500 level response if there is a system error.
  */
- async function CreateAccount(request, response) {
+ async function createAccount(request, response) {
     logger.info("Inside of createAccount, in account controller");
     // Body parameters for account doc
     let email = request.body.email;
@@ -70,7 +71,93 @@ router.post('/account', CreateAccount);
    }
 }
 
+/**
+ * Query database for a single instance of an account.
+ * Sends a response with the account information if available.
+ * Sends 500 level response if account could not be found due to a database error or if it does not exist
+ * @param {*} request Express request expecting body data of username
+ * @param {*} response Sends a successful response with account object if account is found.
+ *                     a 500 level response if account could not be found
+ */
+async function showAccount(request, response) {
 
+    // get the name from url
+    let username = request.params.username; // params = endpoint name
+    logger.debug("username params value: " + username)
+
+   try {
+
+        let account = await accountModel.getSingleAccount(username);
+        logger.debug("Account result: " + account);
+        // if account is null, handle appropriately (unexpected)
+        if(account == null){
+            logger.fatal("Account add account returned something other than object, should NEVER happen");
+            response.status(500)
+            response.send({errorMessage:"Apologies, account was not found inside of database"});
+        }
+        else{
+                response.status(200);
+                response.send(account);
+
+        } 
+            
+
+   } catch (err){
+        // Database
+        if(err instanceof DatabaseError){
+            logger.error("Database Error while getting account information" + err.message);
+            response.status(500)
+            response.send({errorMessage:"Error while finding account: " + err.message});
+        }
+        // Unknown Error
+        else{
+            response.status(500)
+            logger.error("Unexpected Error while getting account information" + err.message);
+            response.send({errorMessage:"Unexpected error while finding account: " + err.message});
+        }
+   }
+}
+/**
+ * Query database for all accounts inside of a mongo db.
+ * Sends a response with the account list if available.
+ * Sends 500 level response if accounts could not be queried due to a database error.
+ * @param {*} request Express request expecting body data of username
+ * @param {*} response Sends a successful response if account is found.
+ *                     a 500 level response if account could not be found
+ */
+async function showAllAccounts(request, response) {
+
+   try {
+
+        let accounts = await accountModel.getAllAccounts();
+        logger.debug("Account result: " + accounts);
+        // if pokemon is null, handle appropriately
+        if(accounts == null){
+            logger.fatal("Accounts should not return null");
+            response.status(404)
+            response.send({errorMessage:"Apologies, could not get all accounts"});
+        }
+        else{
+                response.status(200);
+                response.send(accounts);
+        } 
+            
+
+   } catch (err){
+        // Database
+        if(err instanceof DatabaseError){
+            logger.error("Database Error while getting account information" + err.message);
+            response.status(500)
+            response.send({errorMessage:"Error while finding account: " + err.message});
+        }
+        // Unknown Error
+        else{
+            response.status(500)
+            logger.error("Unexpected Error while getting account information" + err.message);
+            response.send({errorMessage:"Unexpected error while finding account: " + err.message});
+        }
+   }
+}
 module.exports = {
     router,
     routeRoot
