@@ -1,4 +1,5 @@
-import { GetAllRecipes } from "components/FavoriteLayout";
+// import { GetAllRecipes } from "components/FavoriteLayout";
+import {FavoriteLayout} from "components/FavoriteLayout"
 
 /**
  * Displays all the recipes
@@ -9,7 +10,7 @@ function Favorite(){
 
     return (
         <div id="wrapper">
-            <GetAllRecipes/>
+            <FavoriteLayout/>
         </div>
         );
 }

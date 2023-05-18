@@ -42,8 +42,8 @@ function App() {
             <Route index element={<Home/>}/> 
             <Route path="about" element={<About/>}/>
             <Route path="contact" element={<Contact/>}/>
-            <Route path="inventory" element={<Inventory/>}/>
-            <Route path="admin" element={<Admin/>}/>
+            {/* <Route path="inventory" element={<Inventory/>}/>
+            <Route path="admin" element={<Admin/>}/> */}
             <Route path="usererror" element={<UserError/>}/>
             <Route path="systemerror" element={<SystemError/>}/>
             <Route path="quick" element={<Quick/>}/>
