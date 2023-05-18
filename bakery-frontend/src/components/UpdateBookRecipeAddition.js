@@ -13,7 +13,7 @@ function UpdateBookRecipeAddition({book}){
             }
         }
     
-        const response = await fetch ("http://localhost:1339/recipe", requestOptions);
+        const response = await fetch ("http://localhost:1339/recipe/user", requestOptions);
         const result = await response.json();
         setRecipes(result);
     }
