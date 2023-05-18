@@ -8,6 +8,13 @@ const utils = require('../models/validateUtilsAccounts');
 const databaseConnection = require('../models/databaseConnection');
 const { MongoMemoryServer} = require('mongodb-memory-server');
 
+
+// super test
+const app = require("../app.js"); 
+const supertest = require("supertest");
+const testRequest = supertest(app);
+
+
 require("dotenv").config();
 jest.setTimeout(100000);
 let db = "user_account_test"; // collection name
