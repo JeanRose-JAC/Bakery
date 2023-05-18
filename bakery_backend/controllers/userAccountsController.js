@@ -189,7 +189,7 @@ async function editUsername(request, response){
 
         // if account object is null handle approriately (Unexpected)
         if(account == null || account == undefined) {
-            logger.fatal("updateOneUsername returned null or undefined, should never happen")
+            logger.fatal("editUsername returned null or undefined, should never happen")
             response.status(500)
             response.send({errorMessage: `Unexpected error while updating account with: \n Name: ${username}`});
         }else if(account == true) {
@@ -250,7 +250,7 @@ async function editPassword(request, response){
 
         // if account object is null handle approriately (Unexpected)
         if(account == null || account == undefined) {
-            logger.fatal("updateOneUsername returned null or undefined, should never happen")
+            logger.fatal("editPassword returned null or undefined, should never happen")
             response.status(500)
             response.send({errorMessage: `Unexpected error while updating account with: \n Name: ${username}`});
         }else if(account == true) {
@@ -268,6 +268,67 @@ async function editPassword(request, response){
         if(err instanceof InvalidInputError){
             logger.error("Invalid input error while updating an account " + err.message);
             logger.error("Values passed in: " + username + password + newPassword);
+            response.status(406); // not acceptable status code
+            response.send({errorMessage: "Error while updating account: " + err.message});
+        }
+        // Database Error
+        else if(err instanceof DatabaseError){
+            logger.error("Database error while updating an account " + err.message);
+            response.status(500)
+            response.send({errorMessage:"Error while updating account: " + err.message});
+        }
+        // Unknown Error
+        else{
+            logger.warn("Unknown error while updating an account " + err.message);
+            response.status(500)
+            response.send({errorMessage:"Unexpected error while updating account: " + err.message});
+        }
+   }
+}
+
+/**
+ * Queries database for instance of account with same username.
+ * Validate new username, then update account with new username if valid.
+ * Sends object containing oldUsername and newUsername
+ * @param {*} request Express request expecting a JSON request with username and newDisplayName in body
+ * @param {*} response 200 response if account is found and updated. 
+ *                     404 response if account is not found.
+ *                     500 level response if updating account fails.
+ *                     500 level responses can be sent if new username is taken or if updating fails.
+ *              
+ */
+async function editDisplayName(request, response){
+
+    // Body params for new username
+    let username = request.body.username;
+    let newDisplayName = request.body.newDisplayName;
+    logger.debug("Json body from modify request: name: " + username + ", newDisplayName: " + newDisplayName);
+   // updating account username
+   try {
+
+        let account = await accountModel.updateDisplayName(username, newDisplayName);
+        logger.debug("Account update result values  " + account);
+
+        // if account object is null handle approriately (Unexpected)
+        if(account == null || account == undefined) {
+            logger.fatal("editUsername returned null or undefined, should never happen")
+            response.status(500)
+            response.send({errorMessage: `Unexpected error while updating account with: \n Name: ${username}`});
+        }else if(account == true) {
+            response.status(200)
+            response.send({oldName: username, newName: newDisplayName}); // return object for front end
+        }else if(account == false) {
+            response.status(200)
+            response.send({oldName: "Account not found", newName:"Account not found"});
+        }
+
+            
+
+   } catch (err){
+        // User Input Error
+        if(err instanceof InvalidInputError){
+            logger.error("Invalid input error while updating an account " + err.message);
+            logger.error("Values passes in: " + username + newDisplayName);
             response.status(406); // not acceptable status code
             response.send({errorMessage: "Error while updating account: " + err.message});
         }
