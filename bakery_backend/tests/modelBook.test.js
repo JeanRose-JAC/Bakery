@@ -183,7 +183,7 @@ test('Unsuccessfuly update book name; name too long', async ()=> {
   
     try{
     let newRecipeBook = await addOneRecipeToCollection();
-    let succesfulSearch = await recipesBookModel.updateRecipeBoookName(newRecipeBook.name,"ThisNewNameeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");  
+    let succesfulSearch = await recipesBookModel.updateRecipeBookName(newRecipeBook.name,"ThisNewNameeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");  
     expect(succesfulSearch.modifiedCount).toBe(0);
     }
     catch(err){
