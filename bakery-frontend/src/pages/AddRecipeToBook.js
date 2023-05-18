@@ -6,7 +6,7 @@ function AddRecipeToBook(){
 
     return(
         <div>
-        {state && state.book && <UpdateBookRecipeAddition recipe={state.recipe}/>}
+        {state && state.book && <UpdateBookRecipeAddition book={state.book}/>}
         </div>
     )
 }

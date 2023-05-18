@@ -21,7 +21,7 @@ function UpdateBookRecipeAddition({book}){
     return(
         <div className="center">
             <h1>Add Recipe to Book {book.name}</h1>
-            <button onClick={getAllRecipes}View All recipes></button>
+            <button onClick={getAllRecipes}>View All recipes</button>
             {recipes[0] && <ListRecipesForAdditionInBook book={book} recipes={recipes}/>}
         </div>
     );
