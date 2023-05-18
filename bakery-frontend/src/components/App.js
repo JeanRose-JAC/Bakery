@@ -1,4 +1,6 @@
 import './style.css';
+import { createContext } from 'react';
+import { useState } from 'react';
 import { Route, Routes, Navigate} from "react-router-dom";
 import { MainLayout } from 'layouts/MainLayout';
 import { Home } from 'pages/Home';
@@ -19,6 +21,8 @@ import { Culture } from 'pages/Culture';
 import { Search } from 'pages/Search';
 import { Recipe } from 'pages/Recipe';
 import { RecipeCreation } from 'pages/RecipeCreation';
+import { LoginForm } from './LoginForm';
+import { RegisterForm } from './RegisterForm';
 
 
 /**
@@ -27,8 +31,12 @@ import { RecipeCreation } from 'pages/RecipeCreation';
  * @returns A list of routes
  */
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const loggedInValueAndSetter = [isLoggedIn, setIsLoggedIn];
+
   return (
     <div className="App">
+       <LoggedInContext.Provider value={loggedInValueAndSetter}>
         <Routes>
           <Route path="/" element={<MainLayout/>}>
             <Route index element={<Home/>}/> 
@@ -48,12 +56,21 @@ function App() {
             <Route path="profile" element={<Profile/>}/>
             <Route path="favorite" element={<Favorite/>}/>    
             <Route path="recipe" element={<Recipe/>}/>  
-            <Route path="recipe/creation" element={<RecipeCreation/>}/>    
+            <Route path="recipe/creation" element={<RecipeCreation/>}/>  
+
+            <Route path="login" element={<LoginForm/>}/>  
+            <Route path="register" element={<RegisterForm/>}/>  
+  
           </Route>
           <Route path="*" element={<Navigate to="/"/>} />
         </Routes>
+        </LoggedInContext.Provider>
     </div>
   );
 }
 
 export default App;
+export const LoggedInContext = createContext({
+  isLoggedIn: false,
+  setIsLoggedIn: () => {},
+});

@@ -7,6 +7,8 @@ import {
   } from 'mdb-react-ui-kit';
 
   import { Link } from 'react-router-dom';
+  import { useContext } from 'react';
+  import { LoggedInContext } from './App';
 
 /**
  * Displays a list of all recipes with username and title 
@@ -15,6 +17,7 @@ import {
  * @returns A list of recipes formatted in a card
  */
 function ListRecipesFromSearch({recipes}){
+    const [isLoggedIn, setIsLoggedIn] = useContext(LoggedInContext);
 
     return(
         <div>
@@ -29,9 +32,9 @@ function ListRecipesFromSearch({recipes}){
                             Read More
                         </Link>
                         <p></p>
-                        <Link to="/recipe/creation" state={ {recipe: recipe, fromSearch: true}}>
-                            Add to recipe book
-                        </Link>
+                        {isLoggedIn ? <Link to="/recipe/creation" state={ {recipe: recipe, fromSearch: true}}>
+                            Save
+                        </Link> : null}
                 </MDBCardBody>
             </MDBCard>
          ))}
