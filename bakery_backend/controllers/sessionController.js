@@ -22,8 +22,8 @@ async function loginUser(request, response) {
             if(await checkCredentials(username, password)){
                 logger.info("Successfully logged in for " + username);
     
-                // Create a session object that will expire in 2 minutes
-                const sessionId = createSession(username, 10); 
+                // Create a session object that will expire in 20 minutes
+                const sessionId = createSession(username, 20); 
     
                     // Save cookie that will expire.
                 response.cookie("sessionId", sessionId, { expires: getSession(sessionId).expiresAt , httpOnly: true});
@@ -123,6 +123,20 @@ function logoutUser(request, response) {
     response.cookie("sessionId", "", { expires: new Date() , httpOnly: true}); 
     response.sendStatus(200);
 };
+
+router.get("/auth", authUser);
+function authUser(request, response) {
+  try {
+    const authenticatedSession = authenticateUser(request);
+    if (!authenticatedSession) {
+      response.sendStatus(401);
+    } else {
+      response.sendStatus(200);
+    }
+  } catch (error) {
+    response.sendStatus(401);
+  }
+}
     
     
 module.exports = { router, routeRoot, loginUser, authenticateUser, refreshSession};

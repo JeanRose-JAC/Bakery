@@ -16,8 +16,14 @@ import {
   MDBCollapse,
 } from 'mdb-react-ui-kit';
 
+import { LogoutButton } from './LogoutButton';
+import { useContext } from 'react';
+import { LoggedInContext } from './App';
+
+
 function Header() {
   const [showBasic, setShowBasic] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useContext(LoggedInContext);
 
   return (
     <MDBNavbar expand='lg' light bgColor='light'>
@@ -98,6 +104,8 @@ function Header() {
        
       />
     </a>
+
+    {isLoggedIn ? <LogoutButton/> : null}
         
       
         </MDBCollapse>

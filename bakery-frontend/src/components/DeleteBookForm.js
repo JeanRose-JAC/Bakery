@@ -19,10 +19,11 @@ function DeleteBookForm(props){
             credentials: "include",
             body: JSON.stringify({
                 name: name,
-            headers: {
-                "Content-Type": "application/json; charset=UTF-8"
-            },
-        })}
+ 
+        }),
+        headers: {
+            "Content-Type": "application/json; charset=UTF-8"
+        },}
 
         const response = await fetch ("http://localhost:1339/book", requestOptions)
         const result = await response.json();

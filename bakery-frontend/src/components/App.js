@@ -29,6 +29,7 @@ import { DeleteRecipe } from 'pages/DeleteRecipe';
 import { RecipeBookCreation } from 'pages/RecipeBookCreation';
 import { UpdateBookRecipeRemoval } from './UpdateBookRecipeRemoval';
 import { AddRecipeToBook } from 'pages/AddRecipeToBook';
+import { useEffect } from 'react';
 
 
 /**
@@ -39,6 +40,24 @@ import { AddRecipeToBook } from 'pages/AddRecipeToBook';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const loggedInValueAndSetter = [isLoggedIn, setIsLoggedIn];
+
+  useEffect(() => {
+    async function checkForLoggedIn() {
+      try {
+        /** Call auth, passing cookies to the back-end */
+        const response = await fetch("http://localhost:1339/session/auth", { method: "GET", credentials: "include" });
+        if (response.status === 200) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false); // may be unnecessary, but do this just in case to be more secure
+        }
+      } catch (error) {
+        setIsLoggedIn(false);
+      }
+    }
+    checkForLoggedIn();
+  }, []);
+
 
   return (
     <div className="App">

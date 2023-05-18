@@ -14,10 +14,11 @@ function UpdateBookNameForm(props){
             body: JSON.stringify({
                 name: name,
                 newName: newName,
-            headers: {
-                "Content-Type": "application/json; charset=UTF-8"
-            },
-        })}
+
+        }),
+        headers: {
+            "Content-Type": "application/json; charset=UTF-8"
+        },}
 
         const response = await fetch ("http://localhost:1339/book/name", requestOptions)
         const result = await response.json();

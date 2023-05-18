@@ -19,12 +19,12 @@ async function createRecipe(req, res){
     let output;
 
     try{
-        const authenticatedSession = authenticateUser(request);
+        const authenticatedSession = authenticateUser(req);
         if (!authenticatedSession) {
-            response.sendStatus(401); // Unauthorized access
+            res.sendStatus(401); // Unauthorized access
             return;
         }
-        refreshSession(request, response);
+        refreshSession(req, res);
         
         let userId = authenticatedSession.userSession.username;
         let title = "";
@@ -95,12 +95,12 @@ async function showRecipes(req, res){
     let output;
 
     try{
-        const authenticatedSession = authenticateUser(request);
+        const authenticatedSession = authenticateUser(req);
         if (!authenticatedSession) {
-            response.sendStatus(401); // Unauthorized access
+            res.sendStatus(401); // Unauthorized access
             return;
         }
-        refreshSession(request, response);
+        refreshSession(req, res);
 
         let result = await recipesModel.getRecipes();
 
@@ -148,12 +148,12 @@ async function showRecipesOfOneUser(req, res){
     let output;
 
     try{
-        const authenticatedSession = authenticateUser(request);
+        const authenticatedSession = authenticateUser(req);
         if (!authenticatedSession) {
-            response.sendStatus(401); // Unauthorized access
+            res.sendStatus(401); // Unauthorized access
             return;
         }
-        refreshSession(request, response);
+        refreshSession(req, res);
 
         let userId = authenticatedSession.userSession.username;
 
@@ -206,12 +206,12 @@ async function showOneRecipe(req, res){
     let output;
 
     try{
-        const authenticatedSession = authenticateUser(request);
+        const authenticatedSession = authenticateUser(req);
         if (!authenticatedSession) {
-            response.sendStatus(401); // Unauthorized access
+            res.sendStatus(401); // Unauthorized access
             return;
         }
-        refreshSession(request, response);
+        refreshSession(req, res);
 
         let userId = authenticatedSession.userSession.username;
         let title = req.params.title;
@@ -264,12 +264,12 @@ async function showOneRecipeById(req, res){
     let output;
 
     try{
-        const authenticatedSession = authenticateUser(request);
+        const authenticatedSession = authenticateUser(req);
         if (!authenticatedSession) {
-            response.sendStatus(401); // Unauthorized access
+            res.sendStatus(401); // Unauthorized access
             return;
         }
-        refreshSession(request, response);
+        refreshSession(req, res);
 
         let userId = authenticatedSession.userSession.username;
         let id = req.params.id;
@@ -323,12 +323,12 @@ async function updateRecipe(req, res){
     let output;
 
     try{
-        const authenticatedSession = authenticateUser(request);
+        const authenticatedSession = authenticateUser(req);
         if (!authenticatedSession) {
-            response.sendStatus(401); // Unauthorized access
+            res.sendStatus(401); // Unauthorized access
             return;
         }
-        refreshSession(request, response);
+        refreshSession(req, res);
 
         let userId = authenticatedSession.userSession.username;
         let title = req.params.title;
@@ -402,12 +402,12 @@ async function deleteRecipe(req, res){
     let output;
 
     try{
-        const authenticatedSession = authenticateUser(request);
+        const authenticatedSession = authenticateUser(req);
         if (!authenticatedSession) {
-            response.sendStatus(401); // Unauthorized access
+            res.sendStatus(401); // Unauthorized access
             return;
         }
-        refreshSession(request, response);
+        refreshSession(req, res);
 
         let userId = authenticatedSession.userSession.username;
         let title = "";

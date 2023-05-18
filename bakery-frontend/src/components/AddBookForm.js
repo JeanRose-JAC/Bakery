@@ -18,12 +18,13 @@ function AddBookForm(){
             credentials: "include",
             body: JSON.stringify({
                 name: name,
+            }),
             headers: {
                 "Content-Type": "application/json; charset=UTF-8"
             },
-        })}
+            }
 
-        const response = await fetch ("http://localhost:1339/book/", requestOptions)
+        const response = await fetch ("http://localhost:1339/book", requestOptions)
         const result = await response.json();
         if(response.status === 400){
             alert(result.errMessage);
@@ -46,7 +47,7 @@ function AddBookForm(){
 
             <p/>
 
-            {name && <button type="submit">Change Name</button>}
+            {name && <button type="submit">Add Book</button>}
 
             </form>
         </div>
