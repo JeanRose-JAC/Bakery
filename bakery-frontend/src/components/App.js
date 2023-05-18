@@ -30,6 +30,7 @@ import { RecipeBookCreation } from 'pages/RecipeBookCreation';
 import { UpdateBookRecipeRemoval } from './UpdateBookRecipeRemoval';
 import { AddRecipeToBook } from 'pages/AddRecipeToBook';
 import { useEffect } from 'react';
+import { AddRecipesToBookForm } from './AddRecipesToBookForm';
 
 
 /**
@@ -90,6 +91,7 @@ function App() {
             <Route path="book/name" element={<UpdateBookName/>}/>
             <Route path="book/removal" element={<DeleteBook/>}/>
             <Route path="book/addition" element={<AddRecipeToBook/>}/>
+            <Route path="book/addition/form" element={<AddRecipesToBookForm/>}/>
             
             <Route path="login" element={<LoginForm/>}/>  
             <Route path="register" element={<RegisterForm/>}/>  

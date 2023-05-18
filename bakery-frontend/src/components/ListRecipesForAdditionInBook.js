@@ -3,6 +3,7 @@ import {
     MDBCardBody,
     MDBCardTitle,
   } from 'mdb-react-ui-kit';
+import { NavLink } from 'react-router-dom';
 
 function ListRecipesForAdditionInBook({recipes, book}){
 
@@ -12,7 +13,7 @@ function ListRecipesForAdditionInBook({recipes, book}){
             <MDBCard>
                 <MDBCardBody>
                     <MDBCardTitle>{recipe.title}</MDBCardTitle>
-                    <button onClick={addToBook(recipe, book)}>Add</button>
+                    <NavLink to="/book/addition/form" state={{recipe: recipe, book:book}}><button>Add</button></NavLink>
                 </MDBCardBody>
             </MDBCard>
          ))}
@@ -20,32 +21,6 @@ function ListRecipesForAdditionInBook({recipes, book}){
         </div>
     );
 
-}
-
-async function addToBook(recipe, book){
-    const requestOptions = {
-        method: "PUT",
-        credentials: "include",
-        body: JSON.stringify({
-            recipeId: recipe._id,
-            name: book.name
-        }),
-        headers: {
-            "Content-Type": "application/json; charset=UTF-8"
-        },
-    }
-
-    const response = await fetch ("http://localhost:1339/book/content/new", requestOptions)
-    const result = await response.json();
-    if(response.status === 400){
-        alert(result.errMessage);
-    }
-    else if (response.status === 500){
-        alert(result.errMessage);
-    }
-    else{
-        alert("Recipe added")
-    }
 }
 
 export {ListRecipesForAdditionInBook};

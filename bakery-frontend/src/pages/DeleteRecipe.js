@@ -10,7 +10,7 @@ function DeleteRecipe(){
     const {state} = useLocation();
 
     return(
-        <div className="center">
+        <div>
             {state && state.recipe && <DeleteRecipeForm recipe={state.recipe} book={state.book}/>}
         </div>
     )
