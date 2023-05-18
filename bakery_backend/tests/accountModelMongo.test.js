@@ -182,26 +182,54 @@ test("Cannot add account with an invalid password", async () => {
 
 // // Read one
 // // while we technically didnt need this one because the add queries, good to check
-// test("Can read existing account ", async () => {
-//     const { username, password } = generateAccountData();
-//     await model.addAccount(username,password) // add account to database  
-//     let filter = { username: username, password: password };
-//     let collection = await model.getCollection();
+test("Can read existing account ", async () => {
+    const { email, displayName, username, password } = generateAccountData();
+    await model.addAccount(email, displayName, username ,password) // add account to database  
     
-//     // Query database
-//     let account =  await collection.findOne(filter);
-//     const cursor = await model.getCollection();
-//     let results = await cursor.find({username: username}).toArray();// Convert query to array
+    // Filter for query
+    let filter = { username: username, password: password };
+    let collection = await model.getCollection();
     
-//     // Check details from getSingleAccount
-//     expect(account.username.toLowerCase() == username.toLowerCase()).toBe(true);
-//     expect(account.password.toLowerCase() == password.toLowerCase()).toBe(true);
+    // Query database
+    let account =  await collection.findOne(filter);
+    const cursor = await model.getCollection();
+    let results = await cursor.find({username: username}).toArray();// Convert query to array
+    
+    // Check details from getSingleAccount
+    expect(account.username == username).toBe(true);
+    expect(account.password == password).toBe(true);
+    expect(account.email.toLowerCase() == email.toLowerCase()).toBe(true);
+    expect(account.displayName == displayName).toBe(true);
 
-//     // Check account again but directly from database
-//     expect(results[0].username.toLowerCase() == username.toLowerCase()).toBe(true);
-//     expect(results[0].password.toLowerCase() == password.toLowerCase()).toBe(true);
+    // Check account again but directly from database
+    expect(results[0].username == username).toBe(true);
+    expect(results[0].password == password).toBe(true);
+    expect(results[0].email == email).toBe(true);
+    expect(results[0].displayName == displayName).toBe(true);
  
-// });
+});
+test("Can read existing account using model ", async () => {
+    const { email, displayName, username, password } = generateAccountData();
+    await model.addAccount(email, displayName, username ,password) // add account to database  
+    
+    // Filter for query
+    let filter = { username: username, password: password };
+    let collection = await model.getCollection();
+    
+    // Query database
+    let account =  await collection.findOne(filter);
+
+    let modelAccount = model.getSingleAccount(username);
+    
+    // Check details from getSingleAccount
+    expect(account.username == username).toBe(true);
+    expect(account.password == password).toBe(true);
+    expect(account.email.toLowerCase() == email.toLowerCase()).toBe(true);
+    expect(account.displayName == displayName).toBe(true);
+
+    // Check model results
+ 
+});
 
 // test("Cannot read account that doesn't exist (Valid name)", async () => {
 
