@@ -331,14 +331,47 @@ async function updateDisplayName(username, newDisplayName) {
 
 }
 
-
+/**
+ * Find document inside of a mongodb database with matching username and password.
+ * Username and password are validated before querying the database.
+ * If document is found, it will be deleted.
+ * @param {*} username of account to query for.
+ * @param {*} password of account to query for.
+ * @returns account object if delete was successful
+ * @throws InvalidInputError if username or password are invalid.
+ * @throws DataBaseError if account could not be deleted.
+ */
 async function removeAccount(username, password){
-
   try {
+    // search only if input passed in is valid -- automatically throws
+    if(validateUtils.isValid2(username, password)){
+  
+        // filter for query
+        let filter = {username: username, password: password};
+        // Query if account exists
+        let result = await accountCollection.deleteOne(filter,true); // true = delete just one
+
+        // if accountToDelete is null, then account was not found
+        if(result.deletedCount === 0)
+            throw new DatabaseError("Account to delete does not exist");
+        
+        if(result.deletedCount === 1){
+            return filter;
+        }
+        else throw new DatabaseError("Unexpected error while deleting account");;
+    }
+    // Error handling
+} catch (error) {
+    if(error instanceof InvalidInputError)
+        console.log("Database inside of deleteOne " + error.message);
+    if(error instanceof DatabaseError)
+        console.log("Database inside of deleteOne " + error.message);
+    else 
+    console.log("Unexpected error inside of deleteOne " + error.message);
+
+    throw error;
     
-  } catch (error) {
-    
-  }
+}
 }
 module.exports = {
     setCollection,
