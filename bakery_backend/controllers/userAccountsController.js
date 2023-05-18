@@ -13,6 +13,10 @@ const {InvalidInputError} = require("../models/invalidInputError.js");
 router.post('/account', createAccount);
 router.get('/account/:username', showAccount);
 router.get('/account/', showAllAccounts);
+router.put('/account/:username/editusername',editUsername);
+router.put('/account/:username/editpassword',editPassword);
+router.put('/account/:username/editdisplayName',editDisplayName);
+router.delete('/account', deleteAccount);
 
 
  /**
