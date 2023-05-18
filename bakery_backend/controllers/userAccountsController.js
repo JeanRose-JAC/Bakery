@@ -175,25 +175,26 @@ async function showAllAccounts(request, response) {
  *                     500 level responses can be sent if new username is taken or if updating fails.
  *              
  */
-async function modifyAccount(request, response){
+async function editUsername(request, response){
+
     // Body params for new username
-    let name = request.body.username;
-    let newName = request.body.newUsername;
-    logger.debug("Json body from modify request: name: " + name + ", newName: " + newName);
+    let username = request.body.username;
+    let newUsername = request.body.newUsername;
+    logger.debug("Json body from modify request: name: " + username + ", newName: " + newUsername);
    // updating account username
    try {
 
-        let account = await model.updateOneUsername(name, newName);
+        let account = await accountModel.updateUsername(username, newUsername);
         logger.debug("Account update result values  " + account);
 
-        // if pokemon is null, handle appropriately
+        // if account object is null handle approriately (Unexpected)
         if(account == null || account == undefined) {
             logger.fatal("updateOneUsername returned null or undefined, should never happen")
             response.status(500)
-            response.send({errorMessage: `Unexpected error while updating account with: \n Name: ${name}`});
+            response.send({errorMessage: `Unexpected error while updating account with: \n Name: ${username}`});
         }else if(account == true) {
             response.status(200)
-            response.send({oldName: name, newName: newName}); // return object for front end
+            response.send({oldName: username, newName: newUsername}); // return object for front end
         }else if(account == false) {
             response.status(200)
             response.send({oldName: "Account not found", newName:"Account not found"});
@@ -205,7 +206,7 @@ async function modifyAccount(request, response){
         // User Input Error
         if(err instanceof InvalidInputError){
             logger.error("Invalid input error while updating an account " + err.message);
-            logger.error("Values passes in: " + name + newName);
+            logger.error("Values passes in: " + username + newUsername);
             response.status(406); // not acceptable status code
             response.send({errorMessage: "Error while updating account: " + err.message});
         }
