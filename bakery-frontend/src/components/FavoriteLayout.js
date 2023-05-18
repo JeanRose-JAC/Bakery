@@ -40,8 +40,6 @@ import { GetUsersRecipeBooks } from './GetUsersRecipeBooks';
 function FavoriteLayout(){
     const [isLoggedIn, setIsLoggedIn] = useContext(LoggedInContext);
 
-    setIsLoggedIn(true);
-
     return(
         <div>
             {isLoggedIn ? 
