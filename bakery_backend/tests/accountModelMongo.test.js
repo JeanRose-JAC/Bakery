@@ -38,7 +38,7 @@ const generateAccountData_Old = () => userData.splice(Math.floor((Math.random() 
 // Updated version of generating account data using faker.js 
 // Default password isntead of faker js because reg expression suck
 function generateAccountData(){
-    return  {email:faker.internet.email(), displayName: "HisHighnessMishMish", username: "username16"  , password: "testPassword123!"};
+    return  {email:faker.internet.email(), displayName: faker.name.middleName(), username: faker.name.firstName()  , password: "testPassword123!"};
 }
 
 // Prep mock database
@@ -263,41 +263,47 @@ test("Cannot read account that doesn't exist (Valid name) using model", async ()
 
     // Fake Data 
     let notRealUsername = "KuiHuaReal";
-    
+
     // Check account that doesn't exist
     await expect(()=> model.getSingleAccount(notRealUsername).rejects.toThrow(DatabaseError));
 });
 // // Read many 
-// test("Can read entire collection", async () => {
+test("Can read entire collection", async () => {
 
-//     // Add some accounts to the database
-//     const { username, password } = generateAccountData();
-//     let username2 ="Zaid";
-//     let password2 = "123467GoodPassword";
-//     let username3 ="Ahmed";
-//     let password3 = "123ShorterPassword";
+    // Add some accounts to the database
+    const { username, password } = generateAccountData();
+    let a1 = generateAccountData();
+    let a2 = generateAccountData();
+    let a3 = generateAccountData();
 
-//     await model.addAccount(username,password) // add account to database  
-//     await model.addAccount(username2,password2);
-//     await model.addAccount(username3,password3);
+    // add accounts to database 
+    await model.addAccount(a1.email,a1.displayName,a1.username, a1.password)  
+    await model.addAccount(a2.email,a2.displayName,a2.username, a2.password)  
+    await model.addAccount(a3.email,a3.displayName,a3.username, a3.password)  
 
-//     let results = await model.getAllAccounts();
+    let results = await model.getAllAccounts();
 
-//     // Check Array 
-//     expect(Array.isArray(results)).toBe(true);
-//     expect(results.length).toBe(3);
+    // Check Array 
+    expect(Array.isArray(results)).toBe(true);
+    expect(results.length).toBe(3);
 
-//     // Check all accounts that we just created.
-//     // Account 1 
-//     expect(results[0].username.toLowerCase() == username.toLowerCase()).toBe(true);
-//     expect(results[0].password.toLowerCase() == password.toLowerCase()).toBe(true);
-//     // Account 2
-//     expect(results[1].username.toLowerCase() == username2.toLowerCase()).toBe(true);
-//     expect(results[1].password.toLowerCase() == password2.toLowerCase()).toBe(true);
-//     // Account 3
-//     expect(results[2].username.toLowerCase() == username3.toLowerCase()).toBe(true);
-//     expect(results[2].password.toLowerCase() == password3.toLowerCase()).toBe(true);
-// });
+    // Check all accounts that we just created.
+    // Account 1 
+    expect(results[0].email.toLowerCase() == a1.email.toLowerCase()).toBe(true);
+    expect(results[0].displayName.toLowerCase() == a1.displayName.toLowerCase()).toBe(true);
+    expect(results[0].username.toLowerCase() == a1.username.toLowerCase()).toBe(true);
+    expect(results[0].password.toLowerCase() == a1.password.toLowerCase()).toBe(true);
+    // Account 2
+    expect(results[1].email.toLowerCase() == a2.email.toLowerCase()).toBe(true);
+    expect(results[1].displayName.toLowerCase() == a2.displayName.toLowerCase()).toBe(true);
+    expect(results[1].username.toLowerCase() == a2.username.toLowerCase()).toBe(true);
+    expect(results[1].password.toLowerCase() == a2.password.toLowerCase()).toBe(true);
+    // Account 3
+    expect(results[2].email.toLowerCase() == a3.email.toLowerCase()).toBe(true);
+    expect(results[2].displayName.toLowerCase() == a3.displayName.toLowerCase()).toBe(true);
+    expect(results[2].username.toLowerCase() == a3.username.toLowerCase()).toBe(true);
+    expect(results[2].password.toLowerCase() == a3.password.toLowerCase()).toBe(true);
+});
 // // Update
 // test("Can update existing accounts username with valid username", async () => {
 //     // create account
