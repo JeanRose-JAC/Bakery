@@ -116,6 +116,22 @@ async function getAllRecipeBooks() {
 }
 
 /**
+ * Gets all the recipe books of the user
+ * @param {*} userId username
+ * @returns An array of all the recipe books of the user
+ */
+async function getAllRecipeBooksOfUser(userId){
+  try{
+    const cursor = collection.find({userId: userId});
+    const allValues = await cursor.toArray();
+    return allValues;
+  }
+  catch(err){
+    throw new DatabaseError("Input" + err);
+  }
+}
+
+/**
 * Deletes a recipe from the database based on the name of the recipe book
 * @param {*} userId username
 * @param {*} find book name
@@ -135,7 +151,7 @@ async function deleteRecipeBook(userId, find) {
 * @param {*} userId username
 * @param {*} name current book name
 * @param {*} newName new book name
-* @returns wether the operation was succesfull or not.
+* @returns whether the operation was successful or not.
 */
 async function updateRecipeBookName(userId, name, newName) {
 
@@ -156,7 +172,13 @@ async function updateRecipeBookName(userId, name, newName) {
   }
 }
 
-
+/**
+ * Updates the recipe book by adding a saved recipe
+ * @param {*} userId username
+ * @param {*} name book name
+ * @param {*} recipeId recipe id
+ * @returns whether the operation was successful or not.
+ */
 async function updateBookAddRecipe(userId, name, recipeId){
   try{
     let book = await getSingleRecipeBook(userId, name);
@@ -174,6 +196,13 @@ async function updateBookAddRecipe(userId, name, recipeId){
   }
 }
 
+/**
+ * Updates the recipe book by deleting a saved recipe
+ * @param {*} userId username
+ * @param {*} name book name
+ * @param {*} recipeId recipe id
+ * @returns whether the operation was successful or not.
+ */
 async function updateBookDeleteRecipe(userId, name, recipeId){
   try{
     let book = await getSingleRecipeBook(userId, name);
@@ -199,4 +228,4 @@ async function updateBookDeleteRecipe(userId, name, recipeId){
   }
 }
 
-module.exports = {setCollection, getCollection,addBook,getSingleRecipeBook,getAllRecipeBooks,deleteRecipeBook,updateRecipeBookName, updateBookAddRecipe, updateBookDeleteRecipe}
+module.exports = {setCollection, getCollection,addBook,getSingleRecipeBook,getAllRecipeBooks,deleteRecipeBook,updateRecipeBookName, updateBookAddRecipe, updateBookDeleteRecipe, getAllRecipeBooksOfUser}
