@@ -315,6 +315,8 @@ test("Update username success case", async () => {
     // Prep for update
     let newUsername = "newUsernameGoCrazy";
     let filter = { username: username, password: password };
+
+    // Easy access to collection
     let collection = await model.getCollection();
     
     // Update specific document in database
@@ -327,6 +329,31 @@ test("Update username success case", async () => {
     expect(results.modifiedCount === 1).toBe(true);
     // Verify new username is equal is what we set it to
     expect(databaseResult.username == newUsername).toBe(true);
+
+});
+test("Update display name success case", async () => {
+    
+    // create account
+    const { email, displayName, username, password } = generateAccountData();
+    await model.addAccount(email, displayName, username ,password) // add account to database
+
+    // Prep for update
+    let newDisplayName = "newUsernameGoCrazy";
+    let filter = { username: username, password: password };
+
+    // Easy access to collection
+    let collection = await model.getCollection();
+    
+    // Update specific document in database
+    let results = await collection.updateOne(filter,{$set:{username:newDisplayName}})
+
+    // Find updated document using the new username
+    let databaseResult = await collection.findOne({username: newDisplayName}); // this returns document directly
+
+    // Check that an update was made
+    expect(results.modifiedCount === 1).toBe(true);
+    // Verify new username is equal is what we set it to
+    expect(databaseResult.username == newDisplayName).toBe(true);
 
 });
 // test("Can't update account with an invalid username", async () => {
