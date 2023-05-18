@@ -36,15 +36,15 @@ function App() {
             <Route path="admin" element={<Admin/>}/>
             <Route path="usererror" element={<UserError/>}/>
             <Route path="systemerror" element={<SystemError/>}/>
-            <Route path="Quick" element={<Quick/>}/>
-            <Route path="Breakfast" element={<Breakfast/>}/>
-            <Route path="Snack" element={<Snack/>}/>
-            <Route path="Dinner" element={<Dinner/>}/>
-            <Route path="Dessert" element={<Dessert/>}/>
-            <Route path="Culture" element={<Culture/>}/>
-            <Route path="Search" element={<Search/>}/>
-            <Route path="Profile" element={<Profile/>}/>
-            <Route path="Favorite" element={<Favorite/>}/>     
+            <Route path="quick" element={<Quick/>}/>
+            <Route path="breakfast" element={<Breakfast/>}/>
+            <Route path="snack" element={<Snack/>}/>
+            <Route path="dinner" element={<Dinner/>}/>
+            <Route path="dessert" element={<Dessert/>}/>
+            <Route path="culture" element={<Culture/>}/>
+            <Route path="search" element={<Search/>}/>
+            <Route path="profile" element={<Profile/>}/>
+            <Route path="favorite" element={<Favorite/>}/>     
           </Route>
           <Route path="*" element={<Navigate to="/"/>} />
         </Routes>

@@ -51,17 +51,17 @@ function Header() {
                   Recipes
                 </MDBDropdownToggle>
                 <MDBDropdownMenu>
-                  <MDBDropdownItem link href='/Quick'>Quick</MDBDropdownItem>
-                  <MDBDropdownItem link href='/Breakfast'>Breakfast</MDBDropdownItem>
-                  <MDBDropdownItem link href='/Snack'>Snack</MDBDropdownItem>
-                  <MDBDropdownItem link href='/Dinner'>Dinner</MDBDropdownItem>
-                  <MDBDropdownItem link href='/Dessert'>Dessert</MDBDropdownItem>
-                  <MDBDropdownItem link href='/Search'>Search</MDBDropdownItem>
+                  <MDBDropdownItem link href='/quick'>Quick</MDBDropdownItem>
+                  <MDBDropdownItem link href='/breakfast'>Breakfast</MDBDropdownItem>
+                  <MDBDropdownItem link href='/snack'>Snack</MDBDropdownItem>
+                  <MDBDropdownItem link href='/dinner'>Dinner</MDBDropdownItem>
+                  <MDBDropdownItem link href='/dessert'>Dessert</MDBDropdownItem>
+                  <MDBDropdownItem link href='/search'>Search</MDBDropdownItem>
                 </MDBDropdownMenu>
               </MDBDropdown>
             </MDBNavbarItem>
             <MDBNavbarItem>
-              <MDBNavbarLink href='/Culture'>Culture</MDBNavbarLink>
+              <MDBNavbarLink href='/culture'>Culture</MDBNavbarLink>
             </MDBNavbarItem>
             <MDBNavbarItem>
               <MDBNavbarLink href='/about'>About Us</MDBNavbarLink>
@@ -72,7 +72,15 @@ function Header() {
             
           </MDBNavbarNav>
          
-        
+          <a class="navbar-brand me-2" href="/search">
+      <img
+        src="https://i.imgur.com/drIqvV8.png"
+        height="36"
+        alt="GG Logo"
+        loading="lazy"
+       
+      />
+    </a>
           <a class="navbar-brand me-2" href="/favorite">
       <img
         src="https://i.imgur.com/lvcGbQi.png"
