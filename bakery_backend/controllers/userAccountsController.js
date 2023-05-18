@@ -3,10 +3,12 @@ const router = express.Router();
 const routeRoot = '/';
 const logger = require('../logger.js');
 const accountModel = require("../models/userAccountsModel.js");
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 // Error handlers
-const { DatabaseError } = require("../models/databaseError.js");
-const {InvalidInputError} = require("../models/invalidInputError.js");
+const DatabaseError= require("../models/databaseError.js");
+const InvalidInputError= require("../models/invalidInputError.js");
 
 // End Points
 // refer to project documentation for more information
@@ -17,6 +19,13 @@ router.put('/account/:username/editusername',editUsername);
 router.put('/account/:username/editpassword',editPassword);
 router.put('/account/:username/editdisplayName',editDisplayName);
 router.delete('/account', deleteAccount);
+
+/** Returns true if there is a stored user with the same username and password. */
+async function checkCredentials(username, password) {
+    let account = await accountModel.getSingleAccount(username);
+
+    return await bcrypt.compare(password, account.password);
+}
 
 
  /**
@@ -85,9 +94,16 @@ router.delete('/account', deleteAccount);
  */
 async function showAccount(request, response) {
 
-    // get the name from url
-    let username = request.params.username; // params = endpoint name
-    logger.debug("username params value: " + username)
+    const authenticatedSession = authenticateUser(request);
+    if (!authenticatedSession) {
+        response.sendStatus(401); // Unauthorized access
+        return;
+    }
+    refreshSession(request, response);
+
+    // get the name from cookie;
+    let username = authenticatedSession.userSession.username;
+    logger.debug("username value: " + username)
 
    try {
 
@@ -133,6 +149,13 @@ async function showAllAccounts(request, response) {
 
    try {
 
+        const authenticatedSession = authenticateUser(request);
+        if (!authenticatedSession) {
+            response.sendStatus(401); // Unauthorized access
+            return;
+        }
+        refreshSession(request, response);
+
         let accounts = await accountModel.getAllAccounts();
         logger.debug("Account result: " + accounts);
         // if pokemon is null, handle appropriately
@@ -177,8 +200,15 @@ async function showAllAccounts(request, response) {
  */
 async function editUsername(request, response){
 
+    const authenticatedSession = authenticateUser(request);
+    if (!authenticatedSession) {
+        response.sendStatus(401); // Unauthorized access
+        return;
+    }
+    refreshSession(request, response);
+
     // Body params for new username
-    let username = request.body.username;
+    let username = authenticatedSession.userSession.username;
     let newUsername = request.body.newUsername;
     logger.debug("Json body from modify request: name: " + username + ", newName: " + newUsername);
    // updating account username
@@ -237,8 +267,15 @@ async function editUsername(request, response){
  */
 async function editPassword(request, response){
 
+    const authenticatedSession = authenticateUser(request);
+    if (!authenticatedSession) {
+        response.sendStatus(401); // Unauthorized access
+        return;
+    }
+    refreshSession(request, response);
+
     // Body params for new username
-    let username = request.body.username;
+    let username = authenticatedSession.userSession.username;
     let password = request.body.password;
     let newPassword = request.body.newPassword;
     logger.debug("Json body from modify request: name: " + username + ", password: " + password + ", new pass : " + newPassword);
@@ -299,8 +336,15 @@ async function editPassword(request, response){
  */
 async function editDisplayName(request, response){
 
+    const authenticatedSession = authenticateUser(request);
+    if (!authenticatedSession) {
+        response.sendStatus(401); // Unauthorized access
+        return;
+    }
+    refreshSession(request, response);
+
     // Body params for new username
-    let username = request.body.username;
+    let username = authenticatedSession.userSession.username;
     let newDisplayName = request.body.newDisplayName;
     logger.debug("Json body from modify request: name: " + username + ", newDisplayName: " + newDisplayName);
    // updating account username
@@ -357,8 +401,15 @@ async function editDisplayName(request, response){
  */
 async function deleteAccount(request, response){
 
+    const authenticatedSession = authenticateUser(request);
+    if (!authenticatedSession) {
+        response.sendStatus(401); // Unauthorized access
+        return;
+    }
+    refreshSession(request, response);
+
     // Body params for new username
-    let username = request.body.username;
+    let username = authenticatedSession.userSession.username;
     let password = request.body.password;
     logger.debug("remove account json request info - name: " + username + ", password: " + password);
 
@@ -402,5 +453,6 @@ async function deleteAccount(request, response){
 }
 module.exports = {
     router,
-    routeRoot
+    routeRoot,
+    checkCredentials
 }

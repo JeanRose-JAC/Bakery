@@ -4,6 +4,8 @@ const logger = require("../logger.js");
 let collectionName = "user_accounts";
 let collection;
 let databaseConnection;
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 // validation imports
 const validateUtilsAcc = require("./validateUtilsAccounts");
@@ -90,8 +92,10 @@ async function addAccount(email, displayName, username, password) {
     // check for valid username and password
     // ----------------------------------------------------------------
     else if (validateUtilsAcc.isAccountValid(email, displayName, username, password)) {
+      hashedPW = await bcrypt.hash(password, saltRounds);
+
       // creates and returns new account object if successful
-      if (await !collection.insertOne({email: email, displayName: displayName, username: username, password: password,})
+      if (await !collection.insertOne({email: email, displayName: displayName, username: username, password: hashedPW,})
       )
         throw new DatabaseError(
           `Error while inserting account into db: ${username}, ${password}`

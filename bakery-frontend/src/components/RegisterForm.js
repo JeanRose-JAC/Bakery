@@ -29,7 +29,7 @@ function RegisterForm(){
                     
                 };
         
-                const response = await fetch ("http://localhost:1339/users/register", requestOptions)
+                const response = await fetch ("http://localhost:1339/account", requestOptions)
         
                 if(response.status === 200 || response.status === 204) {
                     navigate('/login');
