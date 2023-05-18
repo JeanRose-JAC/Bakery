@@ -350,7 +350,7 @@ async function removeAccount(username, password){
         // filter for query
         let filter = {username: username, password: password};
         // Query if account exists
-        let result = await accountCollection.deleteOne(filter,true); // true = delete just one
+        let result = await collection.deleteOne(filter,true); // true = delete just one
         logger.trace("Result from delete query: " + result);
 
         // if accountToDelete is null, then account was not found
