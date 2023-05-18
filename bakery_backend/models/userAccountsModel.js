@@ -326,6 +326,16 @@ async function updateDisplayName(username, newDisplayName) {
   }
 
 }
+
+
+async function removeAccount(username, password){
+
+  try {
+    
+  } catch (error) {
+    
+  }
+}
 module.exports = {
     setCollection,
     getCollection,
