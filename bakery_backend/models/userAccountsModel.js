@@ -343,13 +343,15 @@ async function updateDisplayName(username, newDisplayName) {
  */
 async function removeAccount(username, password){
   try {
-    // search only if input passed in is valid -- automatically throws
-    if(validateUtils.isValid2(username, password)){
+      
+      // search only if input passed in is valid -- automatically throws
+      if(validateUtilsAcc.isUsernameValid() && validateUtilsAcc.isPasswordValid(password)){
   
         // filter for query
         let filter = {username: username, password: password};
         // Query if account exists
         let result = await accountCollection.deleteOne(filter,true); // true = delete just one
+        logger.trace("Result from delete query: " + result);
 
         // if accountToDelete is null, then account was not found
         if(result.deletedCount === 0)
@@ -359,17 +361,17 @@ async function removeAccount(username, password){
             return filter;
         }
         else throw new DatabaseError("Unexpected error while deleting account");;
-    }
+      }
     // Error handling
-} catch (error) {
-    if(error instanceof InvalidInputError)
-        console.log("Database inside of deleteOne " + error.message);
-    if(error instanceof DatabaseError)
-        console.log("Database inside of deleteOne " + error.message);
+} catch (err) {
+    if(err instanceof InvalidInputError)
+        logger.info("Database inside of deleteOne " + err.message);
+    if(err instanceof DatabaseError)
+      logger.info("Database inside of deleteOne " + err.message);
     else 
-    console.log("Unexpected error inside of deleteOne " + error.message);
+      logger.info("Unexpected error inside of deleteOne " + err.message);
 
-    throw error;
+    throw err;
     
 }
 }
