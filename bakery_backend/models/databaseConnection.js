@@ -1,5 +1,5 @@
 const {MongoClient} = require("mongodb");
-const {DatabaseError} = require('./databaseError.js');
+const DatabaseError = require('./databaseError.js');
 const logger = require('../logger.js');
 let client;
 

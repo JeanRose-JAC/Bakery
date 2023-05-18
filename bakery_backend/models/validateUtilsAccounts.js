@@ -1,5 +1,5 @@
 const validator = require('validator');
-const { InvalidInputError } = require("./invalidInputError.js");
+const InvalidInputError = require("./invalidInputError.js");
 const logger = require("../logger.js");
 //test from desktop
 
