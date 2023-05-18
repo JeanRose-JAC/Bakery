@@ -18,6 +18,7 @@ import { Favorite } from 'pages/Favorite';
 import { Culture } from 'pages/Culture';
 import { Search } from 'pages/Search';
 import { Recipe } from 'pages/Recipe';
+import { RecipeCreation } from 'pages/RecipeCreation';
 
 
 /**
@@ -46,7 +47,8 @@ function App() {
             <Route path="search" element={<Search/>}/>
             <Route path="profile" element={<Profile/>}/>
             <Route path="favorite" element={<Favorite/>}/>    
-            <Route path="recipe" element={<Recipe/>}/>    
+            <Route path="recipe" element={<Recipe/>}/>  
+            <Route path="recipe/creation" element={<RecipeCreation/>}/>    
           </Route>
           <Route path="*" element={<Navigate to="/"/>} />
         </Routes>
