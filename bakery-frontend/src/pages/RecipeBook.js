@@ -21,7 +21,8 @@ function RecipeBook(){
         for(let count = 0; count < state.book.SavedRecipes.length; count++) {
             const response = await fetch ("http://localhost:1339/recipe/user/id/" + state.book.SavedRecipes[count], requestOptions);
             const result = await response.json();
-            recipesData.push(result);
+            if(result.title != null)
+                recipesData.push(result);
         }
 
         setRecipes(recipesData);
