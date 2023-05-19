@@ -27,11 +27,9 @@ import { RecipeBook } from 'pages/RecipeBook';
 import { UpdateRecipe } from 'pages/UpdateRecipe';
 import { DeleteRecipe } from 'pages/DeleteRecipe';
 import { RecipeBookCreation } from 'pages/RecipeBookCreation';
-import { UpdateBookRecipeRemoval } from './UpdateBookRecipeRemoval';
+import { RemoveRecipeFromBook } from 'pages/RemoveRecipeFromBook';
 import { AddRecipeToBook } from 'pages/AddRecipeToBook';
 import { useEffect } from 'react';
-import { AddRecipesToBookForm } from './AddRecipesToBookForm';
-
 
 /**
  * Determines the list of routes in the website
@@ -84,14 +82,13 @@ function App() {
             <Route path="recipe/creation" element={<RecipeCreation/>}/>
             <Route path="recipe/edit" element={<UpdateRecipe/>}/>  
             <Route path="recipe/removal" element={<DeleteRecipe/>}/>  
-            <Route path="/recipe/book/removal" element={<UpdateBookRecipeRemoval/>}/>  
+            <Route path="/recipe/book/removal" element={<RemoveRecipeFromBook/>}/>  
 
             <Route path="book" element={<RecipeBook/>}/>
             <Route path="book/creation" element={<RecipeBookCreation/>}/>
             <Route path="book/name" element={<UpdateBookName/>}/>
             <Route path="book/removal" element={<DeleteBook/>}/>
             <Route path="book/addition" element={<AddRecipeToBook/>}/>
-            <Route path="book/addition/form" element={<AddRecipesToBookForm/>}/>
             
             <Route path="login" element={<LoginForm/>}/>  
             <Route path="register" element={<RegisterForm/>}/>  
