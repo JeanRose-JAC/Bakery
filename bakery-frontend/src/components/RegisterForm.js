@@ -29,13 +29,14 @@ function RegisterForm(){
                     
                 };
         
-                const response = await fetch ("http://localhost:1339/account", requestOptions)
+                const response = await fetch ("http://localhost:1339/account", requestOptions);
+                const result = await response.json();
         
                 if(response.status === 200 || response.status === 204) {
                     navigate('/login');
                 }
                 else{
-                    alert("Failed register : " + response.errMessage);
+                    alert("Failed register : " + result.errorMessage);
                 }    
             }
         catch(e) {
