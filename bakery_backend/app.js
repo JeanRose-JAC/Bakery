@@ -1,4 +1,5 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const app = express();
 const logger = require('./logger');
 const pinohttp = require('pino-http');
@@ -10,9 +11,23 @@ app.use(httpLogger);
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-const controllers = ['userAccountsController', 'recipesController', 'recipeBooksController', 'errorController'];
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
+app.use((req, res, next) => {
+res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Accept, Content-Type, Authorization"); 
+res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+res.setHeader("Access-Control-Allow-Credentials", true);
+res.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH");
+next();
+});
+app.use(cookieParser());
+
+const controllers = ['userAccountsController', 'recipesController', 'recipeBooksController', 'sessionController', 'errorController'];
+
 app.use(express.json());
 // Configuring body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -33,7 +48,7 @@ controllers.forEach((controllerName) => {
     }    
 });
   
-  const listEndpoints = require('express-list-endpoints');
-  console.log(listEndpoints(app));
-  
-  module.exports = app
+const listEndpoints = require('express-list-endpoints');
+console.log(listEndpoints(app));
+
+module.exports = app

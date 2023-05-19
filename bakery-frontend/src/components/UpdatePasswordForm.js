@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import './style.css';
 
 /**
- * Displays the form for updating a recipe
+ * Formats the update password form
  * 
- * @param {*} props function for keeping track of the updated recipe
- * @returns Element that contains the update form
+ * @returns update password form
  */
-function UpdateRecipeForm(props){
+function UpdatePasswordForm(){
     const [password, setUserPassword] = useState(null);
+    const [newPassword, setnewPassword] = useState(null);
     const navigate = useNavigate();
     
     const handleSubmit = async (event) => {
@@ -17,36 +17,46 @@ function UpdateRecipeForm(props){
 
         const requestOptions = {
             method: "PUT",
+            credentials: "include",
             body: JSON.stringify({
-                password:password, }),
+                password:password,
+                newPassword:newPassword,
+            }),
             headers: {
                 "Content-Type": "application/json; charset=UTF-8"
             },
         }
 
-        const response = await fetch ("http://localhost:1339/recipe/" + password)
+        const response = await fetch ("http://localhost:1339/account/editpassword", requestOptions)
         const result = await response.json();
         if(response.status === 400){
-            navigate("/usererror", {state: {errorMessage: result.errorMessage, link: "/admin", linkLabel:"Admin"}});
+            alert(result.errorMessage);
         }
         else if (response.status === 500){
-            navigate("/systemerror", {state: {errorMessage: result.errorMessage, link: "/admin", linkLabel:"Admin"}});
+            alert(result.errorMessage);
         }
         else{
-            props.setAdded(result);
+            alert("success");
         }
     }
+  
+  
 
     return(
-        <h4 className="flex">
-        Change Your password
+    
         <form onSubmit={handleSubmit} className="recipeForm">
-        <input type="text" placeholder="New password..." onChange={(e) => setUserPassword(e.target.value)}></input>
-        {password  && <button type="submit">Update Password</button>}
+             <h1>Update password</h1>
+        <label htmlFor="Current Password" column sm="2">Current Password</label>
+        <input type="password" placeholder="Current password..." onChange={(e) => setUserPassword(e.target.value)}></input>    
         <p/>
+        <label htmlFor="New Password" column sm="2">New Password</label>
+        <input type="password" placeholder="New password..." onChange={(e) => setnewPassword(e.target.value)}></input>    
+        <p/>
+        {password  &&  newPassword &&<button type="submit">Update Password</button>}
         </form> 
-        </h4>   
+       
+      
     );
 }
 
-export {UpdateRecipeForm};
+export {UpdatePasswordForm};

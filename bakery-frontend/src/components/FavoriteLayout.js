@@ -1,33 +1,29 @@
-import { useState } from "react";
-import { ListRecipes } from "./ListRecipes";
+import { useContext } from 'react';
+import { LoggedInContext } from './App';
+import { Link } from 'react-router-dom';
+import { GetUsersRecipeBooks } from './GetUsersRecipeBooks';
 
 /**
- * Displays all of the recipes in the database
+ * Sets user dashboard
  * 
- * @returns A list of all the recipes
+ * @returns Use dashboard
  */
-function GetAllRecipes(){
-    const[recipe, setRecipe] = useState([]);
-
-
-    const callGetAllRecipe  = async () => {
-        const response = await fetch ("http://localhost:1339/recipe/", {method: "GET"})
-        const result = await response.json();
-        setRecipe(result);
-
-    }
-    
+function FavoriteLayout(){
+    const [isLoggedIn, setIsLoggedIn] = useContext(LoggedInContext);
 
     return(
-        <div className="center">
-            <h1>Saved Recipes</h1>
-            <button onClick={callGetAllRecipe} className="buttonIngredients">Get Saved Recipes</button>
-            <button onClick={callGetAllRecipe} className="buttonBook">Get All ingredients</button>
-            <button onClick={callGetAllRecipe} className="buttonBook">My recipes</button>  
-            {recipe[0] && <ListRecipes recipes={recipe}/>}
+        <div>
+            {isLoggedIn ? 
+            <div>
+                <GetUsersRecipeBooks/>
+            </div> : 
+            <div>
+                You must be logged in to access this page
+                <p></p>
+                <Link to="/login">Log In</Link>    
+            </div>}
         </div>
-    );
-
+    )
 }
 
-export {GetAllRecipes};
+export {FavoriteLayout}

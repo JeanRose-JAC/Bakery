@@ -1,15 +1,16 @@
-import { GetAllRecipes } from "components/FavoriteLayout";
+// import { GetAllRecipes } from "components/FavoriteLayout";
+import {FavoriteLayout} from "components/FavoriteLayout"
 
 /**
- * Displays all the recipes
+ * Displays user dashboard information
  * 
- * @returns Element for getting all the Quick recipes
+ * @returns user dashboard
  */
 function Favorite(){
 
     return (
         <div id="wrapper">
-            <GetAllRecipes/>
+            <FavoriteLayout/>
         </div>
         );
 }

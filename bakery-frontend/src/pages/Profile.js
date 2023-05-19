@@ -1,9 +1,9 @@
 import { ProfileLayout } from "components/ProfileLayout";
 
 /**
- * Displays all the recipes
+ * displays user settings or log in form
  * 
- * @returns Element for getting all the Dinner recipes
+ * @returns profile layout
  */
 function Profile(){
     return (

@@ -6,6 +6,7 @@ const logger = require('../logger.js');
 let collectionName = "recipes";
 let recipesCollection;
 let databaseConnection;
+var ObjectId = require('mongodb').ObjectId; 
 
 /**
  * Sets the collection in the database
@@ -248,4 +249,27 @@ async function deleteRecipe(userId, title){
   }
 }
 
-module.exports = {setCollection, getCollection, addNewRecipe, getOneRecipe, getRecipes, getRecipesOfOneUser, updateRecipe, deleteRecipe}
+/**
+ * Gets the recipe based on the userId and title
+ * 
+ * @param {string} userId username
+ * @param {int} id recipeId
+ * @returns Recipe object
+ * @throws DatabaseError if an error occurs in the database
+ * @throws InvalidInputError if any of the input fields are invalid
+ */
+async function getOneRecipeById(userId, id){
+  try{
+
+    let _id = new ObjectId(id);
+
+    return await recipesCollection.findOne({userId: userId, _id: _id});
+  }
+  catch (err) {
+    logger.error("From getOneRecipeById(): " + err.message);
+    throw new DatabaseError(err.message);
+  }  
+
+}
+
+module.exports = {setCollection, getCollection, addNewRecipe, getOneRecipe, getRecipes, getRecipesOfOneUser, updateRecipe, deleteRecipe, getOneRecipeById}

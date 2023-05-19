@@ -2,9 +2,9 @@ import { GetAllBreakfastRecipes } from "components/GetAllBreakfastRecipes";
 
 
 /**
- * Displays all the recipes
+ * Displays breakfast recipes
  * 
- * @returns Element for getting all the recipes
+ * @returns Breakfast recipes
  */
 function Breakfast(){
 

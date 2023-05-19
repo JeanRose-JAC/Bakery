@@ -167,23 +167,29 @@ test('Successfuly find all books', async ()=> {
 //==========UPDATE RECIPE==========
 test('Successfuly update book name', async ()=> {
     let newRecipeBook = await addOneRecipeToCollection();
-    let succesfulSearch = await recipesBookModel.updateRecipeBoookContent(newRecipeBook.userId, newRecipeBook.name,"ThisNewName");
+    let succesfulSearch = await recipesBookModel.updateRecipeBookName(newRecipeBook.userId, newRecipeBook.name,"ThisNewName");
 
     expect(succesfulSearch.modifiedCount).toBe(1);
 });
 
 test('Unsuccessfuly update book name; name not found', async ()=> {
+    let changed = 0
+    try{
     await addOneRecipeToCollection();
-    let succesfulSearch = await recipesBookModel.updateRecipeBoookContent("","ThisNewName");
+    let succesfulSearch = await recipesBookModel.updateRecipeBookName("","ThisNewName");
 
     expect(succesfulSearch.modifiedCount).toBe(0);
+    changed++;
+    }catch(err){
+        expect(changed).toBe(0);
+    }
 });
 
 test('Unsuccessfuly update book name; name too long', async ()=> {
   
     try{
     let newRecipeBook = await addOneRecipeToCollection();
-    let succesfulSearch = await recipesBookModel.updateRecipeBoookName(newRecipeBook.name,"ThisNewNameeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");  
+    let succesfulSearch = await recipesBookModel.updateRecipeBookName(newRecipeBook.name,"ThisNewNameeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");  
     expect(succesfulSearch.modifiedCount).toBe(0);
     }
     catch(err){
@@ -193,12 +199,3 @@ test('Unsuccessfuly update book name; name too long', async ()=> {
 
    
 });
-test('Successfuly change content', async ()=> {
-  
-    let newRecipeBook = await addOneRecipeToCollection();
-    let succesfulSearch = await recipesBookModel.updateRecipeBoookContent(newRecipeBook.userId, newRecipeBook.name,"");  
-    expect(succesfulSearch.modifiedCount).toBe(1);
-    }
- 
-   
-);

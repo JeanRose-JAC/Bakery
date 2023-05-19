@@ -1,26 +1,19 @@
-import { useState } from "react";
-import { ListRecipes } from "./ListRecipes";
-import { UpdatePassword } from "./UpdatePassword";
+import { LoginForm } from './LoginForm';
+import { UserSettings } from './UserSettings';
+import { useContext } from 'react';
+import { LoggedInContext } from './App';
 
 /**
- * Displays all of the recipes in the database
+ * Displays the user settings or the login form
  * 
- * @returns A list of all the recipes
+ * @returns User settings if logged in. Log in form if not
  */
 function ProfileLayout(){
-   
-
+    const [isLoggedIn, setIsLoggedIn] = useContext(LoggedInContext);
 
     return(
-        <div className="center">
-            <h1>My Profile</h1>
-            <h4>Current Email</h4>
-            <input  type="text" placeholder="No email detected"></input>
-            <UpdatePassword/>
-            <h4>Vegan
-            <button className="buttonIngredients">True</button>
-            <button className="buttonBook">False</button>
-            </h4>
+        <div>
+            {isLoggedIn ? <UserSettings/> : <LoginForm/>}
         </div>
     );
 

@@ -1,7 +1,7 @@
 import { AllRecipes } from "./AllRecipes";
 import { SingleRecipe } from "./SingleRecipe";
 import { AddRecipe } from "./AddRecipe";
-import { UpdateRecipe } from "./UpdateRecipe";
+import { UpdateRecipe } from "../pages/UpdateRecipe";
 import { DeleteRecipes} from "./DeleteRecipes";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { useParams } from "react-router-dom";

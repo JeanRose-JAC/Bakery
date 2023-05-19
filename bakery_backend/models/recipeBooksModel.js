@@ -1,7 +1,7 @@
 const DatabaseError = require('./databaseError.js');
 const InvalidInputError = require('./invalidInputError.js');
 const logger = require('../logger.js');
-let collectionName = "recipe_books_test";
+let collectionName = "recipe_books";
 const validateUtils = require("./BookValidation.js");
 let collection;
 let databaseConnection;
@@ -59,20 +59,19 @@ async function getCollection(){
 
 
 /**
- * Adds recipes to the database by validating certain conditions which should be under 25 characterts
+ * Adds a recipe book to the collection. Name must be 25 characters or less.
  * @param {*} userId username
- * @param {*} name is the name of the recipes book to add in the database
- * @param {*} SavedRecipes of the recipes
- * @returns the new recipe book if succesful otherwise either null or throw an error depending of the validation
+ * @param {*} name book name
+ * @returns the new recipe book if successful otherwise either null or throw an error depending of the validation
  */
-async function addBook(userId, name,SavedRecipes){
+async function addBook(userId, name){
   try{
     if (validateUtils.isValid2(name)){
-      const book =  {userId: userId, name: name,SavedRecipes: SavedRecipes}
+      const book =  {userId: userId, name: name,SavedRecipes: []}
       await collection.insertOne(book)
-      return book
+      return await getSingleRecipeBook(userId, name);
       }
-    else throw new InvalidInputError("Recipe book" + name + " does not have a valid");
+    else throw new InvalidInputError("Recipe book" + name + " is not have a valid");
     }catch(err)
     {
         let isIt = err.message.includes('not')
@@ -80,14 +79,14 @@ async function addBook(userId, name,SavedRecipes){
             throw new InvalidInputError("Recipe book " + name + " is invalid. The Name was incorrect. Please do not add anything over 25 characters");
         }
 
-        throw new DatabaseError("Error in the databse" + err);
+        throw new DatabaseError("Error in the database" + err);
     }
 }
 
 /**
-* This function will try to find a recipe book by their name to see if the recipe exists or not
+* Gets a single recipe book
 * @param {*} userId username
-* @param {*} find is the name of the recipe book to find
+* @param {*} find book name
 * @returns return true if the recipe was found otherwise false
 */
 async function getSingleRecipeBook(userId, find) {
@@ -100,6 +99,7 @@ async function getSingleRecipeBook(userId, find) {
   }
 
 }
+
 /**
 * Gets every recipes book in the database
 * @returns the whole collection of recipes in the database
@@ -114,10 +114,27 @@ async function getAllRecipeBooks() {
       throw new DatabaseError("Input" + err);
   }
 }
+
+/**
+ * Gets all the recipe books of the user
+ * @param {*} userId username
+ * @returns An array of all the recipe books of the user
+ */
+async function getAllRecipeBooksOfUser(userId){
+  try{
+    const cursor = collection.find({userId: userId});
+    const allValues = await cursor.toArray();
+    return allValues;
+  }
+  catch(err){
+    throw new DatabaseError("Input" + err);
+  }
+}
+
 /**
 * Deletes a recipe from the database based on the name of the recipe book
 * @param {*} userId username
-* @param {*} find is the parameter used to find the recipe book to delete
+* @param {*} find book name
 * @returns if the operation has somebody deleted or not
 */
 async function deleteRecipeBook(userId, find) {
@@ -130,15 +147,13 @@ async function deleteRecipeBook(userId, find) {
   }
 }
 /**
-* This function is used to take name of a certain recipe book and update their name.
-* The new type is of course validated to be sure that it follows the 
-* requirement of a proper type
+* Updates the book name. Validates that the new name is valid
 * @param {*} userId username
-* @param {*} name of the recipe book that has to be updated
-* @param {*} newName is the new name of the recipe book
-* @returns wether the operation was succesfull or not.
+* @param {*} name current book name
+* @param {*} newName new book name
+* @returns whether the operation was successful or not.
 */
-async function updateRecipeBoookName(userId, name, newName) {
+async function updateRecipeBookName(userId, name, newName) {
 
   try {
       if((!validateUtils.isValid2(newName))){
@@ -158,27 +173,59 @@ async function updateRecipeBoookName(userId, name, newName) {
 }
 
 /**
-* This function is used to take name of a certain recipe book and update their content.
-* The new type is of course validated to be sure that it follows the 
-* requirement of a proper type
-* @param {*} userId username
-* @param {*} name of the recipe book that has to be updated
-* @param {*} SavedRecipes is the new type of the recipe content added to the recipe book
-* @returns wether the operation was succesfull or not.
-*/
-async function updateRecipeBoookContent(userId, name, update) {
-
-  try {
-      let response = await collection.updateOne({ userId: userId, name: name }, { $set: { SavedRecipes: update } })
-      return response
+ * Updates the recipe book by adding a saved recipe
+ * @param {*} userId username
+ * @param {*} name book name
+ * @param {*} recipeId recipe id
+ * @returns whether the operation was successful or not.
+ */
+async function updateBookAddRecipe(userId, name, recipeId){
+  try{
+    let book = await getSingleRecipeBook(userId, name);
+    book.SavedRecipes.push(recipeId);
+    let response = await collection.updateOne({ userId: userId, name: name }, { $set: { SavedRecipes: book.SavedRecipes } })
+    return response
   }
-  catch (err) {
-
-      throw new InvalidInputError("Error while updating the recipe book Content: " + err);
+  catch(err){
+    if(err instanceof InvalidInputError){
+      throw err;
+    }
+    else{
+      throw new DatabaseError(err.message);
+    }
   }
 }
 
+/**
+ * Updates the recipe book by deleting a saved recipe
+ * @param {*} userId username
+ * @param {*} name book name
+ * @param {*} recipeId recipe id
+ * @returns whether the operation was successful or not.
+ */
+async function updateBookDeleteRecipe(userId, name, recipeId){
+  try{
+    let book = await getSingleRecipeBook(userId, name);
+    let recipes = book.SavedRecipes;
+    let newRecipes=[];
 
+    for(let i = 0; i < recipes.length; i++){
+      if(recipes[i] != recipeId){
+        newRecipes.push(recipes[i]);
+      }
+    }
 
+    let response = await collection.updateOne({ userId: userId, name: name }, { $set: { SavedRecipes: newRecipes } })
+    return response
+  }
+  catch(err){
+    if(err instanceof InvalidInputError){
+      throw err;
+    }
+    else{
+      throw new DatabaseError(err.message);
+    }
+  }
+}
 
-module.exports = {setCollection, getCollection,addBook,getSingleRecipeBook,getAllRecipeBooks,deleteRecipeBook,updateRecipeBoookName,updateRecipeBoookContent}
+module.exports = {setCollection, getCollection,addBook,getSingleRecipeBook,getAllRecipeBooks,deleteRecipeBook,updateRecipeBookName, updateBookAddRecipe, updateBookDeleteRecipe, getAllRecipeBooksOfUser}
