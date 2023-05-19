@@ -37,10 +37,10 @@ function UpdateRecipeForm(props){
         const response = await fetch ("http://localhost:1339/recipe/" + title, requestOptions)
         const result = await response.json();
         if(response.status === 400){
-            alert(response.errorMessage);
+            alert(result.errorMessage);
         }
         else if (response.status === 500){
-            alert(response.errorMessage);
+            alert(result.errorMessage);
         }
         else{
             navigate("/recipe", {state:{recipe: result, fromSearch: false}})

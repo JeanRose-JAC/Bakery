@@ -36,10 +36,10 @@ function AddRecipeForm(props){
         const response = await fetch ("http://localhost:1339/recipe", requestOptions)
         const result = await response.json();
         if(response.status === 400){
-            alert("Status 400:" + response.errorMessage);
+            alert(result.errorMessage);
         }
         else if (response.status === 500){
-            alert("Status 500:" + response.errorMessage);
+            alert(result.errorMessage);
         }
         else{
             navigate("/recipe", {state:{recipe: result, fromSearch: false}})
