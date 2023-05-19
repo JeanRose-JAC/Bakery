@@ -32,7 +32,7 @@ function Header() {
   return (
     <MDBNavbar expand='lg' light bgColor='light'>
       <MDBContainer fluid>
-      <a class="navbar-brand me-2" href="http://localhost:3000/">
+      <a class="navbar-brand me-2" href="/">
       <img
         src="https://i.imgur.com/WnhNlqY_d.webp?maxwidth=760&fidelity=grand"
         height="36"
