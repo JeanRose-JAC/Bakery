@@ -4,7 +4,13 @@
 - To run the website, download the project which includes the backend and frontend.
 - Open the two folders in Visual Studio.
 - Run 'npm i' in both projects to install the modules.
+- Add an .env file in the backend with the content below.
 - Run both projects
+
+.env file details
+MONGODB_PWD="ktTLP9Xk04MiCbuh"
+URL_PRE="mongodb+srv://geekgourmet:"
+URL_POST="@cluster0.gdchlfc.mongodb.net/?retryWrites=true&w=majority"
 
 Website URL : http://localhost:3000/
 
