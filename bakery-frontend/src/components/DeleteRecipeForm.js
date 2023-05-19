@@ -61,7 +61,6 @@ function DeleteRecipeForm(props){
     return(
         <div className="center">
         <h1>Delete a Recipe</h1>
-        <h3>Provide the username and title to delete a recipe.</h3>
         <form onSubmit={handleSubmit} className="recipeForm">
         
         <label htmlFor="Title" column sm="2">Title</label>
