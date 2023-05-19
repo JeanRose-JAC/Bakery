@@ -1,6 +1,8 @@
 import { useState} from "react";
 import { useNavigate } from "react-router-dom";
 import './style.css';
+import { useContext } from "react";
+import { LoggedInContext } from "./App";
 
 /**
  * Displays the form for updating a recipe
@@ -8,9 +10,10 @@ import './style.css';
  * @param {*} props function for keeping track of the updated recipe
  * @returns Element that contains the update form
  */
-function DeleteUserAccountForm(props){
+function DeleteUserAccountForm(){
     const navigate = useNavigate();
     const [password, setUserPassword] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useContext(LoggedInContext);
     
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -29,13 +32,15 @@ function DeleteUserAccountForm(props){
         const response = await fetch ("http://localhost:1339/account/", requestOptions)
         const result = await response.json();
         if(response.status === 400){
-            navigate("/usererror", {state: {errorMessage: result.errorMessage, link: "/admin", linkLabel:"Admin"}});
+            alert(result.errorMessage);
         }
         else if (response.status === 500){
-            navigate("/systemerror", {state: {errorMessage: result.errorMessage, link: "/admin", linkLabel:"Admin"}});
+            alert(result.errorMessage);
         }
         else{
-            props.setAdded(result);
+            alert("success");
+            setIsLoggedIn(false);
+            navigate("/");
         }
     }
   
@@ -46,8 +51,8 @@ function DeleteUserAccountForm(props){
         <form onSubmit={handleSubmit} className="recipeForm">
              <h1>Delete Account</h1>
         <label htmlFor="Name" column sm="2">Enter Your Password to delete account</label>
-        <input type="text" placeholder="current password..." onChange={(e) => setUserPassword(e.target.value)}></input> 
-        {<button type="submit">DeleteAccount</button>}
+        <input type="password" placeholder="Current password..." onChange={(e) => setUserPassword(e.target.value)}></input> 
+        {password && <button type="submit">DeleteAccount</button>}
         </form> 
        
       

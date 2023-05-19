@@ -1,4 +1,4 @@
-import { UpdateRecipeForm } from "./UpdatePasswordForm";
+import { UpdatePasswordForm } from "./UpdatePasswordForm";
 
 /**
  * Displays the form and card for updating a recipe
@@ -10,7 +10,7 @@ function UpdatePassword(){
     return(
         <div className="centerUpdate">
 
-            <UpdateRecipeForm/>
+            <UpdatePasswordForm/>
         </div>
     )
 }

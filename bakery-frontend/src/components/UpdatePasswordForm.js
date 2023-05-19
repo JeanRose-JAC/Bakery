@@ -8,7 +8,7 @@ import './style.css';
  * @param {*} props function for keeping track of the updated recipe
  * @returns Element that contains the update form
  */
-function UpdateRecipeForm(props){
+function UpdatePasswordForm(){
     const [password, setUserPassword] = useState(null);
     const [newPassword, setnewPassword] = useState(null);
     const navigate = useNavigate();
@@ -28,16 +28,16 @@ function UpdateRecipeForm(props){
             },
         }
 
-        const response = await fetch ("http://localhost:1339/account/:username/editpassword", requestOptions)
+        const response = await fetch ("http://localhost:1339/account/editpassword", requestOptions)
         const result = await response.json();
         if(response.status === 400){
-            navigate("/usererror", {state: {errorMessage: result.errorMessage, link: "/admin", linkLabel:"Admin"}});
+            alert(result.errorMessage);
         }
         else if (response.status === 500){
-            navigate("/systemerror", {state: {errorMessage: result.errorMessage, link: "/admin", linkLabel:"Admin"}});
+            alert(result.errorMessage);
         }
         else{
-            props.setAdded(result);
+            alert("success");
         }
     }
   
@@ -47,11 +47,11 @@ function UpdateRecipeForm(props){
     
         <form onSubmit={handleSubmit} className="recipeForm">
              <h1>Update password</h1>
-        <label htmlFor="Name" column sm="2">Current Password</label>
-        <input type="text" placeholder="current password..." onChange={(e) => setUserPassword(e.target.value)}></input>    
+        <label htmlFor="Current Password" column sm="2">Current Password</label>
+        <input type="password" placeholder="Current password..." onChange={(e) => setUserPassword(e.target.value)}></input>    
         <p/>
-        <label htmlFor="Name" column sm="2">New Passowrd</label>
-        <input type="text" placeholder="New password..." onChange={(e) => setnewPassword(e.target.value)}></input>    
+        <label htmlFor="New Password" column sm="2">New Password</label>
+        <input type="password" placeholder="New password..." onChange={(e) => setnewPassword(e.target.value)}></input>    
         <p/>
         {password  &&  newPassword &&<button type="submit">Update Password</button>}
         </form> 
@@ -60,4 +60,4 @@ function UpdateRecipeForm(props){
     );
 }
 
-export {UpdateRecipeForm};
+export {UpdatePasswordForm};
