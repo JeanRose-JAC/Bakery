@@ -267,6 +267,8 @@ async function editUsername(request, response){
  */
 async function editPassword(request, response){
 
+    let test;
+    const {authenticateUser, refreshSession} = require('./sessionController.js');
     const authenticatedSession = authenticateUser(request);
     if (!authenticatedSession) {
         response.sendStatus(401); // Unauthorized access
@@ -401,6 +403,7 @@ async function editDisplayName(request, response){
  */
 async function deleteAccount(request, response){
 
+    const {authenticateUser, refreshSession} = require('./sessionController.js');
     const authenticatedSession = authenticateUser(request);
     if (!authenticatedSession) {
         response.sendStatus(401); // Unauthorized access
