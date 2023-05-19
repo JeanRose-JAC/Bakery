@@ -44,7 +44,7 @@ function DeleteRecipeForm(props){
             },
         }
 
-        const response2 = await fetch ("http://localhost:1339/book/content/removal", requestOptions)
+        const response2 = await fetch ("http://localhost:1339/book/content/removal", requestOptions2)
         const result2 = await response.json();
         if(response2.status === 400){
             alert(result2.errMessage);
@@ -64,7 +64,7 @@ function DeleteRecipeForm(props){
         <form onSubmit={handleSubmit} className="recipeForm">
         
         <label htmlFor="Title" column sm="2">Title</label>
-        <input type="text" placeholder="Title..." onChange={(e) => setTitle(e.target.value)}></input>
+        <input value={title} type="text" placeholder="Title..." onChange={(e) => setTitle(e.target.value)}></input>
 
         <p/>
 
