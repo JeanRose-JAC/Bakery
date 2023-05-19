@@ -7,7 +7,7 @@
 - Add an .env file in the backend with the content below.
 - Run both projects
 
-.env file details
+.env file details -> 
 MONGODB_PWD="ktTLP9Xk04MiCbuh"
 URL_PRE="mongodb+srv://geekgourmet:"
 URL_POST="@cluster0.gdchlfc.mongodb.net/?retryWrites=true&w=majority"
