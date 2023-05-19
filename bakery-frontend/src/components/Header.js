@@ -20,7 +20,11 @@ import { LogoutButton } from './LogoutButton';
 import { useContext } from 'react';
 import { LoggedInContext } from './App';
 
-
+/**
+ * Organizes the header
+ * 
+ * @returns Navigation Bar
+ */
 function Header() {
   const [showBasic, setShowBasic] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useContext(LoggedInContext);

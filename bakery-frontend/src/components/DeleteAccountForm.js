@@ -5,10 +5,9 @@ import { useContext } from "react";
 import { LoggedInContext } from "./App";
 
 /**
- * Displays the form for updating a recipe
+ * Displays the form for deleting a user
  * 
- * @param {*} props function for keeping track of the updated recipe
- * @returns Element that contains the update form
+ * @returns Element that contains the delete form
  */
 function DeleteUserAccountForm(){
     const navigate = useNavigate();

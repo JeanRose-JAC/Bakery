@@ -1,9 +1,9 @@
 import { DeleteUserAccountForm } from "./DeleteAccountForm";
 
 /**
- * Displays the form and card for updating a recipe
+ * Displays the form and card for deleting an account
  * 
- * @returns Element that represents the form and card for updating a recipe
+ * @returns Element that represents the form for deleting an account
  */
 function DeleteAccount(){
 

@@ -1,4 +1,10 @@
 import { Card } from "./Card";
+
+/**
+ * Contains culture layout
+ * 
+ * @returns Culture layout
+ */
 function CultureLayout(){
 
   

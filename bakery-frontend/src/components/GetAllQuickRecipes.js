@@ -2,9 +2,9 @@ import { useEffect,useState } from "react";
 import { ListRecipesFromSearch } from "./ListRecipesFromSearch";
 
 /**
- * Displays all of the recipes in the database
+ * Displays quick recipes from Ninja API
  * 
- * @returns A list of all the recipes
+ * @returns A list of recipes
  */
 function GetAllQuickRecipes(){
     const[recipe, setRecipe] = useState([]);

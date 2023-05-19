@@ -2,6 +2,11 @@ import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { LoggedInContext } from "./App";
 
+/**
+ * formats the logout button
+ * 
+ * @returns logout button
+ */
 function LogoutButton(){
     const [isLoggedIn, setIsLoggedIn] = useContext(LoggedInContext);
     const navigate = useNavigate();

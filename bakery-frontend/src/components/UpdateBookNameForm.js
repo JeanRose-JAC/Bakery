@@ -1,6 +1,12 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Formats the update book name form
+ * 
+ * @param {*} props book
+ * @returns Form for updating book name
+ */
 function UpdateBookNameForm(props){
     const [name, setName] = useState(props.book.name);
     const [newName, setNewName] = useState(null);

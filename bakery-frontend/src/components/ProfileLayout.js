@@ -4,9 +4,9 @@ import { useContext } from 'react';
 import { LoggedInContext } from './App';
 
 /**
- * Displays all of the recipes in the database
+ * Displays the user settings or the login form
  * 
- * @returns A list of all the recipes
+ * @returns User settings if logged in. Log in form if not
  */
 function ProfileLayout(){
     const [isLoggedIn, setIsLoggedIn] = useContext(LoggedInContext);

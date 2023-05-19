@@ -1,6 +1,11 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
+/**
+ * Formats the remove recipe from book form
+ * @param {*} param0 book
+ * @returns Remove recipe from book form
+ */
 function UpdateBookRecipeRemoval(props){
     const [title, setTitle] = useState(props.recipe.title);
     const navigate = useNavigate();

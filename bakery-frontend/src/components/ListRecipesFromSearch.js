@@ -10,7 +10,7 @@ import {
   import { LoggedInContext } from './App';
 
 /**
- * Displays a list of all recipes with username and title 
+ * Displays a list of all recipes from query
  * 
  * @param {*} param An array of recipes 
  * @returns A list of recipes formatted in a card

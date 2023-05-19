@@ -2,6 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+/**
+ * Displays register form
+ * 
+ * @returns Register Form
+ */
 function RegisterForm(){
     const [username, setUsername] = useState(null);
     const [email, setEmail] = useState(null);

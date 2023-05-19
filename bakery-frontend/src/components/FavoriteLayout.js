@@ -3,6 +3,11 @@ import { LoggedInContext } from './App';
 import { Link } from 'react-router-dom';
 import { GetUsersRecipeBooks } from './GetUsersRecipeBooks';
 
+/**
+ * Sets user dashboard
+ * 
+ * @returns Use dashboard
+ */
 function FavoriteLayout(){
     const [isLoggedIn, setIsLoggedIn] = useContext(LoggedInContext);
 

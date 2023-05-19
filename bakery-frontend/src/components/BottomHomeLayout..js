@@ -1,4 +1,10 @@
 import { Card } from "./Card";
+
+/**
+ * Contains styling og bottom home layout
+ * 
+ * @returns Bottom Home Layout
+ */
 function BottomHomeLayout(){
 
   

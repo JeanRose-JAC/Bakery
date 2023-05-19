@@ -5,7 +5,7 @@ import './style.css';
 /**
  * Displays the form for deleting a recipe
  * 
- * @param {*} props function that sets the success message
+ * @param {*} props function that contains recipe properties
  * @returns Element that contains the delete form
  */
 function DeleteRecipeForm(props){

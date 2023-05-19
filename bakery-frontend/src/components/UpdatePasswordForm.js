@@ -3,10 +3,9 @@ import { useNavigate } from "react-router-dom";
 import './style.css';
 
 /**
- * Displays the form for updating a recipe
+ * Formats the update password form
  * 
- * @param {*} props function for keeping track of the updated recipe
- * @returns Element that contains the update form
+ * @returns update password form
  */
 function UpdatePasswordForm(){
     const [password, setUserPassword] = useState(null);

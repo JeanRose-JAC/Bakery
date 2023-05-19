@@ -1,4 +1,10 @@
 import { Card } from "./Card";
+
+/**
+ * Displays Home
+ * 
+ * @returns Home Layout
+ */
 function HomeLayout(){
   
     const styleObj = {

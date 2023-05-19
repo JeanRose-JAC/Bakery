@@ -4,6 +4,11 @@ import { LoggedInContext } from "./App";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 
+/**
+ * Displays Log in Form
+ * 
+ * @returns Log In form
+ */
 function LoginForm(){
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);

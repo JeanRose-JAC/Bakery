@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 
 /**
- * Displays delete form
+ * Displays delete book form
  * 
  * @param {*} props book
  * @returns Element that contains the delete form

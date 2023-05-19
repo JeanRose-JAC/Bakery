@@ -2,6 +2,11 @@ import { useState, useEffect } from "react"
 import { ListRecipeBooks } from "./ListRecipeBooks";
 import { Link, NavLink } from "react-router-dom";
 
+/**
+ * Displays options for viewing the recipe book and adding new items
+ * 
+ * @returns Elements to add new recipe or book  as well as getting all the books
+ */
 function GetUsersRecipeBooks(){
     const [books, setBooks] = useState([]);
 

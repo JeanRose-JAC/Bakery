@@ -5,6 +5,12 @@ import {
   } from 'mdb-react-ui-kit';
 import { NavLink } from 'react-router-dom';
 
+/**
+ * Displays list of recipes to add in the book
+ * 
+ * @param {*} param0 recipes, book
+ * @returns list of recipes
+ */
 function ListRecipesForAdditionInBook({recipes, book}){
 
     return(

@@ -3,6 +3,11 @@ import { ListRecipeObjects } from "components/ListRecipeObjects"
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
+/**
+ * Displays information about selected recipe book
+ * 
+ * @returns Information about the selected recipe book
+ */
 function RecipeBook(){
     const {state} = useLocation();
     const [recipes, setRecipes] = useState([]);

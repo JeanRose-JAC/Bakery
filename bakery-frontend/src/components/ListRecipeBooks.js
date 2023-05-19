@@ -8,6 +8,12 @@ import {
 
 import { Link } from 'react-router-dom';
 
+/**
+ * Displays list of books with options
+ * 
+ * @param {*} param0 books
+ * @returns list of books
+ */
 function ListRecipeBooks({books}){
 
     return(

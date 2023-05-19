@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Formats search form
+ * 
+ * @param {*} props 
+ * @returns Search form for Ninja API
+ */
 function SearchRecipeForm(props){
     const [query, setQuery] = useState(null);
     const navigate = useNavigate();

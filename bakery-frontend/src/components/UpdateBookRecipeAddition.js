@@ -1,6 +1,11 @@
 import { useState } from "react"
 import { ListRecipesForAdditionInBook } from "./ListRecipesForAdditionInBook";
 
+/**
+ * Formats the add recipe to book form
+ * @param {*} param0 book
+ * @returns Add recipe to book form
+ */
 function UpdateBookRecipeAddition({book}){
     const [recipes, setRecipes] = useState([]);
 

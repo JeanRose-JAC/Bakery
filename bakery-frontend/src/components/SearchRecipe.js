@@ -2,6 +2,11 @@ import { useState } from "react";
 import { SearchRecipeForm } from "./SearchRecipeForm";
 import { ListRecipesFromSearch } from "./ListRecipesFromSearch";
 
+/**
+ * Displays the search form
+ * 
+ * @returns Search Form
+ */
 function SearchRecipe(){
     const [recipe, setAdded] = useState([]);
 
