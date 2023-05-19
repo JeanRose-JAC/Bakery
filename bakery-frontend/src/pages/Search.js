@@ -2,9 +2,9 @@ import { SearchRecipe } from "components/SearchRecipe";
 
 
 /**
- * Displays all the recipes
+ * Displays the search
  * 
- * @returns Element for getting all the recipes
+ * @returns search form
  */
 function Search(){
 

@@ -1,9 +1,9 @@
 import { GetAllSnackRecipes } from "components/GetAllSnackRecipes";
 
 /**
- * Displays all the recipes
+ * Displays snack recipes
  * 
- * @returns Element for getting all the Lunch recipes
+ * @returns snack recipes
  */
 function Snack(){
 

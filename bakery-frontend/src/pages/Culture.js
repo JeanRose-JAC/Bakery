@@ -1,9 +1,9 @@
 import { CultureLayout } from "components/CultureLayout";
 
 /**
- * Displays all the recipes
+ * displays culture layout
  * 
- * @returns Element for getting all the Culture recipes
+ * @returns culture page
  */
 function Culture(){
 

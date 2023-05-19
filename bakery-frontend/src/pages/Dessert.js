@@ -1,9 +1,9 @@
 import { GetAllDessertRecipes } from "components/GetAllDessertRecipes";
 
 /**
- * Displays all the recipes
+ * Displays dessert recipes
  * 
- * @returns Element for getting all the Dessert recipes
+ * @returns dessert recipes
  */
 function Dessert(){
 

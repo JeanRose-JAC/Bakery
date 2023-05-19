@@ -5,9 +5,9 @@ import { useContext } from "react";
 import { LoggedInContext } from "components/App";
 
 /**
- * Displays all the recipes
+ * Displays one recipe
  * 
- * @returns Element for getting all the recipes
+ * @returns one recipe
  */
 function Recipe(){
     const {state} = useLocation();

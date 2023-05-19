@@ -1,9 +1,9 @@
 import { GetAllQuickRecipes } from "components/GetAllQuickRecipes";
 
 /**
- * Displays all the recipes
+ * Displays quick recipes
  * 
- * @returns Element for getting all the Quick recipes
+ * @returns quick recipes
  */
 function Quick(){
 
