@@ -248,7 +248,7 @@ async function updatePassword(username, password, newPassword){
       throw new InvalidInputError("New password cannot be old password.");
     }
     // Validate that the current password passed in is correct
-    if(account.password != password){
+    if(await bcrypt.compare(password, account.password)){
       throw new InvalidInputError("Current password is incorrect.");
     }
     // validate newPassword 
@@ -351,6 +351,8 @@ async function removeAccount(username, password){
       // search only if input passed in is valid -- automatically throws
       if(validateUtilsAcc.isUsernameValid(username) && validateUtilsAcc.isPasswordValid(password)){
   
+
+    
         // filter for query
         let filter = {username: username, password: password};
         // Query if account exists

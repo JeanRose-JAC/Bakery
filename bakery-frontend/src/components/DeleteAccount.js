@@ -1,18 +1,18 @@
-import { UpdatePasswordForm } from "./UpdatePasswordForm";
+import { DeleteUserAccountForm } from "./DeleteAccountForm";
 
 /**
  * Displays the form and card for updating a recipe
  * 
  * @returns Element that represents the form and card for updating a recipe
  */
-function UpdatePassword(){
+function DeleteAccount(){
 
     return(
         <div className="centerUpdate">
 
-            <UpdatePasswordForm/>
+            <DeleteUserAccountForm/>
         </div>
     )
 }
 
-export {UpdatePassword};
+export {DeleteAccount};

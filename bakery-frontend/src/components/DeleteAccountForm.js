@@ -1,6 +1,8 @@
 import { useState} from "react";
 import { useNavigate } from "react-router-dom";
 import './style.css';
+import { useContext } from "react";
+import { LoggedInContext } from "./App";
 
 /**
  * Displays the form for updating a recipe
@@ -8,27 +10,26 @@ import './style.css';
  * @param {*} props function for keeping track of the updated recipe
  * @returns Element that contains the update form
  */
-function UpdatePasswordForm(){
-    const [password, setUserPassword] = useState(null);
-    const [newPassword, setnewPassword] = useState(null);
+function DeleteUserAccountForm(){
     const navigate = useNavigate();
+    const [password, setUserPassword] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useContext(LoggedInContext);
     
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         const requestOptions = {
-            method: "PUT",
+            method: "DELETE",
             credentials: "include",
             body: JSON.stringify({
                 password:password,
-                newPassword:newPassword,
             }),
             headers: {
                 "Content-Type": "application/json; charset=UTF-8"
             },
         }
 
-        const response = await fetch ("http://localhost:1339/account/editpassword", requestOptions)
+        const response = await fetch ("http://localhost:1339/account/", requestOptions)
         const result = await response.json();
         if(response.status === 400){
             alert(result.errorMessage);
@@ -38,6 +39,8 @@ function UpdatePasswordForm(){
         }
         else{
             alert("success");
+            setIsLoggedIn(false);
+            navigate("/");
         }
     }
   
@@ -46,18 +49,14 @@ function UpdatePasswordForm(){
     return(
     
         <form onSubmit={handleSubmit} className="recipeForm">
-             <h1>Update password</h1>
-        <label htmlFor="Current Password" column sm="2">Current Password</label>
-        <input type="password" placeholder="Current password..." onChange={(e) => setUserPassword(e.target.value)}></input>    
-        <p/>
-        <label htmlFor="New Password" column sm="2">New Password</label>
-        <input type="password" placeholder="New password..." onChange={(e) => setnewPassword(e.target.value)}></input>    
-        <p/>
-        {password  &&  newPassword &&<button type="submit">Update Password</button>}
+             <h1>Delete Account</h1>
+        <label htmlFor="Name" column sm="2">Enter Your Password to delete account</label>
+        <input type="password" placeholder="Current password..." onChange={(e) => setUserPassword(e.target.value)}></input> 
+        {password && <button type="submit">DeleteAccount</button>}
         </form> 
        
       
     );
 }
 
-export {UpdatePasswordForm};
+export {DeleteUserAccountForm};

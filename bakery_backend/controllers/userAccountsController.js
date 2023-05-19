@@ -15,9 +15,9 @@ const InvalidInputError= require("../models/invalidInputError.js");
 router.post('/account', createAccount);
 router.get('/account/:username', showAccount);
 router.get('/account/', showAllAccounts);
-router.put('/account/:username/editusername',editUsername);
-router.put('/account/:username/editpassword',editPassword);
-router.put('/account/:username/editdisplayName',editDisplayName);
+router.put('/account/editusername',editUsername);
+router.put('/account/editpassword',editPassword);
+router.put('/account/editdisplayName',editDisplayName);
 router.delete('/account', deleteAccount);
 
 /** Returns true if there is a stored user with the same username and password. */
@@ -267,6 +267,8 @@ async function editUsername(request, response){
  */
 async function editPassword(request, response){
 
+    let test;
+    const {authenticateUser, refreshSession} = require('./sessionController.js');
     const authenticatedSession = authenticateUser(request);
     if (!authenticatedSession) {
         response.sendStatus(401); // Unauthorized access
@@ -401,6 +403,7 @@ async function editDisplayName(request, response){
  */
 async function deleteAccount(request, response){
 
+    const {authenticateUser, refreshSession} = require('./sessionController.js');
     const authenticatedSession = authenticateUser(request);
     if (!authenticatedSession) {
         response.sendStatus(401); // Unauthorized access
