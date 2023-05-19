@@ -150,6 +150,11 @@ async function findAllBooks(request, response) {
 }
 
 router.get("/user", showAllRecipeBookOfOneUser);
+/**
+ * Gets all the recipes book of one user
+ * @param {*} response the response object from the server
+ * @param {*} request the request object from the server
+ */
 async function showAllRecipeBookOfOneUser(request, response){
     try{
 
