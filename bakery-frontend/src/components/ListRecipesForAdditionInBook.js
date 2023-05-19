@@ -42,7 +42,7 @@ async function addToBook(recipe, book){
         },
     }
 
-    const response = await fetch ("http://localhost:1339/book/content/new", requestOptions)
+    const response = await fetch (process.env.REACT_APP_BACKEND + "/book/content/new", requestOptions)
     const result = await response.json();
     if(response.status === 400){
         alert(result.errMessage);

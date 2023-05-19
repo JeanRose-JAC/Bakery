@@ -25,7 +25,7 @@ function DeleteBookForm(props){
             "Content-Type": "application/json; charset=UTF-8"
         },}
 
-        const response = await fetch ("http://localhost:1339/book", requestOptions)
+        const response = await fetch (process.env.REACT_APP_BACKEND + "/book", requestOptions)
         const result = await response.json();
         if(response.status === 400){
             alert(result.errMessage);

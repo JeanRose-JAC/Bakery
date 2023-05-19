@@ -25,7 +25,7 @@ function UpdateBookRecipeRemoval(props){
             },
         }
 
-        const response = await fetch ("http://localhost:1339/book/content/removal", requestOptions)
+        const response = await fetch (process.env.REACT_APP_BACKEND + "/book/content/removal", requestOptions)
         const result = await response.json();
         if(response.status === 400){
             alert(result.errMessage);

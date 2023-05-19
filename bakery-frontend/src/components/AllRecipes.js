@@ -12,7 +12,7 @@ function AllRecipes(){
 
 
     const callGetAllRecipe = async () =>{
-        const response = await fetch("http://localhost:1339/recipe/",{method: "GET"});
+        const response = await fetch(process.env.REACT_APP_BACKEND + "/recipe/",{method: "GET"});
         const result = await response.json();
         setRecipe(result);
         return JSON.stringify(result);

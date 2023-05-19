@@ -19,7 +19,7 @@ function GetUsersRecipeBooks(){
             }
         }
     
-        const response = await fetch ("http://localhost:1339/book/user", requestOptions);
+        const response = await fetch (process.env.REACT_APP_BACKEND + "/book/user", requestOptions);
         const result = await response.json();
         setBooks(result);
     }

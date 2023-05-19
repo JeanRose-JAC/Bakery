@@ -23,7 +23,7 @@ function DeleteRecipeForm(props){
             },
         }
 
-        const response = await fetch ("http://localhost:1339/recipe/" + title, requestOptions)
+        const response = await fetch (process.env.REACT_APP_BACKEND + "/recipe/" + title, requestOptions)
         const result = await response.json();
         if(response.status === 400){
             alert(result.errorMessage);
@@ -43,7 +43,7 @@ function DeleteRecipeForm(props){
                 },
             }
     
-            const response2 = await fetch ("http://localhost:1339/book/content/removal", requestOptions2)
+            const response2 = await fetch (process.env.REACT_APP_BACKEND + "/book/content/removal", requestOptions2)
             const result2 = await response2.json();
             if(response2.status === 400){
                 alert(result2.errMessage);

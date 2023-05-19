@@ -34,7 +34,7 @@ function UpdateRecipeForm(props){
             },
         }
 
-        const response = await fetch ("http://localhost:1339/recipe/" + title, requestOptions)
+        const response = await fetch (process.env.REACT_APP_BACKEND + "/recipe/" + title, requestOptions)
         const result = await response.json();
         if(response.status === 400){
             alert(result.errorMessage);

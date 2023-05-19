@@ -44,7 +44,7 @@ function App() {
     async function checkForLoggedIn() {
       try {
         /** Call auth, passing cookies to the back-end */
-        const response = await fetch("http://localhost:1339/session/auth", { method: "GET", credentials: "include" });
+        const response = await fetch(process.env.REACT_APP_BACKEND + "/session/auth", { method: "GET", credentials: "include" });
         if (response.status === 200) {
           setIsLoggedIn(true);
         } else {

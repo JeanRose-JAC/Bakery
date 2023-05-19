@@ -33,7 +33,7 @@ function AddRecipeForm(props){
             },
         }
 
-        const response = await fetch ("http://localhost:1339/recipe", requestOptions)
+        const response = await fetch (process.env.REACT_APP_BACKEND + "/recipe", requestOptions)
         const result = await response.json();
         if(response.status === 400){
             alert(result.errorMessage);

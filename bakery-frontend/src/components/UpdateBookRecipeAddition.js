@@ -18,7 +18,7 @@ function UpdateBookRecipeAddition({book}){
             }
         }
     
-        const response = await fetch ("http://localhost:1339/recipe/user", requestOptions);
+        const response = await fetch (process.env.REACT_APP_BACKEND + "/recipe/user", requestOptions);
         const result = await response.json();
         setRecipes(result);
     }
