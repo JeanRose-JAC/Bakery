@@ -6,6 +6,7 @@
 - Run 'npm i' in both projects to install the modules.
 - Add an .env file in the backend with the content below. (Content removed but you need a mongodb infO: PWD, URL_PRE, URL_POST)
 - Run both projects
+- Front end: npm start run
 
 
 Website URL (local) : http://localhost:3000/
