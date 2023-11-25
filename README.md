@@ -7,12 +7,9 @@
 - Add an .env file in the backend with the content below.
 - Run both projects
 
-.env file details -> 
-MONGODB_PWD="ktTLP9Xk04MiCbuh"
-URL_PRE="mongodb+srv://geekgourmet:"
-URL_POST="@cluster0.gdchlfc.mongodb.net/?retryWrites=true&w=majority"
 
-Website URL : http://localhost:3000/
+Website URL (local) : http://localhost:3000/
+Or : https://bakery-frontend.onrender.com/ (Working as of Nov 25, 2023)
 
 In the home page, users can look at the trending recipes or watch the cooking tip videos
 
